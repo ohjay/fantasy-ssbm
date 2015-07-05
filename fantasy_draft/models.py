@@ -38,6 +38,8 @@ class Player(models.Model):
     
 class User(models.Model):
     name = models.CharField(max_length=30) # the user's irl name
+    def __str__(self):
+        return self.name
     
 class Draft(models.Model):
     league = models.ForeignKey(League) # there are many drafts for one league

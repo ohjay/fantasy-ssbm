@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tournament',
             name='name',
-            field=models.CharField(default='Apex', max_length=20),
+            field=models.CharField(default='[default]', max_length=20),
             preserve_default=False,
         ),
     ]
