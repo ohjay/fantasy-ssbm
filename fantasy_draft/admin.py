@@ -16,7 +16,7 @@ class LeagueAdmin(admin.ModelAdmin):
     inlines = [DraftInline]
     
 class PlayerAdmin(admin.ModelAdmin):
-    fields = ['tag', 'name']
+    fields = ['tag', 'name', 'pool', 'placing', 'seed', 'picture', 'description', 'tournaments']
     search_fields = ['tag']
 
 admin.site.register(League, LeagueAdmin)

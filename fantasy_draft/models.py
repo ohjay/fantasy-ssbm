@@ -9,13 +9,20 @@ class League(models.Model):
 class TournamentResult(models.Model):
     player_tag = models.CharField(max_length=30)
     placing = models.IntegerField(max_length=4)
+    def __str__(self):
+        return self.player_tag + ' (' + str(self.placing) + ')'
         
 class Tournament(models.Model):
+    name = models.CharField(max_length=20)
     results = models.ManyToManyField(TournamentResult)
     date = models.DateField('tournament date')
+    def __str__(self):
+        return self.name
     
 class Pool(models.Model):
     identifier = models.CharField(max_length = 20)
+    def __str__(self):
+        return self.identifier
     
 class Player(models.Model):
     name = models.CharField(max_length=30) # the player's real name
