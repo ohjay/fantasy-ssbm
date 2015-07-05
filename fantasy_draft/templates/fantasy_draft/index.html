@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/style.css" %}" />
+
+{% if league_list %}
+    <ul>
+    {% for league in league_list %}
+        <li><a href="{% url 'fantasy_draft:league_detail' league.id %}">{{ league.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No leagues are available.</p>
+{% endif %}

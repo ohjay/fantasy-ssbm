@@ -1,0 +1,6 @@
+<h1>{{ draft.id }}</h1>
+<ul>
+{% for player in draft.players.all %}
+    <li>{{ player }}</li>
+{% endfor %}
+</ul>
