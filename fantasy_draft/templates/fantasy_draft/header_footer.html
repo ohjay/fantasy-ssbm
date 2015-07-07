@@ -1,0 +1,98 @@
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Fantasy EVO</title>
+    <link rel="stylesheet" href="{% static "fantasy_draft/css/header_style.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static "fantasy_draft/css/footer_style.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static "fantasy_draft/css/main_style.css" %}" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}" />
+    <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header id="header-wrapper">
+      <div id="header-content">
+        <ul class="nav">
+          <li id="brand-section">
+             <a href="/#main-wrapper">Main</a>
+          </li>
+          <li class="header-section">
+            <a href="/#main-wrapper">Player Database</a>
+            <ul id="subnav-1" class="subnav">
+                <li><a href="/search">Competitor Search</a></li>
+                <li><a href="/players">Player Pages</a></li>
+            </ul>
+          </li>
+          <li class="header-section">
+            <a href="#">Manage Drafts</a>
+            <ul id="subnav-2" class="subnav">
+                <li><a href="/create_league">Create League</a></li>
+                <li><a href="/drafts">My Drafts</a></li>
+            </ul>
+          </li>
+          <li class="header-section">
+            <a href="/calendar">Results</a>
+          </li>
+          <li class="header-section pull-right">
+            {% if user.is_authenticated %}
+            <a href="/logout">Sign Out</a>
+            {% else %}
+            <a href="/register">Sign In / Register</a>
+            {% endif %}
+          </li>
+          <li class="header-section pull-right">
+            {% if user.is_authenticated %}
+            <a href="/myprofile">{{ user.first_name }} {{ user.last_name }}</a>
+            {% else %}
+            <a href="/login">Sign In / Register</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      <!-- MENU -->
+      <!-- ENDS MENU -->
+    </header>
+    <!-- ENDS HEADER -->
+  <div id="main-content-wrapper">
+    {% block content %}
+
+    {% endblock %}
+  </div>
+
+    <!-- FOOTER -->
+    <div id="footer-wrapper">
+      <div id="footer-content">
+        <div id="footer-top-wrapper">
+          <div id="footer-top">
+            <div class="top-col">
+              <div class="top-col-title"><span>About</span></div>
+              <div class="top-col-info">
+                [fantasy draft website: placeholder]
+              </div>
+              </div>
+            <div class="top-col">
+              <div class="top-col-title"><span>Contact Us</span></div>
+              <div class="top-col-info">
+                <div id="name">Owen Jow</div>owen.jow01@gmail.com<br>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div id="footer-bottom-wrapper">
+          <div id="footer-bottom">
+            <div id="mini-menu">
+            </div>
+            <div id="copyright">
+               Last updated July 6th, 2015 by Owen Jow
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ENDS FOOTER -->
+  </body>
+</html>
