@@ -1,12 +1,37 @@
 {% extends "fantasy_draft/header_footer.html" %}
 {% load staticfiles %}
 
-{% if league_list %}
-    <ul>
-    {% for league in league_list %}
-        <li><a href="{% url 'fantasy_draft:league_detail' league.id %}">{{ league.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No leagues are available.</p>
-{% endif %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}"/>
+    <link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+    <script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
+    <script src="{% static "fantasy_draft/js/countdown.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="clock" style="margin:2em;"></div>
+	<script type="text/javascript">
+		var clock;
+
+		$(document).ready(function() {
+            var currentDate = new Date();
+            // Set the date to the start of EVO SSBM pools
+            var futureDate  = new Date(2015, 6, 17, 8, 0, 0, 0);
+
+		    // Calculate the difference in seconds between the future and current date
+			var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+			clock = $('.clock').FlipClock(diff, {
+				clockFace: 'DailyCounter',
+				countdown: true
+			});
+		});
+	</script>
+{% endblock %}

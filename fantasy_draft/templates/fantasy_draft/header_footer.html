@@ -1,19 +1,25 @@
 {% load staticfiles %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Fantasy EVO</title>
-    <link rel="stylesheet" href="{% static "fantasy_draft/css/header_style.css" %}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{% static "fantasy_draft/css/footer_style.css" %}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{% static "fantasy_draft/css/main_style.css" %}" type="text/css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}" />
+    
+    {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}"/>
+    {% endblock %}
+    
+    {% block javascript %}
     <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
-
+    {% endblock %}
   </head>
+  
   <body>
-    <!-- HEADER -->
     <header id="header-wrapper">
       <div id="header-content">
         <ul class="nav">
@@ -23,19 +29,19 @@
           <li class="header-section">
             <a href="/#main-wrapper">Player Database</a>
             <ul id="subnav-1" class="subnav">
-                <li><a href="/search">Competitor Search</a></li>
-                <li><a href="/players">Player Pages</a></li>
+                <li><a href="{% url 'fantasy_draft:pl_search' %}">Competitor Search</a></li>
+                <li><a href="{% url 'fantasy_draft:players' %}">Player Pages</a></li>
             </ul>
           </li>
           <li class="header-section">
             <a href="#">Manage Drafts</a>
             <ul id="subnav-2" class="subnav">
-                <li><a href="/create_league">Create League</a></li>
-                <li><a href="/drafts">My Drafts</a></li>
+                <li><a href="{% url 'fantasy_draft:create_league' %}">Create League</a></li>
+                <li><a href="{% url 'fantasy_draft:drafts' %}">My Drafts</a></li>
             </ul>
           </li>
           <li class="header-section">
-            <a href="/calendar">Results</a>
+            <a href="{% url 'fantasy_draft:results' %}">Results</a>
           </li>
           <li class="header-section pull-right">
             {% if user.is_authenticated %}
@@ -53,17 +59,12 @@
           </li>
         </ul>
       </div>
-      <!-- MENU -->
-      <!-- ENDS MENU -->
     </header>
-    <!-- ENDS HEADER -->
   <div id="main-content-wrapper">
     {% block content %}
-
     {% endblock %}
   </div>
 
-    <!-- FOOTER -->
     <div id="footer-wrapper">
       <div id="footer-content">
         <div id="footer-top-wrapper">
@@ -84,15 +85,12 @@
         </div>
         <div id="footer-bottom-wrapper">
           <div id="footer-bottom">
-            <div id="mini-menu">
-            </div>
-            <div id="copyright">
+            <div id="last-updated">
                Last updated July 6th, 2015 by Owen Jow
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- ENDS FOOTER -->
   </body>
 </html>

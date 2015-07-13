@@ -30,3 +30,34 @@ def select_player(request, draft_id):
         draft.players += player
         draft.save()
         return HttpResponseRedirect(reverse('fantasy_draft/draft', args=(d.id,)))
+
+def plsearch(request):
+    # edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/index.html', context)
+
+def players(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/players.html', context)
+    
+def create_league(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/create.html', context)
+    
+def drafts(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/drafts.html', context)
+    
+def results(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/results.html', context)
+    
