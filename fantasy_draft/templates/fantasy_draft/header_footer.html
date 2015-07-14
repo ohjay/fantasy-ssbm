@@ -2,95 +2,98 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Fantasy EVO</title>
-    
+
+    {% block favicon %}
+    <link rel="shortcut icon" type="image/png" href="{% static "fantasy_draft/favicon.ico" %}" />
+    {% endblock %}
+
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen" />
     {% endblock %}
-    
+
     {% block javascript %}
     <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
     {% endblock %}
-  </head>
+</head>
   
-  <body>
+<body>
     <header id="header-wrapper">
-      <div id="header-content">
-        <ul class="nav">
-          <li id="brand-section">
-             <a href="/#main-wrapper">Main</a>
-          </li>
-          <li class="header-section">
-            <a href="/#main-wrapper">Player Database</a>
-            <ul id="subnav-1" class="subnav">
-                <li><a href="{% url 'fantasy_draft:pl_search' %}">Competitor Search</a></li>
-                <li><a href="{% url 'fantasy_draft:players' %}">Player Pages</a></li>
+        <div id="header-content">
+            <ul class="nav">
+                <li class="header-section">
+                    <a href="/#main-wrapper">Main</a>
+                </li>
+                <li class="header-section">
+                    <a href="/#main-wrapper">Player Database</a>
+                    <ul id="subnav-1" class="subnav">
+                        <li><a href="{% url 'fantasy_draft:pl_search' %}">Competitor Search</a></li>
+                        <li><a href="{% url 'fantasy_draft:players' %}">Player Pages</a></li>
+                    </ul>
+                </li>
+                <li class="header-section">
+                    <a href="#">Manage Drafts</a>
+                    <ul id="subnav-2" class="subnav">
+                        <li><a href="{% url 'fantasy_draft:create_league' %}">Create League</a></li>
+                        <li><a href="{% url 'fantasy_draft:drafts' %}">My Drafts</a></li>
+                    </ul>
+                </li>
+                <li class="header-section">
+                    <a href="{% url 'fantasy_draft:results' %}">Results</a>
+                </li>
+                <li class="header-section pull-right">
+                    {% if user.is_authenticated %}
+                    <a href="/logout">Sign Out</a>
+                    {% else %}
+                    <a href="/register">Sign In / Register</a>
+                    {% endif %}
+                </li>
+                <li class="header-section pull-right">
+                    {% if user.is_authenticated %}
+                    <a href="/myprofile">{{ user.first_name }} {{ user.last_name }}</a>
+                    {% else %}
+                    <a href="/login">Sign In / Register</a>
+                    {% endif %}
+                </li>
             </ul>
-          </li>
-          <li class="header-section">
-            <a href="#">Manage Drafts</a>
-            <ul id="subnav-2" class="subnav">
-                <li><a href="{% url 'fantasy_draft:create_league' %}">Create League</a></li>
-                <li><a href="{% url 'fantasy_draft:drafts' %}">My Drafts</a></li>
-            </ul>
-          </li>
-          <li class="header-section">
-            <a href="{% url 'fantasy_draft:results' %}">Results</a>
-          </li>
-          <li class="header-section pull-right">
-            {% if user.is_authenticated %}
-            <a href="/logout">Sign Out</a>
-            {% else %}
-            <a href="/register">Sign In / Register</a>
-            {% endif %}
-          </li>
-          <li class="header-section pull-right">
-            {% if user.is_authenticated %}
-            <a href="/myprofile">{{ user.first_name }} {{ user.last_name }}</a>
-            {% else %}
-            <a href="/login">Sign In / Register</a>
-            {% endif %}
-          </li>
-        </ul>
-      </div>
+        </div>
     </header>
-  <div id="main-content-wrapper">
+    
+    <div id="main-content-wrapper">
     {% block content %}
     {% endblock %}
-  </div>
+    </div>
 
     <div id="footer-wrapper">
-      <div id="footer-content">
-        <div id="footer-top-wrapper">
-          <div id="footer-top">
-            <div class="top-col">
-              <div class="top-col-title"><span>About</span></div>
-              <div class="top-col-info">
-                [fantasy draft website: placeholder]
-              </div>
-              </div>
-            <div class="top-col">
-              <div class="top-col-title"><span>Contact Us</span></div>
-              <div class="top-col-info">
-                <div id="name">Owen Jow</div>owen.jow01@gmail.com<br>
+        <div id="footer-content">
+            <div id="footer-top-wrapper">
+                <div id="footer-top">
+                    <div class="top-row">
+                        <div class="top-row-title"><span>About</span></div>
+                            <div class="top-row-info">
+                                  This is a website tailored to manage SSBM fantasy drafts for the Evolution 2015 Championship Series, which will be held during July 17-19 in Las Vegas. The concept is simple: form a league with your friends, in which each person chooses a certain number of players for their draft. At the end of the tournament, everyone will receive points based on how well their players performed at EVO – the person with the highest number of points wins!<br><br>Note: at the moment, this website only supports fantasy leagues for the SSBM tournament at EVO 2015.
+                            </div>
+                        </div>
+                    <div class="top-row">
+                        <div class="top-row-title"><span>Contact</span></div>
+                            <div class="top-row-info">
+                                <div id="name">Owen Jow</div>owen.jow01@gmail.com<br>
+                            </div>
+                    </div>
+                </div>
             </div>
+            <div id="footer-bottom-wrapper">
+                <div id="footer-bottom">
+                    <div id="last-updated">
+                        Last updated July 13th, 2015 by Owen Jow
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div id="footer-bottom-wrapper">
-          <div id="footer-bottom">
-            <div id="last-updated">
-               Last updated July 6th, 2015 by Owen Jow
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </body>
+</body>
 </html>

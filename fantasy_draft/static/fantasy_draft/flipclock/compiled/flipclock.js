@@ -391,6 +391,7 @@ var FlipClock;
 		 */
 		 
 		createDivider: function(label, css, excludeDots) {
+            label = ''; // this removes the text labels
 			if(typeof css == "boolean" || !css) {
 				excludeDots = css;
 				css = label;

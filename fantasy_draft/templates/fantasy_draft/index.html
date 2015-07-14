@@ -5,14 +5,12 @@
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/style.css" %}"/>
     <link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
 {% endblock %}
 
 {% block javascript %}
     <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
     <script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
-    <script src="{% static "fantasy_draft/js/countdown.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,4 +32,6 @@
 			});
 		});
 	</script>
+        
+    <div class="center-text">Soon.</div>
 {% endblock %}

@@ -1,216 +1,45 @@
-@import url(http://fonts.googleapis.com/css?family=PT+Sans);
+@import url(http://fonts.googleapis.com/css?family=Asap:400,700|Jura:600);
 
 /* Main Styles */
 
-#main-wrapper {
-  font-size: 14px;
-  line-height: 18px;
-  font-family: 'PT Sans', sans-serif;
-  color: #555;
-  overflow: hidden;
+li a {
+    color: green;
 }
 
-#main-inner-wrapper {
-  width: 990px;
-  margin: 0px auto 30px auto;
+body {
+    background: white url("../images/background.gif") no-repeat top;
+    position: fixed;
+}
+
+.clock {
+    position: fixed;
+    left: 50%;
+    top: 105px;
+    margin-left: -100px;
+}
+
+#main-wrapper {
+    font-size: 14px;
+    line-height: 18px;
+    font-family: 'Asap', sans-serif;
+    color: #555;
+    overflow: hidden;
 }
 
 #main-content-wrapper {
-  margin-top: 50px;
-  min-height: 300px;
+    margin-top: 50px;
+    min-height: 300px;
 }
 
-#content-wrapper {
-  background-color: #fff;
-  padding: 20px 0;
-  margin: 35px auto;
-  height: 600px;
-  box-shadow: 0 0 10px #bfbeba;
-  -moz-box-shadow: 0 0 10px #bfbeba;
-  -webkit-box-shadow: 0 0 10px #bfbeba;
-  -o-box-shadow: 0 0 10px #bfbeba;
-  -ktml-box-shadow: 0 0 10px #bfbeba;
-  -ms-box-shadow: 0 0 10px #bfbeba;
-}
-
-#content-header-wrapper {
-  padding: 10px 0px 30px 0px;
-  text-align: center;
-}
-
-#content-header-wrapper h1 {
-  width: 600px;
-  margin: 20px auto 10px auto;
-  font-weight: 700;
- /* text-align: center;*/
-  font-size: 24px;
-}
-
-#content-header-wrapper p {
-  margin: 20px auto 10px auto;
-  /* text-align: center;*/
-  font-size: 16px;
-  line-height: 20px;
-  padding: 0 25px;
-  color: #888;
-}
-
-.circle {
-  height: 200px;
-  width: 200px;
-  overflow: hidden;
-  display: inline-block;
-  border-radius: 115px;
-  margin-left: 150px;
-  border: 5px solid #E4E2E2;
-}
-
-.circle.circle2 {
-  margin-left: 60px;
-}
-
-.info .name {
-  font-weight: 800;
-}
-
-.info .date {
-}
-
-.info span, .info ul {
-  display: block;
-}
-
-#events-wrapper, #oh-content, .oh-title {
-  margin: 0px 30px;
-  padding: 10px 0px 10px 0px;
-  width: 930px;
-  color: black;
-}
-
-#events-title-wrapper, #oh-title-wrapper {
-  height: 50px;
-  margin: 0px auto;
-}
-
-#events-title, .oh-title {
-  width: 310px;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 45px;
-  color: #555;
-  border-bottom: 2px solid #3eacc7;
-}
-
-.events-list-item, .oh-list-item  {
-  color: black;
-  margin: 10px 0px;
-  height: 140px;
-  width: 310px;
-  cursor: pointer;
-  box-shadow: 0 0 5px #bfbeba;
-  -moz-box-shadow: 0 0 5px #bfbeba !important;
-  -webkit-box-shadow: 0 0 5px #bfbeba !important;
-  -o-box-shadow: 0 0 5px #bfbeba !important;
-  -ktml-box-shadow: 0 0 5px #bfbeba !important;
-  -ms-box-shadow: 0 0 5px #bfbeba !important;
-}
-
-.oh-list-item {
-  width: 287px;
-  margin: 10px 10px;
-  font-size: 12px;
-}
-
-
-.events-list-item img, .oh-list-item img {
-  margin: 10px;
-  margin-top: 20px;
-  height: 100px;
-  width: 100px;
-  float: left;
-}
-
-.events-list-item h1, .oh-list-item h1 {
-  margin: 5px auto auto 70px;
-  padding-top: 10px;
-  font-weight: 700;
-  width: 200px;
-}
-
-.events-list-item p, .oh-list-item p {
-  margin: 0px auto 5px 70px;
-  line-height: 20px;
-  width: 250px;
-}
-
-.events-list-description-image {
-  /* banner height should be > 237px */
-  height: 237px;
-  overflow: hidden;
-  background-size: 100% auto;
-  background-attachment: cover;
-  background-repeat: no-repeat;
-}
-
-.description-text {
-  padding:20px;
-  overflow:scroll;
-  height:197px;
-}
-
-#business-wrapper {
-  margin: 20px 0px;
-  width: 990px;
-  /*height: 700px;*/
-  background: #fff;
-  box-shadow: 0 0 5px #bfbeba;
-  -moz-box-shadow: 0 0 5px #bfbeba;
-  -webkit-box-shadow: 0 0 5px #bfbeba;
-  -o-box-shadow: 0 0 5px #bfbeba;
-  -ktml-box-shadow: 0 0 5px #bfbeba;
-  -ms-box-shadow: 0 0 5px #bfbeba;
-}
-
-#indrel-wrapper {
-  width: 960px;
-  margin: 15px auto;
-}
-
-.indrel-column {
-  width: 290px;
-  height: 330px;
-  float: left;
-  margin: 0px 15px;
-}
-
-.icon-box {
-  position: relative;
-  margin-bottom: 56px;
-  text-align: justify;
-}
-
-.icon-box  img{
-  margin: 0px auto;
-  height: 150px;
-  width: 290px;
-}
-
-.icon-box h2 {
-  font-size: 16px;
-  margin: 10px 0px;
-  font-weight: 700;
-}
-
-.icon-box p {
-  margin: 10px 0px;
-}
-
-.icon-box a {
-  font-weight: 700;
-  text-decoration: none;
-  color: #3EACC7;
-}
-
-.icon-box a:hover {
-  text-decoration: underline;
-}
+.center-text {
+    position: fixed;
+    width: 100%;
+    top: 300px;
+    margin-left: -75px;
+    margin-top: -25px; 
+    font-family: 'Jura', sans-serif;
+    color: #ffffff;
+    font-size: 100px;
+    font-weight: 900;
+    text-align: center;
+}​
