@@ -46,10 +46,10 @@
                     <a href="{% url 'fantasy_draft:results' %}">Results</a>
                 </li>
                 <li class="header-section pull-right">
-                    {% if request.user.is_authenticated %}
-                    <a href="#">{{ user.name }}</a>
+                    {% if user.is_authenticated %}
+                    <a href="#" id="uname">{{ user.username }}</a>
                     {% else %}
-                    <a href="{% url 'fantasy_draft:login' %}">Login</a>
+                    <a href="{% url 'fantasy_draft:loginreg' %}">Login</a>
                     {% endif %}
                 </li>
             </ul>

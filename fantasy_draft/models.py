@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class League(models.Model):
     name = models.CharField(max_length=30) # a name for this league (could be anything)
@@ -35,11 +36,6 @@ class Player(models.Model):
     tournaments = models.ManyToManyField(Tournament)
     def __str__(self):
         return self.tag
-    
-class User(models.Model):
-    name = models.CharField(max_length=30) # the user's irl name
-    def __str__(self):
-        return self.name
     
 class Draft(models.Model):
     league = models.ForeignKey(League) # there are many drafts for one league

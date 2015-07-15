@@ -6,7 +6,7 @@
 }
 
 #login-form {
-	width: 340px;
+	width: 400px;
 	margin: 30px auto;
 }
 
@@ -15,14 +15,6 @@
 	display: block;
 	text-align: center;
 	margin-top: 15px;
-}
-
-.register-container {
-	text-align: center;
-}
-
-.register {
-	font-weight: bold;
 }
 
 input {
@@ -65,4 +57,10 @@ input[type="submit"] {
 	width: 214px;
 	margin: 25px auto;
 	display: block;
+}
+
+.btn-green {
+	color: #fff;
+	background-color: #5cb85c;
+	border-color: #4cae4c;
 }

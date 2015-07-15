@@ -20,15 +20,12 @@ li a {
 }
 
 #main-content-wrapper .content-container {
-	width: 100%;
+	width: 90%;
 	margin: 72px auto 20px auto;
 	background-image: url("../images/shl.png");
 	padding: 35px 20px;
 	overflow: auto;
-}
-
-#main-content-wrapper .content-container {
-	font-family: 'Asap', sans-serif;
+    font-family: 'Asap', sans-serif;
 }
 
 .center-text {

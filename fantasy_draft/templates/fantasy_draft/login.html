@@ -12,15 +12,15 @@
 <div class="content-container">
     <span class="login">Login</span>
     {% if incorrect_log_in %}
-        <span class="error">Password is incorrect</span>
+        <span class="error">Password is incorrect!</span>
     {% endif %}
-    <form id="login-form" method="post" action="/login/">
+    <form id="login-form" method="post" action="/user_login/">
         {% csrf_token %}
         Username <input type="text" name="username" value="" size="50" />
         <br />
         Password <input type="password" name="password" value="" size="50" />
         <br />
-        <input type="submit" class="btn-green" value="Login" />
+        <input type="submit" class="btn-green" value="Login/Register" />
     </form>
 </div>
 {% endblock %}
