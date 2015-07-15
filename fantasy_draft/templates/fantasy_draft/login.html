@@ -1,0 +1,26 @@
+{% extends "fantasy_draft/header_footer.html" %}
+{% load staticfiles %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/login.css" %}" media="screen"/>
+{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <span class="login">Login</span>
+    {% if incorrect_log_in %}
+        <span class="error">Password is incorrect</span>
+    {% endif %}
+    <form id="login-form" method="post" action="/login/">
+        {% csrf_token %}
+        Username <input type="text" name="username" value="" size="50" />
+        <br />
+        Password <input type="password" name="password" value="" size="50" />
+        <br />
+        <input type="submit" class="btn-green" value="Login" />
+    </form>
+</div>
+{% endblock %}

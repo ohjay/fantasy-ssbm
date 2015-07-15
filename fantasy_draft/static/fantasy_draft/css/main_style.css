@@ -6,18 +6,6 @@ li a {
     color: green;
 }
 
-body {
-    background: white url("../images/background.gif") no-repeat top;
-    position: fixed;
-}
-
-.clock {
-    position: fixed;
-    left: 50%;
-    top: 105px;
-    margin-left: -100px;
-}
-
 #main-wrapper {
     font-size: 14px;
     line-height: 18px;
@@ -29,6 +17,18 @@ body {
 #main-content-wrapper {
     margin-top: 50px;
     min-height: 300px;
+}
+
+#main-content-wrapper .content-container {
+	width: 100%;
+	margin: 72px auto 20px auto;
+	background-image: url("../images/shl.png");
+	padding: 35px 20px;
+	overflow: auto;
+}
+
+#main-content-wrapper .content-container {
+	font-family: 'Asap', sans-serif;
 }
 
 .center-text {

@@ -35,7 +35,7 @@ def plsearch(request):
     # edit this
     league_list = League.objects.order_by('id')[:5]
     context = {'league_list': league_list}
-    return render(request, 'fantasy_draft/index.html', context)
+    return render(request, 'fantasy_draft/pl_search.html', context)
 
 def players(request):
     #edit this
@@ -60,4 +60,10 @@ def results(request):
     league_list = League.objects.order_by('id')[:5]
     context = {'league_list': league_list}
     return render(request, 'fantasy_draft/results.html', context)
+    
+def login(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/login.html', context)
     

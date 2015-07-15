@@ -1,0 +1,11 @@
+body {
+    background: white url("../images/background.gif") no-repeat top;
+    position: fixed;
+}
+
+.clock {
+    position: fixed;
+    left: 50%;
+    top: 105px;
+    margin-left: -100px;
+}

@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^drafts/$', views.drafts, name='drafts'),
     # ex: /fantasy_draft/results
     url(r'^results/$', views.results, name='results'),
+    # ex: /fantasy_draft/login
+    url(r'^login/$', views.login, name='login'),
 ]

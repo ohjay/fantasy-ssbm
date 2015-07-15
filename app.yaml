@@ -1,0 +1,17 @@
+application: fantasy-evo
+version: 1
+runtime: python34
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: website
+  script: website.wsgi.application
+
+libraries:
+- name: django
+  version: 1.5
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'website.settings'
+  
