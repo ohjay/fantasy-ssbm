@@ -27,16 +27,3 @@ li a {
 	overflow: auto;
     font-family: 'Asap', sans-serif;
 }
-
-.center-text {
-    position: fixed;
-    width: 100%;
-    top: 300px;
-    margin-left: -75px;
-    margin-top: -25px; 
-    font-family: 'Jura', sans-serif;
-    color: #ffffff;
-    font-size: 100px;
-    font-weight: 900;
-    text-align: center;
-}​
