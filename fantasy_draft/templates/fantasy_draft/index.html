@@ -15,16 +15,17 @@
 {% endblock %}
 
 {% block content %}
+    <div class="opaque1"></div>
     <div class="clock" style="margin:2em;"></div>
 	<script type="text/javascript">
 		var clock;
 
 		$(document).ready(function() {
             var currentDate = new Date();
-            // To do: write a web scraper to get the date of the next big tournament
+            // To do: write a web scraper (Scrapy!) to get the date of the next big tournament
             // And then set the timer to count down to that date
             // (For now, we'll just set it to sometime in the far future)
-            var futureDate  = new Date(2021, 6, 17, 8, 0, 0, 0);
+            var futureDate  = new Date("August 13, 2015 21:00:00");
 
 		    // Calculate the difference in seconds between the future and current date
 			var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
@@ -36,5 +37,6 @@
 		});
 	</script>
         
-    <div class="center-text">20XX is approaching...</div>
+    <div class="opaque2"></div>
+    <div class="center-text">The last 100 meters.</div>
 {% endblock %}
