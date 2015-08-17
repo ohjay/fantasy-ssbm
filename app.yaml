@@ -1,16 +1,20 @@
-application: fantasy-evo
+application: fantasy-ssbm
 version: 1
-runtime: python34
+runtime: python27
 api_version: 1
 threadsafe: true
+module: default
 
 handlers:
-- url: website
-  script: website.wsgi.application
+- url: /static/fantasy_draft
+  static_dir: fantasy_draft/static/fantasy_draft
 
 libraries:
 - name: django
-  version: 1.5
+  version: "1.5"
+
+builtins:
+- django_wsgi: on
 
 env_variables:
   DJANGO_SETTINGS_MODULE: 'website.settings'

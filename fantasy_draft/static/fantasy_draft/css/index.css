@@ -1,46 +1,11 @@
-body {
-    background: white url("../images/background.gif") no-repeat top;
-    position: fixed;
-}
-
-.clock {
-    position: fixed;
-    left: 50%;
-    top: 105px;
-    margin-left: -100px;
-}
-
-.opaque1 {
-    position: absolute;
-    top: 144px;
-    left: 312px;
-    width: 700px;
-    height: 122px;
-    background-color: black;
-    z-index: 0;
-    opacity: 0.75;
-}
-
-.opaque2 {
-    position: absolute;
-    top: 297px;
-    left: -21px;
-    width: 1500px;
-    height: 122px;
-    background-color: black;
-    z-index: 0;
-    opacity: 0.75;
-}
-
-.center-text {
-    position: fixed;
-    width: 100%;
-    top: 340px;
-    margin-left: -50px;
-    margin-top: -25px; 
-    font-family: 'Jura', sans-serif;
-    color: #ffffff;
-    font-size: 100px;
-    font-weight: 900;
-    text-align: center;
-}​
+body            { background: white url("../images/background.gif") no-repeat top; 
+                  position: fixed; }
+            
+.clock          { position: fixed; left: 50%; top: 105px; margin-left: -100px; }
+.opaque1        { position: absolute; top: 144px; left: 312px; width: 700px; 
+                  height: 122px; background-color: black; z-index: 0; opacity: 0.75; }
+.opaque2        { position: absolute; top: 297px; left: -21px; width: 1500px; height: 122px;
+                  background-color: black; z-index: 0; opacity: 0.75; }
+.center-text    { position: fixed; width: 100%; top: 340px; margin-left: -50px;
+                  margin-top: -25px; font-family: 'Jura', sans-serif; color: #ffffff;
+                  font-size: 100px; font-weight: 900; text-align: center; }​

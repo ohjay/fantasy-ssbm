@@ -2,28 +2,13 @@
 
 /* Main Styles */
 
-li a {
-    color: green;
-}
+li a                                        { color: green; }
 
-#main-wrapper {
-    font-size: 14px;
-    line-height: 18px;
-    font-family: 'Asap', sans-serif;
-    color: #555;
-    overflow: hidden;
-}
-
-#main-content-wrapper {
-    margin-top: 50px;
-    min-height: 300px;
-}
-
-#main-content-wrapper .content-container {
-	width: 90%;
-	margin: 72px auto 20px auto;
-	background-image: url("../images/shl.png");
-	padding: 35px 20px;
-	overflow: auto;
-    font-family: 'Asap', sans-serif;
-}
+#main-wrapper                               { font-size: 14px; line-height: 18px; 
+                                              font-family: 'Asap', sans-serif;
+                                              color: #555; overflow: hidden; }
+#main-content-wrapper                       { margin-top: 50px; min-height: 300px; }
+#main-content-wrapper .content-container    { width: 90%; margin: 72px auto 20px auto;
+	                                          background-image: url("../images/shl.png");
+	                                          padding: 35px 20px; overflow: auto;
+                                              font-family: 'Asap', sans-serif; }

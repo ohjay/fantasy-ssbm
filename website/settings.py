@@ -44,7 +44,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -57,12 +56,30 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
+    os.getenv('SETTINGS_MODE') == 'prod'):
+    # Running on production App Engine, so use a Google Cloud SQL database.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+            'OPTIONS': {"init_command": "SET storage_engine=INNODB"},
+        }
     }
-}
+else:
+    # Running in development, so use a local sqlite3 database.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

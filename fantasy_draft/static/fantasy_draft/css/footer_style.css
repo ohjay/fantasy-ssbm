@@ -1,82 +1,19 @@
-a:link {
-    text-decoration: none;
-}
+a:link { text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-a:hover {
-    text-decoration: underline;
-}
+.top-row                { float: left; display: inline; width: 40%; padding: 15px 5%; height: 240px; }
+.top-row-title          { color: white; border-bottom: 2px solid #3EACC7; font-size: 14px; }
+.top-row-info           { margin-top: 10px; }
+.top-row-title span     { padding: 0 20px 10px 0; display: inline-block; margin-bottom: -1px; }
 
-#footer-wrapper {
-    color: white;
-    z-index: 10;
-    width: 100%;
-    font-family: 'Asap', sans-serif;
-    font-size: 14px;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    overflow: auto;
-}
-
-#footer-top-wrapper {
-    font-family: 'Asap', sans-serif;
-    font-size: 0.8em;
-    background: #122;
-    overflow: hidden;
-    padding-top: 5px;
-    line-height: 18px;
-    color: #D3D3D3;
-    height: 250px;
-    font-size: 12px;
-}
-
-#footer-top {
-    width: 80%;
-    margin: 0px auto;
-}
-
-.top-row {
-    float: left;
-    display: inline;
-    width: 40%;
-    padding: 15px 5%;
-    height: 240px;
-}
-
-.top-row-title {
-    color: white;
-    border-bottom: 2px solid #3EACC7;
-    font-size: 14px;
-}
-
-.top-row-info {
-    margin-top: 10px;
-}
-
-.top-row-title span {
-    padding: 0 20px 10px 0;
-    display: inline-block;
-    margin-bottom: -1px;
-}
-
-#footer-bottom-wrapper {
-    background: #221;
-    overflow: hidden;
-    font-size: 12px;
-    color: #fefefa;
-}
-
-#footer-bottom {
-    width: 990px;
-    margin: 0px auto;
-}
-
-#last-updated {
-    float: right;
-    line-height: 40px;
-}
-
-#name {
-  font-weight: bold;
-}
+#footer-wrapper         { color: white; z-index: 10; width: 100%; font-family: 'Asap', sans-serif;
+                          font-size: 14px; position: fixed; bottom: 0px; left: 0px;
+                          right: 0px; overflow: auto; }
+#footer-top-wrapper     { font-family: 'Asap', sans-serif; font-size: 0.8em; background: #122;
+                          overflow: hidden; padding-top: 5px; line-height: 18px;
+                          color: #D3D3D3; height: 250px; font-size: 12px; }
+#footer-top             { width: 80%; margin: 0px auto; }
+#footer-bottom-wrapper  { background: #221; overflow: hidden; font-size: 12px; color: #fefefa; }
+#footer-bottom          { width: 990px; margin: 0px auto; }
+#last-updated           { float: right; line-height: 40px; }
+#name                   { font-weight: bold; }
