@@ -7,7 +7,7 @@
                                   padding: 0 12px; text-decoration: none;
                                   text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); font-weight: 400; }
 .nav li a:hover                 { background-color: #494646; }
-.subnav                         { visibility: hidden; position: absolute; top: 110%; width: 200px;
+.subnav                         { visibility: hidden; position: absolute; top: 100%; width: 200px;
                                   height: auto; opacity: 0; transition: all 0.1s; background: #221; }
 .subnav li                      { float: none; }
 
@@ -17,5 +17,5 @@
                                   font-size: 12px; position: fixed; top: 0px; left: 0px;
                                   right: 0px; }
 #header-content                 { padding: 0% 6%; height: 50px; width: 100%; margin: 0 auto; }
-#subnav-1                       { right: -43px; }
-#subnav-2                       { right: -53px; }
+#subnav-1                       { top: 43px; right: -43px; }
+#subnav-2                       { top: 43px; right: -53px; }

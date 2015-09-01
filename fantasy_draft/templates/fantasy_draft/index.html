@@ -22,10 +22,8 @@
 
 		$(document).ready(function() {
             var currentDate = new Date();
-            // To do: write a web scraper (Scrapy!) to get the date of the next big tournament
-            // And then set the timer to count down to that date
-            // (For now, we'll just set it to sometime in the far future)
-            var futureDate  = new Date("August 17, 2015 18:00:00");
+            // To do: create a model for tournaments (incl. date) and use the date of the next tournament here
+            var futureDate  = new Date("September 9, 2015 18:00:00");
 
 		    // Calculate the difference in seconds between the future and current date
 			var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
@@ -38,5 +36,5 @@
 	</script>
         
     <div class="opaque2"></div>
-    <div class="center-text">The last 100 meters.</div>
+    <div class="center-text">Currently under development! :)</div>
 {% endblock %}
