@@ -11,10 +11,14 @@ input[type="submit"]    { padding: 6px 12px; font-size: 14px; font-weight: 400; 
                           cursor: pointer; -webkit-user-select: none; -moz-user-select: none;
 	                      -ms-user-select: none; user-select: none; background-image: none;
 	                      border: 1px solid transparent; border-radius: 4px; color: #fff;
-	                      height: 35px; width: 214px; margin: 25px auto; display: block;    }
+	                      height: 35px; width: 214px; margin: 25px auto; display: block; }
 
-.login                  { font-size: 28px; font-weight: 700; display: block; text-align: center; }
+.login                  { font-size: 28px; font-weight: 700; display: block; text-align: center; 
+                          margin: 72px auto 0px auto; }
 .error                  { color: red; display: block; text-align: center; margin-top: 15px; }
 .btn-green              { color: #fff; background-color: #5cb85c; border-color: #4cae4c; }
 
-#login-form             { width: 400px; margin: 30px auto; }
+#main-content-wrapper .content-container    { position: absolute; width: 100%; left: 0%; height: 75%;
+	                                          background-image: url("../images/shl.png");
+	                                          overflow: hidden; font-family: 'Asap', sans-serif; }
+#login-form                                 { width: 400px; margin: 30px auto; margin-right: 37%; }
