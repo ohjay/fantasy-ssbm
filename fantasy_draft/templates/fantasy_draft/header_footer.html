@@ -29,14 +29,14 @@
                 </li>
                 <li class="header-section">
                     <a href="#">Player Database</a>
-                    <ul id="subnav-1" class="subnav">
+                    <ul class="subnav">
                         <li><a href="{% url 'fantasy_draft:pl_search' %}">Competitor Search</a></li>
                         <li><a href="{% url 'fantasy_draft:players' %}">Player Pages</a></li>
                     </ul>
                 </li>
                 <li class="header-section">
                     <a href="#">Manage Drafts</a>
-                    <ul id="subnav-2" class="subnav">
+                    <ul class="subnav">
                         <li><a href="{% url 'fantasy_draft:create_league' %}">Create League</a></li>
                         <li><a href="{% url 'fantasy_draft:drafts' %}">My Drafts</a></li>
                     </ul>
@@ -46,47 +46,57 @@
                 </li>
                 <li class="header-section">
                     {% if user.is_authenticated %}
-                    <a href="#" id="uname">{{ user.username }}</a>
+                    <a href="#" id="username">{{ user.username }}</a>
                     {% else %}
                     <a href="{% url 'fantasy_draft:loginreg' %}">Login/Register</a>
                     {% endif %}
-                </li>
-            </ul>
-        </div>
-    </header>
+                </li> <!-- /header-section -->
+            </ul><!-- /nav -->
+        </div><!-- /header-content -->
+    </header><!-- /header-wrapper -->
     
     <div id="main-content-wrapper">
     {% block content %}
     {% endblock %}
     </div>
 
-    <div id="footer-wrapper">
-        <div id="footer-content">
-            <div id="footer-top-wrapper">
-                <div id="footer-top">
-                    <div class="top-row">
-                        <div class="top-row-title"><span>About</span></div>
-                            <div class="top-row-info">
-                                  This is a website tailored to manage SSBM fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends, in which each person will choose a certain number of players for his/her draft. At the end of each tournament, everyone will receive points based on how well their players performed – come the season's finish, the person with the highest number of points wins!<br><br>Note: at the moment, this website only supports fantasy leagues for the SSBM tournament at EVO 2015.
-                            </div>
-                        </div>
-                    <div class="top-row">
-                        <div class="top-row-title"><span>Contact</span></div>
-                            <div class="top-row-info">
-                                <p>If you need someone to complain to (about this website, preferably), feel free to contact the following site administrators:
-                                <div id="name">Owen Jow</div><a href="mailto:owen.jow01@gmail.com">owen.jow01@gmail.com</a><br>
-                            </div>
+    <footer id="footer-wrapper">
+        <!-- Top portion of the footer -->
+        <div id="footer-top-wrapper">
+            <div id="footer-top">
+                <!-- Left half of the top row -->
+                <div class="top-row">
+                    <div class="top-row-title"><span>About</span></div>
+                    <div class="top-row-info">
+                          <p>This is a website tailored to manage SSBM fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends, in which each person will choose a certain number of players for his/her draft. At the end of each tournament, everyone will receive points based on how well their players performed – come the season's finish, the person with the highest number of points wins!
+                              <br><br>
+                              Note: at the moment, this website only supports fantasy leagues for the SSBM tournament at EVO 2015.
+                          </p>
                     </div>
                 </div>
-            </div>
-            <div id="footer-bottom-wrapper">
-                <div id="footer-bottom">
-                    <div id="last-updated">
-                        Last updated August 31st, 2015 by Owen Jow
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                
+                <!-- Right half of the top row -->
+                <div class="top-row">
+                    <div class="top-row-title"><span>Contact</span></div>
+                    <div class="top-row-info">
+                        <p>Want to contribute – or complain? If you need someone to talk to (preferably about this website), feel free to contact the following site administrators:
+                            <br><br>
+                            <b>Owen Jow</b><br>
+                            <a href="mailto:owen.jow01@gmail.com">owen.jow01@gmail.com</a><br>
+                        </p>
+                    </div><!-- /top-row-info -->
+                </div><!-- /top-row -->
+            </div><!-- /footer-top -->
+        </div><!-- /footer-top-wrapper -->
+        
+        <!-- Bottom portion of the footer -->
+        <div id="footer-bottom-wrapper">
+            <div id="footer-bottom">
+                <div id="last-updated">
+                    Last updated August 31st, 2015 by Owen Jow
+                </div><!-- /last-updated -->
+            </div><!-- /footer-bottom -->
+        </div><!-- /footer-bottom-wrapper -->
+    </footer><!-- /footer-wrapper -->
 </body>
 </html>
