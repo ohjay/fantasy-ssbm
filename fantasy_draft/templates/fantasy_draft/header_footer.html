@@ -28,11 +28,7 @@
                     <a href="{% url 'fantasy_draft:index' %}">Main</a>
                 </li>
                 <li class="header-section">
-                    <a href="#">Player Database</a>
-                    <ul class="subnav">
-                        <li><a href="{% url 'fantasy_draft:pl_search' %}">Competitor Search</a></li>
-                        <li><a href="{% url 'fantasy_draft:players' %}">Player Pages</a></li>
-                    </ul>
+                    <a href="{% url 'fantasy_draft:players' %}">Player Rankings</a>
                 </li>
                 <li class="header-section">
                     <a href="#">Manage Drafts</a>
@@ -42,7 +38,7 @@
                     </ul>
                 </li>
                 <li class="header-section">
-                    <a href="{% url 'fantasy_draft:results' %}">Results</a>
+                    <a href="{% url 'fantasy_draft:standings' %}">Standings</a>
                 </li>
                 <li class="header-section">
                     {% if user.is_authenticated %}
@@ -93,7 +89,7 @@
         <div id="footer-bottom-wrapper">
             <div id="footer-bottom">
                 <div id="last-updated">
-                    Last updated September 13rd, 2015 by Owen Jow
+                    Last updated September 13th, 2015 by Owen Jow
                 </div><!-- /last-updated -->
             </div><!-- /footer-bottom -->
         </div><!-- /footer-bottom-wrapper -->
