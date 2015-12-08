@@ -1,11 +1,22 @@
-body            { background: url("../images/background.gif") no-repeat top; 
-                  position: fixed; }
+body            { background: url("../images/background-tiltshift_1600x900.png") no-repeat top; 
+                  position: fixed; height: 100%; width: 100%; }
             
-.clock          { position: fixed; left: 53.1%; top: 105px; }
-.opaque1        { position: absolute; top: 144px; left: 312px; width: 700px; 
-                  height: 122px; background-color: black; z-index: 0; opacity: 0.75; }
-.opaque2        { position: absolute; top: 297px; left: -21px; width: 1500px; height: 122px;
-                  background-color: black; z-index: 0; opacity: 0.75; }
-.center-text    { position: fixed; width: 100%; top: 340px;
-                  margin-top: -16px; font-family: 'Jura', sans-serif; color: #ffffff;
-                  font-size: 5em; font-weight: 900; text-align: center; }​
+.clock          { z-index: 1; }
+.opaque         { background-color: black; z-index: 0; opacity: 0.75; margin-top: 120px; }
+.center-text    { font-family: 'Jura', sans-serif; color: #ffffff;
+                  font-size: 2.7em; font-weight: 900; text-align: center; }​
+                  
+@media screen and (max-width: 480px) {
+    * {
+        overflow: auto !important;
+    }
+    
+    body {
+        background: url("../images/background-tiltshift_675x900.png") no-repeat top;
+        background-size: cover;
+    }
+    
+    .opaque {
+        margin-top: 220px;
+    }
+}

@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Fantasy SSBM</title>
 
     {% block favicon %}
@@ -32,10 +33,6 @@
                 </li>
                 <li class="header-section">
                     <a href="#">Manage Drafts</a>
-                    <ul class="subnav">
-                        <li><a href="{% url 'fantasy_draft:create_league' %}">Create League</a></li>
-                        <li><a href="{% url 'fantasy_draft:drafts' %}">My Drafts</a></li>
-                    </ul>
                 </li>
                 <li class="header-section">
                     <a href="{% url 'fantasy_draft:standings' %}">Standings</a>
@@ -64,7 +61,7 @@
                 <div class="top-row">
                     <div class="top-row-title"><span>About</span></div>
                     <div class="top-row-info">
-                          <p>This is a website tailored to manage SSBM fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends, in which each person will choose a certain number of players for his/her draft. At the end of each tournament, everyone will receive points based on how well their players performed – come the season's finish, the person with the highest number of points wins!
+                          <p>This is a website tailored to manage Super Smash Bros: Melee fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends, in which each person will choose a certain number of players for his/her draft. At the end of each tournament, everyone will receive points based on how well their players performed – come the season's finish, the person with the highest number of points wins!
                               <br><br>
                               For more details about the rules behind Fantasy SSBM (plus the tournament season listings), see <a href="#">here</a>.
                           </p>
@@ -89,7 +86,7 @@
         <div id="footer-bottom-wrapper">
             <div id="footer-bottom">
                 <div id="last-updated">
-                    Last updated September 13th, 2015 by Owen Jow
+                    Last updated December 6th, 2015 by Owen Jow
                 </div><!-- /last-updated -->
             </div><!-- /footer-bottom -->
         </div><!-- /footer-bottom-wrapper -->

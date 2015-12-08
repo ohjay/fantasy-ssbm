@@ -15,14 +15,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="opaque1"></div>
-    <div class="clock"></div>
+    <!-- Countdown to next tournament -->
+    <div style="text-align: center">    
+        <div class="opaque" style="display: inline-block">
+            <div class="clock"></div>
+        </div>
+    </div>
+    
+    <!-- Display text -->
+    <p class="center-text">    
+        Currently under development!
+    </p>
+    
+    <!-- Clock script -->
 	<script type="text/javascript">
 		var clock;
 
 		$(document).ready(function() {
             var currentDate = new Date();
-            // To do: create a model for tournaments (incl. date) and use the date of the next tournament here
+            // TODO: create a model for tournaments (incl. date) and use the date of the next tournament here
             var futureDate  = new Date("December 22, 2015 18:00:00");
 
 		    // Calculate the difference in seconds between the future and current date
@@ -34,7 +45,4 @@
 			});
 		});
 	</script>
-        
-    <div class="opaque2"></div>
-    <div class="center-text">Currently under development! :)</div>
 {% endblock %}
