@@ -1,24 +1,25 @@
 input                   { margin: 5px 0; display: block; height: 20px; padding: 6px 6px; 
                           font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff;
-	                      background-image: none; border: 1px solid #ccc; border-radius: 4px;
-	                      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-	                      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-	                      -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-	                      -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	                      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
+	                      	background-image: none; border: 1px solid #ccc; border-radius: 4px;
+	                      	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	                      	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	                      	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	                      	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	                      	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
 input[type="submit"]    { padding: 6px 12px; font-size: 14px; font-weight: 400; line-height: 1.42857143;
-	                      text-align: center; white-space: nowrap; vertical-align: middle;
+	                      	text-align: center; white-space: nowrap; vertical-align: middle;
                           cursor: pointer; -webkit-user-select: none; -moz-user-select: none;
-	                      -ms-user-select: none; user-select: none; background-image: none;
-	                      border: 1px solid transparent; border-radius: 4px; color: #fff;
-	                      height: 35px; width: 214px; margin: 25px auto; display: block; }
-
+	                      	-ms-user-select: none; user-select: none; background-image: none;
+	                      	border: 1px solid transparent; border-radius: 4px; color: #fff;
+	                      	height: 35px; width: 214px; margin: 25px auto; display: block; }
+													
+.sky-blue 							{ color: #5886a6; }
 .login                  { font-size: 28px; font-weight: 700; display: block; text-align: center; 
                           margin: 72px auto 0px auto; }
 .error                  { color: red; display: block; text-align: center; margin-top: 15px; }
-.btn-green              { color: #fff; background-color: #5cb85c; border-color: #4cae4c; }
+.btn-green              { color: #fff; background-color: #5cb85c; border-color: #4cae4c; 
+													border: 20px double black; }
 
 #main-content-wrapper .content-container    { position: absolute; width: 100%; left: 0%; height: 75%;
-	                                          background-image: url("../images/shl.png");
-	                                          overflow: hidden; font-family: 'Asap', sans-serif; }
-#login-form                                 { width: 400px; margin: 30px auto; margin-right: 37%; }
+	                                          	overflow: hidden; font-family: 'Asap', sans-serif; color: white; }
+#login-form                                 { width: 371px; margin: 30px auto; } /* 371px wide on my computer */

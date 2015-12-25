@@ -1,6 +1,3 @@
-body            { background: url("../images/background-tiltshift_1600x900.png") no-repeat top; 
-                  position: fixed; height: 100%; width: 100%; }
-            
 .clock          { z-index: 1; }
 .opaque         { background-color: black; z-index: 0; opacity: 0.75; margin-top: 120px; }
 .center-text    { font-family: 'Jura', sans-serif; color: #ffffff;

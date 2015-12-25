@@ -10,12 +10,12 @@ a:hover { text-decoration: underline; }
                           font-size: 14px; position: fixed; bottom: 0px; left: 0px;
                           right: 0px; overflow: auto; }
 #footer-top-wrapper     { font-family: 'Asap', sans-serif; background: #122;
-                          overflow: hidden; padding-top: 5px; line-height: 18px; opacity: 0.97;
-                          color: #D3D3D3; height: 250px; font-size: 12px; }
+                          overflow: hidden; padding-top: 0px; line-height: 18px; opacity: 0.97;
+                          color: #D3D3D3; height: 235px; font-size: 12px; }
 #footer-top             { width: 80%; margin: 0px auto; }
 #footer-bottom-wrapper  { background: #221; overflow: hidden; font-size: 12px; color: #fefefa; }
 #footer-bottom          { width: 100%; margin: 0px auto; }
-#last-updated           { padding-right: 15%; float: right; line-height: 40px; }
+#last-updated           { padding-right: 15%; float: right; line-height: 30px; }
 
 @media screen and (max-width: 480px) {
     * {

@@ -10,10 +10,10 @@
 
 {% block content %}
 <div class="content-container">
-    <span class="login">Welcome back! [Unless you've <a href="#">never been here</a>.]</span>
+    <span class="login">Welcome back! [Unless you've <a class="sky-blue" href="#">never been here</a>.]</span>
     
     {% if incorrect_log_in %}
-        <span class="error">That's not right! Did you <a href="#">forget your password</a>?</span>
+        <span class="error">That's not right! Did you <a class="sky-blue" href="#">forget your password</a>?</span>
     {% endif %}
     
     <form id="login-form" method="post" action="/user_login/">
