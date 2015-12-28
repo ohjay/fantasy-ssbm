@@ -11,7 +11,7 @@ urlpatterns = [
     # ex: /fantasy_draft/2/1/select
     url(r'^[0-9]+/(?P<draft_id>[0-9]+)/select/$', views.select_player, name='select'),
     # ex: /fantasy_draft/players
-    url(r'^players/$', views.players, name='players'),
+    url(r'^player_rankings/$', views.player_rankings, name='player_rankings'),
     # ex: /fantasy_draft/create_league
     url(r'^create_league/$', views.create_league, name='create_league'),
     # ex: /fantasy_draft/drafts

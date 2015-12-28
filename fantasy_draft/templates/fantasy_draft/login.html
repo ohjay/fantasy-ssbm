@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="content-container">
-    <span class="login">Welcome back! [Unless you've <a class="sky-blue" href="#">never been here</a>.]</span>
+    <span class="login">Your journey begins here.</span>
     
     {% if incorrect_log_in %}
         <span class="error">That's not right! Did you <a class="sky-blue" href="#">forget your password</a>?</span>
@@ -18,7 +18,7 @@
     
     <form id="login-form" method="post" action="/user_login/">
         {% csrf_token %}
-        Username <input type="text" name="username" value="" size="50" /><br>
+        Username <a class="neon-blue" href="#">(New user?)</a> <input type="text" name="username" value="" size="50" /><br>
         Password <input type="password" name="password" value="" size="50" /><br>
         <input type="submit" class="btn-green" value="Login" />
     </form>

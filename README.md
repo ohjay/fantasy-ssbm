@@ -1,8 +1,8 @@
-# fantasy-ssbm
-A website to manage SSBM fantasy leagues. Much of the inspiration for layout and formatting was drawn from my experience with UC Berkeley's UPE site. Meanwhile, the [FlipClock API](http://flipclockjs.com/) was used to create the countdown timer on the main page. 
+# Fantasy SSBM
+A website to manage SSBM (Super Smash Bros: Melee) fantasy leagues. Much of the inspiration for layout and formatting was drawn from my experience with UC Berkeley's UPE site. 
 
-It's under development right now, but you can view the public site-in-progress [here](http://fantasy-ssbm.appspot.com)! This website is powered by the Django framework.
+View the public rendition here: http://fantasy-ssbm.appspot.com.
 
-## Development Timeline
-- [By **12/21/15 @ 11:59pm**] Models/controllers/backend functionality "complete"
-- [By **12/29/15 @ 11:59pm**] UI/overall website in a finalized condition
+## Shoutouts
+- [FlipClock.js](http://flipclockjs.com/): used to create the countdown timer on the main page
+- [Django](https://www.djangoproject.com/): this is a great framework!

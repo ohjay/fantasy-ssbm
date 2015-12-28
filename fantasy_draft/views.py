@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
+from datetime import datetime, timedelta
 
 from .models import League, Draft, Player
 
@@ -32,11 +33,13 @@ def select_player(request, draft_id):
         draft.save()
         return HttpResponseRedirect(reverse('fantasy_draft/draft', args=(d.id,)))
 
-def players(request):
+def player_rankings(request):
     #edit this
     league_list = League.objects.order_by('id')[:5]
-    context = {'league_list': league_list}
-    return render(request, 'fantasy_draft/players.html', context)
+    context = {'league_list': league_list, 
+               'date_now': datetime.now().date, 
+               'date_1yr_ago': (datetime.now() - timedelta(days=365)).date}
+    return render(request, 'fantasy_draft/player_rankings.html', context)
     
 def create_league(request):
     #edit this
