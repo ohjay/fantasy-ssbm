@@ -2,9 +2,29 @@
 {% load staticfiles %}
 
 {% block content %}
-Rankings from {{ date_1yr_ago }} to {{ date_now }} [PST]:
-<ul>
-    <li>1. Armada</li>
-    <li>2. Leffen</li>
-</ul>
+<div class="grid-container">
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p><h1>Rankings</h1></p>
+        </div>
+    </div>
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                Rankings from {{ date_1yr_ago }} to {{ date_now }} [PST]:
+                <ol>
+                    <li>Armada</li>
+                    <li>Hungrybox</li>
+                    <li>Leffen</li>
+                    <li>Mango</li>
+                    <li>PPMD</li>
+                    <li>Mew2King</li>
+                    <li>Plup</li>
+                    <li>Axe</li>
+                    <li>Westballz</li>
+                </ol>
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}

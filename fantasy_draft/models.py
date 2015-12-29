@@ -21,7 +21,7 @@ class Tournament(models.Model):
         return self.name
     
 class Pool(models.Model):
-    identifier = models.CharField(max_length = 20)
+    identifier = models.CharField(max_length=20)
     def __str__(self):
         return self.identifier
     
@@ -31,7 +31,6 @@ class Player(models.Model):
     pool = models.ForeignKey(Pool)
     placing = models.IntegerField(max_length=4)
     seed = models.IntegerField(max_length=4)
-    picture = models.ImageField(upload_to='player_images')
     description = models.TextField()
     tournaments = models.ManyToManyField(Tournament)
     def __str__(self):

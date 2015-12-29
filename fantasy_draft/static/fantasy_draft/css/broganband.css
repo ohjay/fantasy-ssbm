@@ -1,0 +1,84 @@
+/*!
+ * Broganband v1.0
+ * Built using this tutorial as a foundation: 
+ * http://j4n.co/blog/Creating-your-own-css-grid-system
+ */
+
+h1 {
+    text-align: center;
+}
+
+.grid-container {
+    width: 100vw;
+}
+
+.grid-container * {
+    box-sizing: border-box;
+}
+
+.row:before,
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+[class*='col-'] {
+    float: left;
+    min-height: 1px;
+    padding: 12px; /* gutter size */
+    background-color: #000000;
+    opacity: 0.7;
+}
+
+[class*='col-'] > p {
+    background-color: #464646;
+    padding: 0;
+    margin: 0;
+    text-align: center; 
+    color: white; 
+}
+
+.bordered {
+    outline: 1px solid #797979; 
+}
+
+.border-top {
+    border-top: 1px solid #797979;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #797979;
+}
+
+.border-left {
+    border-left: 1px solid #797979;
+}
+
+.border-right {
+    border-right: 1px solid #797979;
+}
+
+.col-1 {
+    width: 16.66vw;
+}
+
+.col-2 {
+    width: 33.33vw;
+}
+
+.col-3 {
+    width: 50vw;
+}
+
+.col-4 {
+    width: 66.664vw;
+}
+
+.col-5 {
+    width: 83.33vw;
+}
+
+.col-6 {
+    width: 100vw;
+}

@@ -12,40 +12,39 @@
     {% endblock %}
 
     {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header_style.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer_style.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main_style.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/broganband.css" %}" media="screen" />
     {% endblock %}
 
     {% block javascript %}
     <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
     {% endblock %}
 </head>
-<body link="gray">
+<body>
     <header id="header-wrapper">
-        <div id="header-content">
-            <ul class="nav">
-                <li class="header-section">
-                    <a href="{% url 'fantasy_draft:index' %}">Main</a>
-                </li>
-                <li class="header-section">
-                    <a href="{% url 'fantasy_draft:player_rankings' %}">Player Rankings</a>
-                </li>
-                <li class="header-section">
-                    <a href="#">Manage Drafts</a>
-                </li>
-                <li class="header-section">
-                    <a href="{% url 'fantasy_draft:standings' %}">Standings</a>
-                </li>
-                <li class="header-section">
-                    {% if user.is_authenticated %}
-                    <a href="#" id="username">{{ user.username }}</a>
-                    {% else %}
-                    <a href="{% url 'fantasy_draft:loginreg' %}">Login/Register</a>
-                    {% endif %}
-                </li> <!-- /header-section -->
-            </ul><!-- /nav -->
-        </div><!-- /header-content -->
+        <ul class="nav">
+            <li class="header-section">
+                <a href="{% url 'fantasy_draft:index' %}">Main</a>
+            </li>
+            <li class="header-section">
+                <a href="{% url 'fantasy_draft:player_rankings' %}">Player Rankings</a>
+            </li>
+            <li class="header-section">
+                <a href="{% url 'fantasy_draft:drafts' %}">Manage Drafts</a>
+            </li>
+            <li class="header-section">
+                <a href="{% url 'fantasy_draft:standings' %}">Standings</a>
+            </li>
+            <li class="header-section">
+                {% if user.is_authenticated %}
+                <a href="#" id="username">{{ user.username }}</a>
+                {% else %}
+                <a href="{% url 'fantasy_draft:login' %}">Login/Register</a>
+                {% endif %}
+            </li> <!-- /header-section -->
+        </ul><!-- /nav -->
     </header><!-- /header-wrapper -->
     
     <div id="main-content-wrapper">
@@ -63,7 +62,7 @@
                     <div class="top-row-info">
                           <p>This is a website tailored to manage Super Smash Bros: Melee fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends, in which each person will choose a certain number of players for his/her draft. At the end of each tournament, everyone will receive points based on how well their players performed – come the season's finish, the person with the highest number of points wins!
                               <br><br>
-                              For more details about the rules behind Fantasy SSBM (plus the tournament season listings), see <a href="#">here</a>.
+                              For more details about the rules behind Fantasy SSBM (plus the tournament season listings), see <a href="{% url 'fantasy_draft:info' %}">here</a>.
                           </p>
                     </div>
                 </div>
@@ -86,7 +85,7 @@
         <div id="footer-bottom-wrapper">
             <div id="footer-bottom">
                 <div id="last-updated">
-                    Last updated December 24th, 2015 by <a href="http://owenjow.xyz">Owen Jow</a>
+                    Last updated December 28th, 2015 by <a href="http://owenjow.xyz">Owen Jow</a>
                 </div><!-- /last-updated -->
             </div><!-- /footer-bottom -->
         </div><!-- /footer-bottom-wrapper -->

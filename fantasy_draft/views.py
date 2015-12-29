@@ -10,10 +10,6 @@ from .models import League, Draft, Player
 
 def index(request):
     return render(request, 'fantasy_draft/index.html', {})
-
-def league_detail(request, league_id):
-    league = get_object_or_404(League, pk=league_id)
-    return render(request, 'fantasy_draft/league_detail.html', {'league': league})
     
 def draft_detail(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)
@@ -59,11 +55,20 @@ def standings(request):
     context = {'league_list': league_list}
     return render(request, 'fantasy_draft/standings.html', context)
     
-def loginreg(request):
+def login(request):
     #edit this
     league_list = League.objects.order_by('id')[:5]
     context = {'league_list': league_list}
     return render(request, 'fantasy_draft/login.html', context)
+    
+def register(request):
+    #edit this
+    league_list = League.objects.order_by('id')[:5]
+    context = {'league_list': league_list}
+    return render(request, 'fantasy_draft/register.html', context)
+    
+def info(request):
+    return render(request, 'fantasy_draft/info.html', {})
     
 def user_login(request):
     context = RequestContext(request)

@@ -1,9 +1,0 @@
-<h1>{{ league.id }}</h1>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'fantasy_draft:select_player' league.id %}" method="post">
-{% csrf_token %}
-<input type="text" name="player_selection" id="player_selection" />
-<br /> <input type="submit" value="Choose" />
-</form>

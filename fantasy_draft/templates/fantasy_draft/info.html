@@ -1,0 +1,53 @@
+{% extends "fantasy_draft/header_footer.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="grid-container">
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p><h1>Fantasy SSBM Info</h1></p>
+        </div>
+    </div>
+    <div class="row bordered">
+        <div class="col-3 bordered border-left">
+            <p>
+                <h2>Getting Started</h2>
+                Available to the Public
+                <ul>
+                    <li><i>To see a countdown to the next major tournament</i>, click <a href="{% url 'fantasy_draft:index' %}">here</a>.</li>
+                    <li><i>To view an objective ranking of players</i>, click <a href="{% url 'fantasy_draft:player_rankings' %}">here</a>.</li>
+                </ul>
+                
+                Available to Users Only
+                <ul>
+                    <li><i>To create and edit drafts</i>, click <a href="{% url 'fantasy_draft:drafts' %}">here</a>.</li>
+                    <li><i>To view league results</i>, click <a href="{% url 'fantasy_draft:standings' %}">here</a>.</li>
+                    <li><i>To login to an existing account</i>, click <a href="{% url 'fantasy_draft:login' %}">here</a>.</li>
+                    <li><i>To create a new account</i>, click <a href="{% url 'fantasy_draft:register' %}">here</a>.</li>
+                </ul>
+            </p>
+        </div> 
+        <div class="col-3 bordered border-right border-bottom">
+            <p>
+                <h2>Season Listings</h2>
+                2015 Season 1 [01/01/2016 - 06/30/2016]
+                <ul>
+                    <li>Genesis 3 (NorCal) - 1/15-1/18</li>
+                    <li>BEAST 6 (Sweden) - 2/18-2/21</li>
+                    <li>Pound (MD/VA) - 4/2-4/3</li>
+                    <li>DreamHack Austin (Southwest) - 5/6-5/8</li>
+                    <li>CEO (Florida) - 6/24-6/26</li>
+                </ul>
+                
+                2015 Season 2 [07/01/2016 - 12/31/2016]
+                <ul>
+                    <li>EVO (NV) - 7/15-7/17</li>
+                    <li>Smash Con (MD/VA) - 8/11-8/14</li>
+                    <li>The Big House 6 (Michigan) - 10/2016</li>
+                    <li>DreamHack Winter - 11/24-11/27</li>
+                </ul>
+            </p>
+        </div> 
+    </div> 
+</div>
+{% endblock %}

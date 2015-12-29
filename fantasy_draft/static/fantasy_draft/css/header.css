@@ -1,0 +1,43 @@
+.header-section { 
+    width: 20%; 
+}
+
+.nav { 
+    margin: 0px; 
+    padding: 0px; 
+}
+
+ul.nav li { 
+    list-style-type: none; 
+    display: inline; 
+    float: left; 
+    text-align: center; 
+}
+
+ul.nav li a { 
+    font-size: 0.975vmax;
+    color: #fefefa; 
+    display: block; 
+    line-height: 5.116vh;
+    text-decoration: none;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); 
+    font-weight: 400; 
+}
+
+ul.nav li a:hover { 
+    background-color: #494646; 
+}
+
+#header-wrapper { 
+    background: #221; 
+    font-family: 'Asap', sans-serif;
+    color: #C9C9C9;
+    width: 100%; 
+    height: 5.115vh; 
+    z-index: 1;
+    position: fixed; 
+}
+
+#username { 
+    color: #67c8ff; 
+}

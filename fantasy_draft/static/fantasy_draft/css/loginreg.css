@@ -1,0 +1,94 @@
+input { 
+    margin: 5px 0; 
+    display: block; 
+    height: 2.558vh; 
+    padding: 6px 6px; 
+    font-size: 0.975vmax; 
+    line-height: 1.42857143; 
+    color: #fff; 
+    background-color: #221;
+    background-image: none; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+}
+
+input:focus { 
+    outline: none; 
+}
+
+input[type="submit"] { 
+    padding: 6px 12px; 
+    font-size: 0.975vmax; 
+    font-weight: 400; 
+    line-height: 1.42857143;
+    text-align: center; 
+    white-space: nowrap; 
+    vertical-align: middle;
+    cursor: pointer; 
+    -webkit-user-select: none; 
+    -moz-user-select: none;
+    -ms-user-select: none; 
+    user-select: none; 
+    background-image: none;
+    border: 1px solid transparent; 
+    border-radius: 4px; 
+    color: #fff;
+    height: 4.476vh; 
+    width: 14.9vw; 
+    margin: 3.197vh auto; 
+    display: block; 
+}
+													
+.neon-blue { 
+    color: #67c8ff; 
+    font-size: 0.905vmax; 
+}
+
+.error { 
+    color: red; 
+    display: block; 
+    text-align: center; 
+    margin-top: 1.92vh; 
+}
+
+.btn-green { 
+    color: #fff; 
+    background-color: #5cb85c; 
+    border-color: #4cae4c; 
+}
+
+#login-greeting, #register-greeting { 
+    font-size: 1.95vmax; 
+    font-weight: 700; 
+    display: block;
+    text-align: center;
+    text-shadow: 1px 1px #000000;
+}
+
+#login-greeting {
+    margin: 12vh auto 0px auto; 
+}
+
+#register-greeting {
+    margin: 7.5vh auto 0px auto;
+}
+                          
+#main-content-wrapper .content-container { 
+    position: absolute; 
+    width: 100%; 
+    left: 0%; 
+    height: 75%;
+    overflow: hidden; 
+    font-family: 'Asap', sans-serif; 
+    color: white; 
+}
+
+#login-form { 
+    width: 25.836vw; /* 371px wide on my computer */
+    margin: 3.836vh auto; 
+}
