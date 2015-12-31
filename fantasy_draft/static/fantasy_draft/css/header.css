@@ -14,7 +14,7 @@ ul.nav li {
     text-align: center; 
 }
 
-ul.nav li a { 
+ul.nav li .h-item, .h-item a { 
     font-size: 0.975vmax;
     color: #fefefa; 
     display: block; 
@@ -24,7 +24,11 @@ ul.nav li a {
     font-weight: 400; 
 }
 
-ul.nav li a:hover { 
+.h-item a {
+    display: inline;
+}
+
+ul.nav li .h-item:hover { 
     background-color: #494646; 
 }
 

@@ -10,11 +10,14 @@
         <div class="col-6 bordered border-left border-right">
             <p>
                 {% if user.is_authenticated %}
-                What would you like to do?
                 <ul>
-                    <li>Create a league</li>
-                    <li>List leagues for each tournament</li>
-                    <li>[ACTIVE] GENESIS 3: No league! Would you like to create one?</li>
+                    {% for tournament, league in tournament_leagues %}
+                        {% if league %}
+                        <li>{{ tournament.name }}: {{ league.name }}</li>
+                        {% else %}
+                        <li>{{ tournament.name }}: CREATE LEAGUE</li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
                 {% else %}
                 You must be <a href="{% url 'fantasy_draft:login' %}">logged in</a> to create or edit drafts.

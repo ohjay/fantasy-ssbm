@@ -14,7 +14,7 @@
     
     <form id="login-form" method="post" action="/user_login/">
         {% csrf_token %}
-        Username <input type="text" name="username" value="" maxlength="30" size="50" />
+        Username <input type="text" name="username" value="" maxlength="30" size="50" autofocus />
         Email <input type="text" name="username" value="" maxlength="50" size="50" />
         Password <input type="password" name="password" value="" maxlength="50" size="50" />
         Confirm Password <input type="password" name="password" value="" maxlength="50" size="50" />

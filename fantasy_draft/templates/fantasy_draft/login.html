@@ -18,7 +18,7 @@
     
     <form id="login-form" method="post" action="/user_login/">
         {% csrf_token %}
-        Username <a class="neon-blue" href="{% url 'fantasy_draft:register' %}">(New user?)</a> <input type="text" name="username" value="" maxlength="30" size="50" /><br>
+        Username <a class="neon-blue" href="{% url 'fantasy_draft:register' %}">(New user?)</a> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
         Password <input type="password" name="password" value="" maxlength="50" size="50" /><br>
         <input type="submit" class="btn-green" value="Login" />
     </form>

@@ -26,22 +26,24 @@
     <header id="header-wrapper">
         <ul class="nav">
             <li class="header-section">
-                <a href="{% url 'fantasy_draft:index' %}">Main</a>
+                <a href="{% url 'fantasy_draft:index' %}" class="h-item">Main</a>
             </li>
             <li class="header-section">
-                <a href="{% url 'fantasy_draft:player_rankings' %}">Player Rankings</a>
+                <a href="{% url 'fantasy_draft:player_rankings' %}" class="h-item">Player Rankings</a>
             </li>
             <li class="header-section">
-                <a href="{% url 'fantasy_draft:leagues' %}">Manage Leagues</a>
+                <a href="{% url 'fantasy_draft:leagues' %}" class="h-item">Manage Leagues</a>
             </li>
             <li class="header-section">
-                <a href="{% url 'fantasy_draft:standings' %}">Standings</a>
+                <a href="{% url 'fantasy_draft:standings' %}" class="h-item">Standings</a>
             </li>
             <li class="header-section">
                 {% if user.is_authenticated %}
-                <a href="#" id="username">{{ user.username }}</a>
-                {% else %}
-                <a href="{% url 'fantasy_draft:login' %}">Login/Register</a>
+                <span class="h-item">
+                    <a href="{% url 'fantasy_draft:profile' %}" id="username">{{ user.username }}</a> (<a href="{% url 'fantasy_draft:user_logout' %}?next={% firstof request.path '/' %}">Logout</a>)
+                    {% else %}
+                    <a href="{% url 'fantasy_draft:login' %}" class="h-item">Login/Register</a>
+                </div>
                 {% endif %}
             </li> <!-- /header-section -->
         </ul><!-- /nav -->
