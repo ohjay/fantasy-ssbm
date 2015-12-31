@@ -7,6 +7,19 @@
         <div class="col-6 bordered border-left border-right">
             <p><h1>Drafts</h1></p>
         </div>
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                {% if user.is_authenticated %}
+                What would you like to do?
+                <ul>
+                    <li>Create a league</li>
+                    <li>View drafts</li>
+                </ul>
+                {% else %}
+                You must be <a href="{% url 'fantasy_draft:login' %}">logged in</a> to create or edit drafts.
+                {% endif %}
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}

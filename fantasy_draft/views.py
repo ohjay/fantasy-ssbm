@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib import auth
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
 from datetime import datetime, timedelta
@@ -16,18 +17,18 @@ def draft_detail(request, draft_id):
     return render(request, 'fantasy_draft/draft_detail.html', {'draft': draft})
     
 def select_player(request, draft_id):
-    d = get_object_or_404(Draft, pk=draft_id)
+    draft = get_object_or_404(Draft, pk=draft_id)
     try:
-        selection = d.get(pk=request.POST['player_selection'])
+        player = draft.get(pk=request.POST['player_selection'])
     except (KeyError, Player.DoesNotExist):
         return render(request, 'fantasy_draft/league_detail.html', {
-            'draft': d,
+            'draft': draft,
             'error_message': "Filler error message in views.py; change later",
         })
     else:
         draft.players += player
         draft.save()
-        return HttpResponseRedirect(reverse('fantasy_draft/draft', args=(d.id,)))
+        return HttpResponseRedirect(reverse('fantasy_draft:drafts', args=(d.id,)))
 
 def player_rankings(request):
     #edit this
@@ -77,7 +78,7 @@ def user_login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth.login(request, user)
             template = loader.get_template('fantasy_draft/index.html')
             context = RequestContext(request, {})
             return HttpResponse(template.render(context))
