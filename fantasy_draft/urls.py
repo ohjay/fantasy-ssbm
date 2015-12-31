@@ -10,8 +10,8 @@ urlpatterns = [
     url(r'^[0-9]+/(?P<draft_id>[0-9]+)/select/$', views.select_player, name='select'),
     # ex: /fantasy_draft/players
     url(r'^player_rankings/$', views.player_rankings, name='player_rankings'),
-    # ex: /fantasy_draft/drafts
-    url(r'^drafts/$', views.drafts, name='drafts'),
+    # ex: /fantasy_draft/leagues
+    url(r'^leagues/$', views.leagues, name='leagues'),
     # ex: /fantasy_draft/results
     url(r'^standings/$', views.standings, name='standings'),
     # ex: /fantasy_draft/login

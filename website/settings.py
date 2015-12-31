@@ -22,8 +22,6 @@ SECRET_KEY = 'a%s&uvs4mhxlsl)0to5&bzst5=#ux+-r^onpo^=+-d0tb1b5)7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -102,8 +100,6 @@ STATIC_URL = '/static/'
 
 # Templates
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -116,6 +112,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG,
         },
     },
 ]
+
+# Custom user model
+AUTH_USER_MODEL = 'fantasy_draft.UserProfile'

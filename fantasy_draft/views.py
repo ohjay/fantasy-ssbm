@@ -44,11 +44,11 @@ def create_league(request):
     context = {'league_list': league_list}
     return render(request, 'fantasy_draft/create.html', context)
     
-def drafts(request):
+def leagues(request):
     #edit this
     league_list = League.objects.order_by('id')[:5]
     context = {'league_list': league_list}
-    return render(request, 'fantasy_draft/drafts.html', context)
+    return render(request, 'fantasy_draft/leagues.html', context)
     
 def standings(request):
     #edit this

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Objects with an admin interface:
-from .models import League, Player, Draft, Result, Tournament, User
+from .models import League, Player, Draft, Result, Tournament, UserProfile
     
 class DraftInline(admin.TabularInline):
     model = Draft
@@ -22,3 +22,4 @@ admin.site.register(Player, PlayerAdmin)
 admin.site.register(Draft, DraftAdmin)
 admin.site.register(Tournament)
 admin.site.register(Result)
+admin.site.register(UserProfile)
