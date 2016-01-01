@@ -20,14 +20,27 @@ def league_detail(request, league_id):
 def user_search(request, league_id):
     if request.method == "GET":
         name_input = request.GET['name_input']
+        users = []
+        
         if name_input is not None and name_input != u"":
-            users = UserProfile.objects.filter(username__contains = name_input)
-            users = users.extra(select={'length': 'Length(username)'}).order_by('length')
-        else:
-            users = []
-        # Limit the output to a maximum of 5 results
+            user_set = UserProfile.objects.filter(username__contains = name_input)
+            user_set = user_set.extra(select={'length': 'Length(username)'}).order_by('length')
+            tournament = get_object_or_404(League, pk=league_id).tournament
+            
+            for u in user_set:
+                exclude = False
+                for l in u.leagues.all():
+                    # This is acceptable, since each user has a very limited number of leagues
+                    if l.tournament == tournament:
+                        exclude = True
+                        
+                if not exclude:
+                    users.append(u)
+                    if len(users) > 4:
+                        # Limit the output to a maximum of 5 users
+                        break
         return render(request, 'fantasy_draft/user_search.html', {
-            'users': users[:5],
+            'users': users,
             'league_id': league_id,
         })
 
@@ -67,6 +80,18 @@ def decline(request, i_id):
         invitation.delete()
         
         return HttpResponseRedirect(request.GET.get('next', '/'))
+        
+def activate(request, league_id):
+    league = get_object_or_404(League, pk=league_id)
+    if not request.user.is_authenticated() or request.user != league.creator:
+        # Call hax
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
+        # Activate the league
+        league.activated = True
+        league.save()
+        
+        return HttpResponseRedirect(request.GET.get('next', '/'))
     
 def draft_detail(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)
@@ -100,6 +125,7 @@ def create_league(request, t_id):
                 league = league_form.save(commit=False)
                 league.creator = request.user
                 league.tournament = Tournament.objects.get(pk=t_id)
+                league.date_created = datetime.now()
                 league.save()
                 
                 # Then add it to the user's collection of leagues

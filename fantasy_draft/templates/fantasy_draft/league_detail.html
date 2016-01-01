@@ -32,21 +32,42 @@
             </p>
         </div>
     </div>
-    <div class="row bordered border-bottom">
+    {% if league.activated %}
+    <div class="row bordered">
         <div class="col-6 bordered border-left border-right">
-            <p>
-                {% if user.is_authenticated and league.creator == user %}
-                Invite users to join your league:&nbsp;
-                <input type="text" id="name_input" name="name_input" />
-                <div id="search-results">
-                    <p>No users found.</p>
-                </div>
-                {% else %}
-                You don't have permission to add users to the league!
-                {% endif %}
-            </p>
+            <p>This league has been activated! View drafts</p>
         </div>
     </div>
+    {% else %}
+        <div class="row bordered border-bottom">
+            <div class="col-6 bordered border-left border-right">
+                <p>
+                    {% if user.is_authenticated and league.creator == user %}
+                    Invite users to join your league:&nbsp;
+                    <input type="text" id="name_input" name="name_input" />
+                    <div id="search-results">
+                        <p>No users found.</p>
+                    </div>
+                    {% else %}
+                    You don't have permission to add users to the league!
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% if user.is_authenticated and league.creator == user %}
+        <div class="row bordered border-bottom">
+            <div class="col-6 bordered border-left border-right">
+                <p>
+                    Activate the league (warning: this will lock in all players). 
+                    <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:activate' league_id=league.id %}?next={% firstof request.path '/' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Activate" />
+                    </form>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
 </div>
 
 <script type="text/javascript">
