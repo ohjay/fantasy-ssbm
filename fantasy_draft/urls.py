@@ -8,8 +8,6 @@ urlpatterns = [
     url(r'^league/(?P<invite_sent>[tf])/(?P<league_id>[0-9]+)/$', views.league_detail, name='league_detail'),
     # ex: /fantasy_draft/user_search
     url(r'^user_search/(?P<league_id>[0-9]+)/$', views.user_search, name='user_search'),
-    # ex: /fantasy_draft/league/2/1
-    url(r'^league/[0-9]+/(?P<draft_id>[0-9]+)/$', views.draft_detail, name='draft_detail'),
     # ex: /fantasy_draft/2/1/select
     url(r'^[0-9]+/(?P<draft_id>[0-9]+)/select/$', views.select_player, name='select'),
     # ex: /fantasy_draft/players

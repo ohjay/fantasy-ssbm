@@ -12,6 +12,7 @@ class League(models.Model):
     name = models.CharField(max_length=30) # a name for this league (could be anything)
     date_created = models.DateTimeField()
     activated = models.BooleanField(default=False) # describes whether or not the league has started
+    number_of_picks = models.PositiveSmallIntegerField()
     tournament = models.ForeignKey(Tournament)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     def __str__(self):
@@ -31,7 +32,7 @@ class Draft(models.Model):
     ) # the user associated with this draft
     players = models.ManyToManyField(Player, blank=True) # the players in the draft
     def __str__(self):
-        return self.user + "'s " + self.league.tournament + ' draft'
+        return str(self.user) + "'s " + str(self.league.tournament) + ' draft'
         
 class Result(models.Model):
     placing = models.IntegerField()

@@ -22,20 +22,15 @@
     </div>
     {% if league.activated %}
     <div class="row bordered">
-        <div class="col-6 bordered border-left border-right">
+        <div class="col-4 bordered border-left border-right">
             <p>
                 Drafts:
                 <ul>
                     {% for draft in league.draft_set.all %}
-                    <li>{{ draft.user }}'s draft: <a href="/league/{{ league.id }}/{{ draft.id }}">View</a></li>
+                    <li>{{ draft.user }}'s draft:</li>
                     {% endfor %}
                 </ul>
             </p>
-        </div>
-    </div>
-    <div class="row bordered">
-        <div class="col-6 bordered border-left border-right">
-            <p>This league has been activated!</p>
         </div>
     </div>
     {% else %}

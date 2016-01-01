@@ -104,10 +104,6 @@ def activate(request, league_id):
         
         return HttpResponseRedirect(request.GET.get('next', '/'))
     
-def draft_detail(request, draft_id):
-    draft = get_object_or_404(Draft, pk=draft_id)
-    return render(request, 'fantasy_draft/draft_detail.html', {'draft': draft})
-    
 def select_player(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)
     try:

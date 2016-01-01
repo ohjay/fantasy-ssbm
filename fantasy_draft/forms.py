@@ -25,7 +25,14 @@ class LeagueForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'maxlength': '50', 'size': '50', 'autofocus': 'autofocus'
     }))
+    number_of_picks = forms.IntegerField(widget=forms.NumberInput(attrs={
+        'min': '1', 'max': '10', 'step': '1'
+    }))
+    
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.fields['number_of_picks'].label = "Number of picks (max: 10)"
     
     class Meta:
         model = League
-        fields = ('name',)
+        fields = ('name', 'number_of_picks')

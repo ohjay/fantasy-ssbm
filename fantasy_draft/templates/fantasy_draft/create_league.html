@@ -20,7 +20,10 @@
                 {% csrf_token %}
         
                 <label>{{ league_form.name.label }}</label>&nbsp;
-                {{ league_form.name }}&nbsp;
+                {{ league_form.name }}<br><br>
+                
+                <label>{{ league_form.number_of_picks.label }}</label>&nbsp;
+                {{ league_form.number_of_picks }}<br><br>
         
                 <input type="submit" value="Create League" />
             </form>
