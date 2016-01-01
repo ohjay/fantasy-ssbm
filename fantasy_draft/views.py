@@ -17,6 +17,17 @@ def league_detail(request, league_id):
     league = get_object_or_404(League, pk=league_id)
     return render(request, 'fantasy_draft/league_detail.html', {'league': league})
     
+def user_search(request):
+    if request.method == "GET":
+        name_input = request.GET['name_input']
+        if name_input is not None and name_input != u"":
+            users = UserProfile.objects.filter(username__contains = name_input)
+            users = users.extra(select={'length': 'Length(username)'}).order_by('length')
+        else:
+            users = []
+        # Limit the output to a maximum of 5 results
+        return render(request, 'fantasy_draft/user_search.html', {'users': users[:5]})
+    
 def draft_detail(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)
     return render(request, 'fantasy_draft/draft_detail.html', {'draft': draft})
@@ -41,7 +52,7 @@ def player_rankings(request):
     return render(request, 'fantasy_draft/player_rankings.html', context)
     
 def create_league(request, t_id):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and not request.user.leagues.filter(tournament__id=t_id):
         if request.method == 'POST':
             league_form = LeagueForm(data=request.POST)
             if league_form.is_valid(): # it should pretty much always be valid

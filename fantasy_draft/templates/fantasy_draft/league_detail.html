@@ -1,6 +1,10 @@
 {% extends "fantasy_draft/header_footer.html" %}
 {% load staticfiles %}
 
+{% block javascript %}
+<script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="grid-container">
     <div class="row bordered border-top">
@@ -8,5 +12,49 @@
             <p><h1>{{ league.name }}</h1></p>
         </div>
     </div>
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                Tournament: {{ league.tournament }}<br>
+                Created on {{ league.date_created }} by {{ league.creator }}.
+            </p>
+        </div>
+    </div>
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                {% if user.is_authenticated and league.creator == user %}
+                Invite users to join your draft:&nbsp;
+                <input type="text" id="name_input" name="name_input" />
+                <div id="search-results">
+                </div>
+                {% else %}
+                You don't have permission to add users to the draft!
+                {% endif %}
+            </p>
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+	// Ajax live search
+    $(function() {
+        $('#name_input').keyup(function() {
+            $.ajax({
+                type: "GET",
+                url: "/user_search/",
+                data: {
+                    'name_input': $('#name_input').val(),
+                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: liveUpdate,
+                dataType: 'html'
+            });
+        });
+    });
+    
+    function liveUpdate(data, textStatus, jqXHR) {
+        $('#search-results').html(data);
+    }
+</script>
 {% endblock %}

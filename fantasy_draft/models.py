@@ -41,3 +41,5 @@ class Result(models.Model):
         
 class UserProfile(AbstractUser):
     leagues = models.ManyToManyField(League, blank=True)
+    def __str__(self):
+        return self.username

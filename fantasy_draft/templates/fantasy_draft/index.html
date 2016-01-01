@@ -2,47 +2,46 @@
 {% load staticfiles %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/index.css" %}" media="screen"/>
-    <link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/index.css" %}" media="screen"/>
+<link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
 {% endblock %}
 
 {% block javascript %}
-    <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
-    <script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
+<script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+<script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
 {% endblock %}
 
 {% block content %}
-    <!-- Countdown to next tournament -->
-    <div style="text-align: center">    
-        <div class="opaque" style="display: inline-block">
-            <div class="clock"></div>
-        </div>
+<!-- Countdown to next tournament -->
+<div style="text-align: center">    
+    <div class="opaque" style="display: inline-block">
+        <div class="clock"></div>
     </div>
-    
-    <!-- Display text -->
-    <p class="center-text">    
-        GENESIS 3 : January 15, 2016
-    </p>
-    
-    <!-- Clock script -->
-	<script type="text/javascript">
-		var clock;
+</div>
 
-		$(document).ready(function() {
-            var currentDate = new Date();
-            // TODO: create a model for tournaments (incl. date) and use the date of the next tournament here
-            var futureDate  = new Date("January 15, 2016 0:00:00");
+<!-- Display text -->
+<p class="center-text">    
+    GENESIS 3 : January 15, 2016
+</p>
 
-		    // Calculate the difference in seconds between the future and current date
-			var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
-
+<!-- Clock script -->
+<script type="text/javascript">
+	var clock;
+	$(document).ready(function() {
+        var currentDate = new Date();
+        
+        // Current tournament: GENESIS 3; next tournament: BEAST 6 (2/18)
+        var futureDate  = new Date("January 15, 2016 0:00:00");
+        
+		// Calculate the difference in seconds between the future and current date
+		var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
 			clock = $('.clock').FlipClock(diff, {
-				clockFace: 'DailyCounter',
-				countdown: true
-			});
+			clockFace: 'DailyCounter',
+			countdown: true
 		});
-	</script>
+	});
+</script>
 {% endblock %}
