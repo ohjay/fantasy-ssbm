@@ -1,24 +1,56 @@
 {% extends "fantasy_draft/header_footer.html" %}
 {% load staticfiles %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/input.css" %}" media="screen" />
-{% endblock %}
-
 {% block content %}
-<div class="content-container">
-    <span class="greeting">Enter a name for your {{ t_name }} league!</span>
+<div class="grid-container">
+    <div class="row bordered border-top">
+        <div class="col-3 bordered border-left">
+            <p><h1>New league</h1></p>
+        </div>
+        <div class="col-3 bordered border-right">
+            <p><h1>Join a league</h1></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 bordered border-left">
+            <h2>Enter a name for your {{ t_name }} league!</h2>
     
-    <form class="sized-form" method="post" action="{% url 'fantasy_draft:create_league' t_id=t_id %}">
-        {% csrf_token %}
+            <form method="post" action="{% url 'fantasy_draft:create_league' t_id=t_id %}">
+                {% csrf_token %}
         
-        <label>{{ league_form.name.label }}</label>
-        {{ league_form.name }}
+                <label>{{ league_form.name.label }}</label>&nbsp;
+                {{ league_form.name }}&nbsp;
         
-        <input type="submit" class="btn-green" value="Create League" />
-    </form>
+                <input type="submit" value="Create League" />
+            </form>
+        </div>
+        <div class="col-3 bordered border-right">
+            <p>
+                {% if user.invites_received.count > 0 %}
+                <h2>Open invitations</h2>
+                <ul>
+                    {% for invitation in user.invites_received.all %}
+                    <li>
+                        {{ invitation.league }}, sent by {{ invitation.sender }} on {{ invitation.date_issued }}&nbsp;
+                        <!-- Accept?... -->
+                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:accept' i_id=invitation.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Accept" />
+                        </form>
+                        
+                        <!-- ...or decline? -->
+                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:decline' i_id=invitation.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Decline" />
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                You have no open invitations.
+                {% endif %}
+            </p>
+        </div> 
+    </div> 
 </div>
 {% endblock %}

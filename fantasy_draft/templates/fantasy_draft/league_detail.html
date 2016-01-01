@@ -27,6 +27,7 @@
                 Invite users to join your draft:&nbsp;
                 <input type="text" id="name_input" name="name_input" />
                 <div id="search-results">
+                    <p>No users found.</p>
                 </div>
                 {% else %}
                 You don't have permission to add users to the draft!
@@ -42,7 +43,7 @@
         $('#name_input').keyup(function() {
             $.ajax({
                 type: "GET",
-                url: "/user_search/",
+                url: "/user_search/" + getLeagueId(window.location.href),
                 data: {
                     'name_input': $('#name_input').val(),
                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
@@ -55,6 +56,11 @@
     
     function liveUpdate(data, textStatus, jqXHR) {
         $('#search-results').html(data);
+    }
+    
+    function getLeagueId(href) {
+        href = href.substring(0, href.length - 1)
+        return href.substr(href.lastIndexOf('/') + 1);
     }
 </script>
 {% endblock %}

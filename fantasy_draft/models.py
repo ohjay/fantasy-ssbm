@@ -43,3 +43,17 @@ class UserProfile(AbstractUser):
     leagues = models.ManyToManyField(League, blank=True)
     def __str__(self):
         return self.username
+        
+class Invitation(models.Model):
+    """An invitation to join a league."""
+    league = models.ForeignKey(League)
+    date_issued = models.DateTimeField(auto_now=True)
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='invites_sent')
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='invites_received')
+    
+    STATUS_CODES = (
+        ('UNA', 'unanswered'),
+        ('ACC', 'accepted'),
+        ('DEC', 'declined'),
+    )
+    status = models.CharField(max_length=3, choices=STATUS_CODES, default='UNA')

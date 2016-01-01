@@ -17,7 +17,7 @@ def league_detail(request, league_id):
     league = get_object_or_404(League, pk=league_id)
     return render(request, 'fantasy_draft/league_detail.html', {'league': league})
     
-def user_search(request):
+def user_search(request, league_id):
     if request.method == "GET":
         name_input = request.GET['name_input']
         if name_input is not None and name_input != u"":
@@ -26,7 +26,35 @@ def user_search(request):
         else:
             users = []
         # Limit the output to a maximum of 5 results
-        return render(request, 'fantasy_draft/user_search.html', {'users': users[:5]})
+        return render(request, 'fantasy_draft/user_search.html', {
+            'users': users[:5],
+            'league_id': league_id,
+        })
+
+def invite(request, recipient_id, league_id):
+    if not request.user.is_authenticated() or request.method != "POST":
+        # Someone's trying to game the system...
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
+        # Create and send a new invitation
+        invitation = Invitation()
+        invitation.league = get_object_or_404(League, pk=league_id)
+        invitation.sender = request.user
+        invitation.recipient = get_object_or_404(UserProfile, pk=recipient_id)
+        invitation.save()
+        
+        # Quick, back to the league page
+        return HttpResponseRedirect('/league/' + league_id)
+        
+def accept(request, i_id):
+    if request.user_is_authenticated and request.method == "POST":
+        invitation = get_object_or_404(Invitation, pk=i_id)
+        # TODO: continue this
+    
+def decline(request, i_id):
+    if request.user_is_authenticated and request.method == "POST":
+        invitation = get_object_or_404(Invitation, pk=i_id)
+        # TODO: continue this
     
 def draft_detail(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)

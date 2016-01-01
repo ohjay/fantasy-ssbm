@@ -7,7 +7,7 @@ urlpatterns = [
     # ex: /fantasy_draft/league/2
     url(r'^league/(?P<league_id>[0-9]+)/$', views.league_detail, name='league_detail'),
     # ex: /fantasy_draft/user_search
-    url(r'^user_search/$', views.user_search, name='user_search'),
+    url(r'^user_search/(?P<league_id>[0-9]+)/$', views.user_search, name='user_search'),
     # ex: /fantasy_draft/2/1
     url(r'^[0-9]+/(?P<draft_id>[0-9]+)/$', views.draft_detail, name='draft_detail'),
     # ex: /fantasy_draft/2/1/select
@@ -30,4 +30,10 @@ urlpatterns = [
     url(r'^user_logout/$', views.user_logout, name='user_logout'),
     # ex: /fantasy_draft/create_league/40
     url(r'^create_league/(?P<t_id>[0-9]+)/$', views.create_league, name='create_league'),
+    # ex: /fantasy_draft/invite/3/19
+    url(r'^invite/(?P<recipient_id>[0-9]+)/(?P<league_id>[0-9]+)$', views.invite, name='invite'),
+    # ex: /fantasy_draft/accept/560
+    url(r'^accept/(?P<i_id>[0-9]+)$', views.accept, name='accept'),
+    # ex: /fantasy_draft/decline/560
+    url(r'^decline/(?P<i_id>[0-9]+)$', views.decline, name='decline'),
 ]
