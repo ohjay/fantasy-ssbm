@@ -73,7 +73,7 @@ def accept(request, i_id):
         request.user.leagues.add(invitation.league)
         request.user.save()
         
-        return HttpResponseRedirect('/league/' + league_id)
+        return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
     
 def decline(request, i_id):
     if not request.user.is_authenticated() or request.method != "POST":
@@ -85,6 +85,7 @@ def decline(request, i_id):
         return HttpResponseRedirect(request.GET.get('next', '/'))
         
 def activate(request, league_id):
+    """Lock users in and create empty drafts for them."""
     league = get_object_or_404(League, pk=league_id)
     if not request.user.is_authenticated() or request.user != league.creator:
         # Call hax
@@ -93,6 +94,13 @@ def activate(request, league_id):
         # Activate the league
         league.activated = True
         league.save()
+        
+        # Create drafts for the users in the league
+        for u in league.userprofile_set.all():
+            u_draft = Draft()
+            u_draft.league = league
+            u_draft.user = u
+            u_draft.save()
         
         return HttpResponseRedirect(request.GET.get('next', '/'))
     

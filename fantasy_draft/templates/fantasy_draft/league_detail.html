@@ -20,25 +20,38 @@
             </p>
         </div>
     </div>
+    {% if league.activated %}
     <div class="row bordered">
         <div class="col-6 bordered border-left border-right">
             <p>
-                Users currently part of this league:
+                Drafts:
                 <ul>
-                    {% for u in league.userprofile_set.all %}
-                    <li>{{ u }}</li>
+                    {% for draft in league.draft_set.all %}
+                    <li>{{ draft.user }}'s draft: <a href="/league/{{ league.id }}/{{ draft.id }}">View</a></li>
                     {% endfor %}
                 </ul>
             </p>
         </div>
     </div>
-    {% if league.activated %}
     <div class="row bordered">
         <div class="col-6 bordered border-left border-right">
-            <p>This league has been activated! View drafts</p>
+            <p>This league has been activated!</p>
         </div>
     </div>
     {% else %}
+        <!-- Indent for visual effect -->
+        <div class="row bordered">
+            <div class="col-6 bordered border-left border-right">
+                <p>
+                    Users currently part of this league:
+                    <ul>
+                        {% for u in league.userprofile_set.all %}
+                        <li>{{ u }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </div>
+        </div>
         <div class="row bordered border-bottom">
             <div class="col-6 bordered border-left border-right">
                 <p>

@@ -1,6 +1,24 @@
-<h1>{{ draft.id }}</h1>
-<ul>
-{% for player in draft.players.all %}
-    <li>{{ player }}</li>
-{% endfor %}
-</ul>
+{% extends "fantasy_draft/header_footer.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="grid-container">
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p><h1>{{ draft.user }}'s draft for {{ draft.league }}</h1></p>
+        </div>
+    </div>
+    <div class="row bordered">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                Players: 
+                <ul>
+                {% for player in draft.players.all %}
+                    <li>{{ player }}</li>
+                {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
