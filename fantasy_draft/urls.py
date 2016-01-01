@@ -4,8 +4,8 @@ from . import views
 urlpatterns = [
     # ex: /fantasy_draft/
     url(r'^$', views.index, name='index'),
-    # ex: /fantasy_draft/league/2
-    url(r'^league/(?P<league_id>[0-9]+)/$', views.league_detail, name='league_detail'),
+    # ex: /fantasy_draft/league/t/2
+    url(r'^league/(?P<invite_sent>[tf])/(?P<league_id>[0-9]+)/$', views.league_detail, name='league_detail'),
     # ex: /fantasy_draft/user_search
     url(r'^user_search/(?P<league_id>[0-9]+)/$', views.user_search, name='user_search'),
     # ex: /fantasy_draft/2/1

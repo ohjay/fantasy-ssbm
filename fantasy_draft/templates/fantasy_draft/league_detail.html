@@ -46,7 +46,11 @@
                     Invite users to join your league:&nbsp;
                     <input type="text" id="name_input" name="name_input" />
                     <div id="search-results">
+                        {% if invite_sent %}
+                        <p>Invitation successfully sent!</p>
+                        {% else %}
                         <p>No users found.</p>
+                        {% endif %}
                     </div>
                     {% else %}
                     You don't have permission to add users to the league!

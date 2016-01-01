@@ -13,9 +13,12 @@ from .forms import *
 def index(request):
     return render(request, 'fantasy_draft/index.html', {})
     
-def league_detail(request, league_id):
+def league_detail(request, invite_sent, league_id):
     league = get_object_or_404(League, pk=league_id)
-    return render(request, 'fantasy_draft/league_detail.html', {'league': league})
+    return render(request, 'fantasy_draft/league_detail.html', {
+        'invite_sent': True if invite_sent == 't' else False,
+        'league': league,
+    })
     
 def user_search(request, league_id):
     if request.method == "GET":
@@ -57,7 +60,7 @@ def invite(request, recipient_id, league_id):
         invitation.save()
         
         # Quick, back to the league page
-        return HttpResponseRedirect('/league/' + league_id)
+        return HttpResponseRedirect('/league/t/' + league_id)
         
 def accept(request, i_id):
     if not request.user.is_authenticated() or request.method != "POST":
