@@ -12,7 +12,7 @@
             <p><h1>{{ league.name }}</h1></p>
         </div>
     </div>
-    <div class="row bordered border-top">
+    <div class="row bordered">
         <div class="col-6 bordered border-left border-right">
             <p>
                 Tournament: {{ league.tournament }}<br>
@@ -20,30 +20,30 @@
             </p>
         </div>
     </div>
-    <div class="row bordered border-top">
+    <div class="row bordered">
         <div class="col-6 bordered border-left border-right">
             <p>
-                {% if user.is_authenticated and league.creator == user %}
-                Invite users to join your draft:&nbsp;
-                <input type="text" id="name_input" name="name_input" />
-                <div id="search-results">
-                    <p>No users found.</p>
-                </div>
-                {% else %}
-                You don't have permission to add users to the draft!
-                {% endif %}
-            </p>
-        </div>
-    </div>
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right">
-            <p>
-                Users currently part of this draft:
+                Users currently part of this league:
                 <ul>
                     {% for u in league.userprofile_set.all %}
                     <li>{{ u }}</li>
                     {% endfor %}
                 </ul>
+            </p>
+        </div>
+    </div>
+    <div class="row bordered border-bottom">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                {% if user.is_authenticated and league.creator == user %}
+                Invite users to join your league:&nbsp;
+                <input type="text" id="name_input" name="name_input" />
+                <div id="search-results">
+                    <p>No users found.</p>
+                </div>
+                {% else %}
+                You don't have permission to add users to the league!
+                {% endif %}
             </p>
         </div>
     </div>
