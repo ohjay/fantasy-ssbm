@@ -43,11 +43,6 @@ input[type="submit"] {
     margin: 3.197vh auto; 
     display: block; 
 }
-													
-.neon-blue { 
-    color: #67c8ff; 
-    font-size: 0.905vmax; 
-}
 
 .error { 
     color: red; 
@@ -62,7 +57,7 @@ input[type="submit"] {
     border-color: #4cae4c; 
 }
 
-#login-greeting, #register-greeting { 
+.greeting { 
     font-size: 1.95vmax; 
     font-weight: 700; 
     display: block;
@@ -70,7 +65,12 @@ input[type="submit"] {
     text-shadow: 1px 1px #000000;
     margin: 12vh auto 0px auto; 
 }
-                          
+
+.sized-form { 
+    width: 25.836vw; /* 371px wide on my computer */
+    margin: 3.836vh auto; 
+}
+
 #main-content-wrapper .content-container { 
     position: absolute; 
     width: 100%; 
@@ -79,9 +79,4 @@ input[type="submit"] {
     overflow: hidden; 
     font-family: 'Asap', sans-serif; 
     color: white; 
-}
-
-#loginreg-form { 
-    width: 25.836vw; /* 371px wide on my computer */
-    margin: 3.836vh auto; 
 }

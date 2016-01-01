@@ -10,23 +10,15 @@
 
 {% block content %}
 <div class="content-container">
-    <span class="greeting">Your journey begins here.</span>
+    <span class="greeting">Enter a name for your {{ t_name }} league!</span>
     
-    {% if error_msg %}
-    <span class="error"><strong>{{ error_msg }}</strong></span>
-    {% endif %}
-    
-    <form class="sized-form" method="post" action="/register/">
+    <form class="sized-form" method="post" action="{% url 'fantasy_draft:create_league' t_id=t_id %}">
         {% csrf_token %}
         
-        <label>{{ user_form.username.label }}</label>
-        {{ user_form.username }}
-        <label>{{ user_form.email.label }}</label>
-        {{ user_form.email }}
-        <label>{{ user_form.password.label }}</label>
-        {{ user_form.password }}
+        <label>{{ league_form.name.label }}</label>
+        {{ league_form.name }}
         
-        <input type="submit" class="btn-green" value="Register" />
+        <input type="submit" class="btn-green" value="Create League" />
     </form>
 </div>
 {% endblock %}

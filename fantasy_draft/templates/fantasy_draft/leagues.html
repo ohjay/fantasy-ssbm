@@ -15,7 +15,7 @@
                         {% if league %}
                         <li>{{ tournament.name }}: {{ league.name }}</li>
                         {% else %}
-                        <li>{{ tournament.name }}: CREATE LEAGUE</li>
+                        <li>{{ tournament.name }}: <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">CREATE LEAGUE</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>

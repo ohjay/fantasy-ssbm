@@ -25,5 +25,7 @@ urlpatterns = [
     # ex: /fantasy_draft/profile
     url(r'^profile/$', views.profile, name='profile'),
     # ex: /fantasy_draft/user_logout
-    url(r'^user_logout/$', views.user_logout, name='user_logout')
+    url(r'^user_logout/$', views.user_logout, name='user_logout'),
+    # ex: /fantasy_draft/create_league/40
+    url(r'^create_league/(?P<t_id>[0-9]+)/$', views.create_league, name='create_league'),
 ]

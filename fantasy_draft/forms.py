@@ -20,3 +20,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('username', 'email', 'password')
+        
+class LeagueForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'maxlength': '50', 'size': '50', 'autofocus': 'autofocus'
+    }))
+    
+    class Meta:
+        model = League
+        fields = ('name',)

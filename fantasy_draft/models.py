@@ -10,8 +10,9 @@ class Tournament(models.Model):
 
 class League(models.Model):
     name = models.CharField(max_length=30) # a name for this league (could be anything)
-    date_created = models.DateTimeField()
-    tournament = models.OneToOneField(Tournament)
+    date_created = models.DateTimeField(auto_now=True) # assumes leagues are only saved when created
+    tournament = models.ForeignKey(Tournament)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     def __str__(self):
         return self.name
     

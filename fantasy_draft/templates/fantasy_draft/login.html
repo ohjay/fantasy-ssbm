@@ -5,20 +5,20 @@
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/loginreg.css" %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/input.css" %}" media="screen" />
 {% endblock %}
 
 {% block content %}
 <div class="content-container">
-    <span id="login-greeting">Welcome back to Fantasy SSBM!</span>
+    <span class="greeting">Welcome back to Fantasy SSBM!</span>
     
     {% if incorrect_log_in %}
-        <span class="error">That's not right! Did you <a class="sky-blue" href="#">forget your password</a>?</span>
+    <span class="error">That's not right! Did you <a href="#">forget your password</a>?</span>
     {% endif %}
     
-    <form id="loginreg-form" method="post" action="/user_login/">
+    <form class="sized-form" method="post" action="/user_login/">
         {% csrf_token %}
-        Username <a class="neon-blue" href="{% url 'fantasy_draft:register' %}">(New user?)</a> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
+        Username <a style="color: #67c8ff; font-size: 0.905vmax;" href="{% url 'fantasy_draft:register' %}">(New user?)</a> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
         Password <input type="password" name="password" value="" maxlength="50" size="50" /><br>
         <input type="submit" class="btn-green" value="Login" />
     </form>

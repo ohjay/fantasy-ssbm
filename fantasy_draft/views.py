@@ -40,10 +40,34 @@ def player_rankings(request):
                'date_1yr_ago': (datetime.now() - timedelta(days=365)).date}
     return render(request, 'fantasy_draft/player_rankings.html', context)
     
-def create_league(request):
-    league_list = League.objects.order_by('id')[:5]
-    context = {'league_list': league_list}
-    return render(request, 'fantasy_draft/create.html', context)
+def create_league(request, t_id):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            league_form = LeagueForm(data=request.POST)
+            if league_form.is_valid(): # it should pretty much always be valid
+                # Create a new league and save it
+                league = league_form.save(commit=False)
+                league.creator = request.user
+                league.tournament = Tournament.objects.get(pk=t_id)
+                league.save()
+                
+                # Then add it to the user's collection of leagues
+                request.user.leagues.add(league)
+                request.user.save()
+                
+                # Redirect
+                return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
+        else:
+            # Render a blank creation form
+            league_form = LeagueForm()
+            return render(request, 'fantasy_draft/create_league.html', {
+                'league_form': league_form,
+                't_id': t_id,
+                't_name': Tournament.objects.get(pk=t_id),
+            })
+    else:
+        # Permission denied
+        return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
     
 def leagues(request):
     if request.user.is_authenticated():
@@ -64,9 +88,7 @@ def leagues(request):
         return render(request, 'fantasy_draft/leagues.html', {})
     
 def standings(request):
-    league_list = League.objects.order_by('id')[:5]
-    context = {'league_list': league_list}
-    return render(request, 'fantasy_draft/standings.html', context)
+    return render(request, 'fantasy_draft/standings.html', {})
     
 def login(request):
     return render(request, 'fantasy_draft/login.html', {})
@@ -84,12 +106,22 @@ def register(request):
             user = authenticate(username=request.POST['username'],
                     password=request.POST['password'])
             auth.login(request, user)
+            return HttpResponseRedirect(reverse('fantasy_draft:index'))
         else:
-            print(str(user_form.errors))
-        return HttpResponseRedirect(reverse('fantasy_draft:index'))
+            # Cut the asterisk label out of the error message
+            error_msg = user_form.errors.as_text()
+            error_msg = error_msg[error_msg.find('*', 1) + 2:]
+            
+            return render(request, 'fantasy_draft/register.html', {
+                'user_form': user_form, 
+                'error_msg': error_msg
+            })
     else:
         user_form = UserForm()
-        return render(request, 'fantasy_draft/register.html', {'user_form': user_form})
+        return render(request, 'fantasy_draft/register.html', {
+            'user_form': user_form, 
+            'error_msg': False
+        })
     
 def info(request):
     return render(request, 'fantasy_draft/info.html', {})
