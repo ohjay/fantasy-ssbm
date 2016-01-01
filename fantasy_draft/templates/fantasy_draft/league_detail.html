@@ -35,6 +35,18 @@
             </p>
         </div>
     </div>
+    <div class="row bordered border-top">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                Users currently part of this draft:
+                <ul>
+                    {% for u in league.userprofile_set.all %}
+                    <li>{{ u }}</li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">

@@ -47,14 +47,26 @@ def invite(request, recipient_id, league_id):
         return HttpResponseRedirect('/league/' + league_id)
         
 def accept(request, i_id):
-    if request.user_is_authenticated and request.method == "POST":
+    if not request.user.is_authenticated() or request.method != "POST":
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
         invitation = get_object_or_404(Invitation, pk=i_id)
-        # TODO: continue this
+        invitation.status = "ACC"
+        invitation.save()
+        
+        request.user.leagues.add(invitation.league)
+        request.user.save()
+        
+        return HttpResponseRedirect('/league/' + league_id)
     
 def decline(request, i_id):
-    if request.user_is_authenticated and request.method == "POST":
+    if not request.user.is_authenticated() or request.method != "POST":
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
         invitation = get_object_or_404(Invitation, pk=i_id)
-        # TODO: continue this
+        invitation.delete()
+        
+        return HttpResponseRedirect(request.GET.get('next', '/'))
     
 def draft_detail(request, draft_id):
     draft = get_object_or_404(Draft, pk=draft_id)

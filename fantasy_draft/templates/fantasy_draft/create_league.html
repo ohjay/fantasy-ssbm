@@ -12,6 +12,7 @@
         </div>
     </div>
     <div class="row">
+        <!-- Create a league -->
         <div class="col-3 bordered border-left">
             <h2>Enter a name for your {{ t_name }} league!</h2>
     
@@ -24,26 +25,30 @@
                 <input type="submit" value="Create League" />
             </form>
         </div>
+        
+        <!-- Join a league -->
         <div class="col-3 bordered border-right">
             <p>
                 {% if user.invites_received.count > 0 %}
                 <h2>Open invitations</h2>
                 <ul>
                     {% for invitation in user.invites_received.all %}
-                    <li>
-                        {{ invitation.league }}, sent by {{ invitation.sender }} on {{ invitation.date_issued }}&nbsp;
-                        <!-- Accept?... -->
-                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:accept' i_id=invitation.id %}">
-                            {% csrf_token %}
-                            <input type="submit" value="Accept" />
-                        </form>
+                        {% if invitation.status == "UNA" %}
+                        <li>
+                            {{ invitation.league }}, sent by {{ invitation.sender }} on {{ invitation.date_issued }}&nbsp;
+                            <!-- Accept?... -->
+                            <form style="display: inline" method="post" action="{% url 'fantasy_draft:accept' i_id=invitation.id %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Accept" />
+                            </form>
                         
-                        <!-- ...or decline? -->
-                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:decline' i_id=invitation.id %}">
-                            {% csrf_token %}
-                            <input type="submit" value="Decline" />
-                        </form>
-                    </li>
+                            <!-- ...or decline? -->
+                            <form style="display: inline" method="post" action="{% url 'fantasy_draft:decline' i_id=invitation.id %}?next={% firstof request.path '/' %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Decline" />
+                            </form>
+                        </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
                 {% else %}
