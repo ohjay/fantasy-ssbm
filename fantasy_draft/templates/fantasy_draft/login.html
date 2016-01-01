@@ -16,7 +16,7 @@
         <span class="error">That's not right! Did you <a class="sky-blue" href="#">forget your password</a>?</span>
     {% endif %}
     
-    <form id="login-form" method="post" action="/user_login/">
+    <form id="loginreg-form" method="post" action="/user_login/">
         {% csrf_token %}
         Username <a class="neon-blue" href="{% url 'fantasy_draft:register' %}">(New user?)</a> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
         Password <input type="password" name="password" value="" maxlength="50" size="50" /><br>

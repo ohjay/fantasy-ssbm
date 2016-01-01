@@ -12,12 +12,23 @@
 <div class="content-container">
     <span id="register-greeting">Your journey begins here.</span>
     
-    <form id="login-form" method="post" action="/user_login/">
+    <form id="loginreg-form" method="post" action="/register/">
         {% csrf_token %}
-        Username <input type="text" name="username" value="" maxlength="30" size="50" autofocus />
-        Email <input type="text" name="username" value="" maxlength="50" size="50" />
-        Password <input type="password" name="password" value="" maxlength="50" size="50" />
-        Confirm Password <input type="password" name="password" value="" maxlength="50" size="50" />
+        <div class="form-centered">
+            <label>{{ user_form.username.label }}</label>
+            {{ user_form.username }}
+        </div>
+        
+        <div class="form-centered">
+            <label>{{ user_form.email.label }}</label>
+            {{ user_form.email }}
+        </div>
+        
+        <div class="form-centered">
+            <label>{{ user_form.password.label }}</label>
+            {{ user_form.password }}
+        </div>
+        
         <input type="submit" class="btn-green" value="Register" />
     </form>
 </div>

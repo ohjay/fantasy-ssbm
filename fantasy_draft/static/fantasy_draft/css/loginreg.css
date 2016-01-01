@@ -68,14 +68,7 @@ input[type="submit"] {
     display: block;
     text-align: center;
     text-shadow: 1px 1px #000000;
-}
-
-#login-greeting {
     margin: 12vh auto 0px auto; 
-}
-
-#register-greeting {
-    margin: 7.5vh auto 0px auto;
 }
                           
 #main-content-wrapper .content-container { 
@@ -88,7 +81,7 @@ input[type="submit"] {
     color: white; 
 }
 
-#login-form { 
+#loginreg-form { 
     width: 25.836vw; /* 371px wide on my computer */
     margin: 3.836vh auto; 
 }

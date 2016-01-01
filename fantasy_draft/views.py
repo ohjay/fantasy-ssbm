@@ -8,6 +8,7 @@ from django.template import RequestContext, loader
 from datetime import datetime, timedelta
 
 from .models import *
+from .forms import *
 
 def index(request):
     return render(request, 'fantasy_draft/index.html', {})
@@ -45,19 +46,22 @@ def create_league(request):
     return render(request, 'fantasy_draft/create.html', context)
     
 def leagues(request):
-    tournaments, user_leagues = Tournament.objects.all(), request.user.leagues
-    tournament_leagues = []
+    if request.user.is_authenticated():
+        tournaments, user_leagues = Tournament.objects.all(), request.user.leagues
+        tournament_leagues = []
     
-    # Fill in tournament_leagues (a list of tournaments and their corresponding leagues)
-    for t in tournaments:
-        user_tleague = user_leagues.filter(tournament__name=t.name).first()
-        if user_tleague is None:
-            tournament_leagues.append((t, None))
-        else:
-            tournament_leagues.append((t, user_tleague))
+        # Fill in tournament_leagues (a list of tournaments and their corresponding leagues)
+        for t in tournaments:
+            user_tleague = user_leagues.filter(tournament__name=t.name).first()
+            if user_tleague is None:
+                tournament_leagues.append((t, None))
+            else:
+                tournament_leagues.append((t, user_tleague))
     
-    context = {'tournament_leagues': tournament_leagues}
-    return render(request, 'fantasy_draft/leagues.html', context)
+        context = {'tournament_leagues': tournament_leagues}
+        return render(request, 'fantasy_draft/leagues.html', context)
+    else:
+        return render(request, 'fantasy_draft/leagues.html', {})
     
 def standings(request):
     league_list = League.objects.order_by('id')[:5]
@@ -68,14 +72,34 @@ def login(request):
     return render(request, 'fantasy_draft/login.html', {})
     
 def register(request):
-    return render(request, 'fantasy_draft/register.html', {})
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            # Save the new user to the database
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            
+            # Log the user in
+            user = authenticate(username=request.POST['username'],
+                    password=request.POST['password'])
+            auth.login(request, user)
+        else:
+            print(str(user_form.errors))
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
+    else:
+        user_form = UserForm()
+        return render(request, 'fantasy_draft/register.html', {'user_form': user_form})
     
 def info(request):
     return render(request, 'fantasy_draft/info.html', {})
     
 def profile(request):
-    context = {'user': request.user}
-    return render(request, 'fantasy_draft/profile.html', context)
+    if request.user.is_authenticated():
+        context = {'user': request.user}
+        return render(request, 'fantasy_draft/profile.html', context)
+    else:
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     
 def user_login(request):
     context = RequestContext(request)
@@ -85,9 +109,7 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            template = loader.get_template('fantasy_draft/index.html')
-            context = RequestContext(request, {})
-            return HttpResponse(template.render(context))
+            return HttpResponseRedirect(reverse('fantasy_draft:index'))
         else:
             return render_to_response('fantasy_draft/login.html', 
                     context_instance=RequestContext(request, {'incorrect_log_in': True}))

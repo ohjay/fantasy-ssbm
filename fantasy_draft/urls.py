@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^standings/$', views.standings, name='standings'),
     # ex: /fantasy_draft/login
     url(r'^login/$', views.login, name='login'),
-    # ex: /fantasy_draft/login
+    # ex: /fantasy_draft/register
     url(r'^register/$', views.register, name='register'),
     # ex: /fantasy_draft/info
     url(r'^info/$', views.info, name='info'),
