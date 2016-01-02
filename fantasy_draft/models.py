@@ -9,10 +9,21 @@ class Tournament(models.Model):
         return self.name
 
 class League(models.Model):
+    PHASES = (
+        ('PRE', 'Phase 1: Preliminary'), # users can still join/leave the league
+        ('BID', 'Phase 2: Bidding'), # users are locked in and are now bidding for order
+        ('SEL', 'Phase 3: Selection'), # users should be selecting players for their drafts
+        ('COM', 'Phase 4: Complete'), # all draft picks have now been made
+    )
+    phase = models.CharField(max_length=3, choices=PHASES, default='PRE')
+    
+    # Options selected by the creator:
+    random_order = models.BooleanField(default=False) # order is either random or determined by bidding
+    snake_style = models.BooleanField(default=False) # snake style or cyclic sequential
+    number_of_picks = models.PositiveSmallIntegerField()
+    
     name = models.CharField(max_length=30) # a name for this league (could be anything)
     date_created = models.DateTimeField()
-    activated = models.BooleanField(default=False) # describes whether or not the league has started
-    number_of_picks = models.PositiveSmallIntegerField()
     tournament = models.ForeignKey(Tournament)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     def __str__(self):

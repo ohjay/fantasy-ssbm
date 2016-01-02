@@ -20,9 +20,9 @@
             </p>
         </div>
     </div>
-    {% if league.activated %}
-    <div class="row bordered">
-        <div class="col-4 bordered border-left border-right">
+    {% if league.phase != 'PRE' %}
+    <div class="row">
+        <div class="col-4 bordered border-left">
             <p>
                 Drafts:
                 <ul>
@@ -30,6 +30,12 @@
                     <li>{{ draft.user }}'s draft:</li>
                     {% endfor %}
                 </ul>
+            </p>
+        </div>
+        <div class="col-2 bordered border-right">
+            <p style="background-color: #67c8ff">
+                <u>Your Turn</u><br>
+                Enter Pick
             </p>
         </div>
     </div>

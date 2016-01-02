@@ -28,11 +28,15 @@ class LeagueForm(forms.ModelForm):
     number_of_picks = forms.IntegerField(widget=forms.NumberInput(attrs={
         'min': '1', 'max': '10', 'step': '1'
     }))
+    random_order = forms.BooleanField(required=False)
+    snake_style = forms.BooleanField(required=False)
     
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['number_of_picks'].label = "Number of picks (max: 10)"
+        self.fields['random_order'].label = "Random order? (default: determined by bidding)"
+        self.fields['snake_style'].label = "Snake style?"
     
     class Meta:
         model = League
-        fields = ('name', 'number_of_picks')
+        fields = ('name', 'number_of_picks', 'random_order', 'snake_style')

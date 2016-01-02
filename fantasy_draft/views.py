@@ -92,7 +92,15 @@ def activate(request, league_id):
         return render(request, 'fantasy_draft/index.html', {})
     else:
         # Activate the league
-        league.activated = True
+        if league.random_order:
+            league.phase = 'SEL'
+            
+            # Assign a random order for the players
+            num_users = league.userprofile_set.count()
+            for u in league.userprofile_set.all():
+                # TODO: figure out order
+        else:
+            league.phase = 'BID'
         league.save()
         
         # Create drafts for the users in the league
@@ -127,7 +135,7 @@ def create_league(request, t_id):
     if request.user.is_authenticated() and not request.user.leagues.filter(tournament__id=t_id):
         if request.method == 'POST':
             league_form = LeagueForm(data=request.POST)
-            if league_form.is_valid(): # it should pretty much always be valid
+            if league_form.is_valid():
                 # Create a new league and save it
                 league = league_form.save(commit=False)
                 league.creator = request.user
@@ -141,6 +149,15 @@ def create_league(request, t_id):
                 
                 # Redirect
                 return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
+            else:
+                error_msg = league_form.errors.as_text()
+                
+                return render(request, 'fantasy_draft/create_league.html', {
+                    'league_form': league_form,
+                    't_id': t_id,
+                    't_name': Tournament.objects.get(pk=t_id),
+                    'error_msg': "[ERROR] " + error_msg,
+                })
         else:
             # Render a blank creation form
             league_form = LeagueForm()
@@ -148,6 +165,7 @@ def create_league(request, t_id):
                 'league_form': league_form,
                 't_id': t_id,
                 't_name': Tournament.objects.get(pk=t_id),
+                'error_msg': False,
             })
     else:
         # Permission denied

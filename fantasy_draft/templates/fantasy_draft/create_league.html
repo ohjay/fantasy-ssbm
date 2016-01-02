@@ -14,6 +14,10 @@
     <div class="row">
         <!-- Create a league -->
         <div class="col-3 bordered border-left">
+            {% if error_msg %}
+            <span style="color: red"><strong>{{ error_msg }}</strong></span>
+            {% endif %}
+            
             <h2>Enter a name for your {{ t_name }} league!</h2>
     
             <form method="post" action="{% url 'fantasy_draft:create_league' t_id=t_id %}">
@@ -22,8 +26,16 @@
                 <label>{{ league_form.name.label }}</label>&nbsp;
                 {{ league_form.name }}<br><br>
                 
+                <h2>Customize your {{ t_name }} league!</h2>
+                
                 <label>{{ league_form.number_of_picks.label }}</label>&nbsp;
                 {{ league_form.number_of_picks }}<br><br>
+                
+                <label>{{ league_form.random_order.label }}</label>&nbsp;
+                {{ league_form.random_order }}<br><br>
+                
+                <label>{{ league_form.snake_style.label }}</label>&nbsp;
+                {{ league_form.snake_style }}<br><br>
         
                 <input type="submit" value="Create League" />
             </form>
