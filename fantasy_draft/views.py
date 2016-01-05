@@ -70,8 +70,8 @@ def accept(request, i_id):
         invitation.status = "ACC"
         invitation.save()
         
-        request.user.leagues.add(invitation.league)
-        request.user.save()
+        Order.objects.create(number=league.userprofile_set.count() + 1, 
+                user=request.user, league=invitation.league)
         
         return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
     
@@ -98,6 +98,7 @@ def activate(request, league_id):
             # Assign a random order for the players
             num_users = league.userprofile_set.count()
             for u in league.userprofile_set.all():
+                pass
                 # TODO: figure out order
         else:
             league.phase = 'BID'
@@ -144,8 +145,8 @@ def create_league(request, t_id):
                 league.save()
                 
                 # Then add it to the user's collection of leagues
-                request.user.leagues.add(league)
-                request.user.save()
+                Order.objects.create(number=league.userprofile_set.count() + 1, 
+                        user=request.user, league=league)
                 
                 # Redirect
                 return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
