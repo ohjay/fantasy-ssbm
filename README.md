@@ -5,4 +5,4 @@ View the public rendition here: http://fantasy-ssbm.appspot.com.
 
 ## Shoutouts
 - [FlipClock.js](http://flipclockjs.com/): used to create the countdown timer on the main page
-- [Django](https://www.djangoproject.com/): this is a very accessible framework!
+- [Django](https://www.djangoproject.com/): used to create everything else

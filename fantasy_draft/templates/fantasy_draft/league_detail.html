@@ -27,16 +27,30 @@
                 Drafts:
                 <ul>
                     {% for draft in league.draft_set.all %}
-                    <li>{{ draft.user }}'s draft:</li>
+                    <li>
+                        {{ draft.user }}'s draft:
+                        <ul>
+                            {% for player in draft.players.all %}
+                            <li>{{ player }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                     {% endfor %}
                 </ul>
             </p>
         </div>
         <div class="col-2 bordered border-right">
+            {% if league.phase == 'BID' %}
+            <p style="background-color: #67c8ff">
+                <u>It's the bidding phase!</u><br>
+                Enter Pick
+            </p>
+            {% elif league.phase == 'SEL' %}
             <p style="background-color: #67c8ff">
                 <u>Your Turn</u><br>
                 Enter Pick
             </p>
+            {% endif %}
         </div>
     </div>
     {% else %}

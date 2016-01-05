@@ -59,9 +59,14 @@ class Result(models.Model):
         
 class Order(models.Model):
     number = models.PositiveSmallIntegerField()
+    
+    # Only used if users bid for order
+    is_final = models.BooleanField(default=False) # describes whether the ordering position is final
+    bid = models.PositiveIntegerField(null=True, blank=True)
+    
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     league = models.ForeignKey(League)
-        
+    
 class UserProfile(AbstractUser):
     leagues = models.ManyToManyField(League, through='Order', blank=True)
     

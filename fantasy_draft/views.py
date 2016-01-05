@@ -5,10 +5,12 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
-from datetime import datetime, timedelta
 
 from .models import *
 from .forms import *
+
+from datetime import datetime, timedelta
+import random
 
 def index(request):
     return render(request, 'fantasy_draft/index.html', {})
@@ -70,7 +72,7 @@ def accept(request, i_id):
         invitation.status = "ACC"
         invitation.save()
         
-        Order.objects.create(number=league.userprofile_set.count() + 1, 
+        Order.objects.create(number=invitation.league.userprofile_set.count() + 1, 
                 user=request.user, league=invitation.league)
         
         return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
@@ -96,10 +98,15 @@ def activate(request, league_id):
             league.phase = 'SEL'
             
             # Assign a random order for the players
-            num_users = league.userprofile_set.count()
+            order_options = list(range(1, league.userprofile_set.count() + 1))
             for u in league.userprofile_set.all():
-                pass
-                # TODO: figure out order
+                user_order = Order.objects.get(user=u, league=league)
+                
+                selected_num = random.choice(order_options)
+                user_order.number = selected_num
+                user_order.save()
+                
+                order_options.remove(selected_num) # this spot in the ordering is TAKEN, son
         else:
             league.phase = 'BID'
         league.save()
