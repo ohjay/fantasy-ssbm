@@ -5,9 +5,11 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
+from django.db.models import Max
 
 from .models import *
 from .forms import *
+from .utils import to_ordinal
 
 from datetime import datetime, timedelta
 import random
@@ -17,6 +19,32 @@ def index(request):
     
 def league_detail(request, invite_sent, league_id):
     league = get_object_or_404(League, pk=league_id)
+    
+    if league.phase == 'BID':
+        league_orders = Order.objects.filter(league=league)
+        temp_orders, final_orders = league_orders.filter(is_final=False), \
+                league_orders.filter(is_final=True)
+        on_auction = final_orders.count()
+        auction_ordinal = to_ordinal(on_auction)
+        
+        # Determine whose turn it is to bid for order
+        next_user = temp_orders.get(is_turn=True).user
+        
+        # Obtain the value of the current highest bid (+ the winning bidder)
+        high_bid = temp_orders.all().aggregate(Max('bid'))['bid__max']
+        high_bidder = temp_orders.filter(bid=high_bid)[0].user
+        
+        return render(request, 'fantasy_draft/league_detail.html', {
+            'league': league,
+            'final_orders': final_orders,
+            'on_auction': on_auction,
+            'auction_ordinal': auction_ordinal,
+            'next_user': next_user,
+            'high_bid': high_bid,
+            'high_bidder': high_bidder,
+        })
+        
+    # Standard view
     return render(request, 'fantasy_draft/league_detail.html', {
         'invite_sent': True if invite_sent == 't' else False,
         'league': league,
@@ -72,7 +100,7 @@ def accept(request, i_id):
         invitation.status = "ACC"
         invitation.save()
         
-        Order.objects.create(number=invitation.league.userprofile_set.count() + 1, 
+        Order.objects.create(number=invitation.league.userprofile_set.count(), 
                 user=request.user, league=invitation.league)
         
         return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
@@ -98,7 +126,7 @@ def activate(request, league_id):
             league.phase = 'SEL'
             
             # Assign a random order for the players
-            order_options = list(range(1, league.userprofile_set.count() + 1))
+            order_options = list(range(league.userprofile_set.count()))
             for u in league.userprofile_set.all():
                 user_order = Order.objects.get(user=u, league=league)
                 
@@ -152,8 +180,7 @@ def create_league(request, t_id):
                 league.save()
                 
                 # Then add it to the user's collection of leagues
-                Order.objects.create(number=league.userprofile_set.count() + 1, 
-                        user=request.user, league=league)
+                Order.objects.create(number=0, user=request.user, league=league, is_turn=True)
                 
                 # Redirect
                 return HttpResponseRedirect(reverse('fantasy_draft:leagues'))

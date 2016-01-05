@@ -26,7 +26,7 @@ class League(models.Model):
     name = models.CharField(max_length=30) # a name for this league (could be anything)
     date_created = models.DateTimeField()
     tournament = models.ForeignKey(Tournament)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='leagues_created')
     
     def __str__(self):
         return self.name
@@ -62,7 +62,8 @@ class Order(models.Model):
     
     # Only used if users bid for order
     is_final = models.BooleanField(default=False) # describes whether the ordering position is final
-    bid = models.PositiveIntegerField(null=True, blank=True)
+    is_turn = models.BooleanField(default=False) # true if it's this user's turn to bid
+    bid = models.PositiveIntegerField(default=0)
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     league = models.ForeignKey(League)

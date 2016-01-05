@@ -43,7 +43,7 @@
             {% if league.phase == 'BID' %}
             <p style="background-color: #67c8ff">
                 <u>It's the bidding phase!</u><br>
-                Enter Pick
+                We're bidding for {{ auction_ordinal }} pick. The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
             </p>
             {% elif league.phase == 'SEL' %}
             <p style="background-color: #67c8ff">
