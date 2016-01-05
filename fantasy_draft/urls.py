@@ -36,4 +36,8 @@ urlpatterns = [
     url(r'^decline/(?P<i_id>[0-9]+)$', views.decline, name='decline'),
     # ex: /fantasy_draft/activate/23
     url(r'^activate/(?P<league_id>[0-9]+)$', views.activate, name='activate'),
+    # ex: /fantasy_draft/drop_out/10/2
+    url(r'^drop_out/(?P<league_id>[0-9]+)/(?P<on_auction>[0-9]+)$', views.drop_out, name='drop_out'),
+    # ex: /fantasy_draft/bid/10
+    url(r'^bid/(?P<league_id>[0-9]+)$', views.bid, name='bid'),
 ]

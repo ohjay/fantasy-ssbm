@@ -22,7 +22,7 @@ def league_detail(request, invite_sent, league_id):
     
     if league.phase == 'BID':
         league_orders = Order.objects.filter(league=league)
-        temp_orders, final_orders = league_orders.filter(is_final=False), \
+        temp_orders, final_orders = league_orders.filter(is_final=False).exclude(bid=-1), \
                 league_orders.filter(is_final=True)
         on_auction = final_orders.count()
         auction_ordinal = to_ordinal(on_auction)
@@ -36,6 +36,7 @@ def league_detail(request, invite_sent, league_id):
         
         return render(request, 'fantasy_draft/league_detail.html', {
             'league': league,
+            'temp_orders': temp_orders,
             'final_orders': final_orders,
             'on_auction': on_auction,
             'auction_ordinal': auction_ordinal,
@@ -43,12 +44,116 @@ def league_detail(request, invite_sent, league_id):
             'high_bid': high_bid,
             'high_bidder': high_bidder,
         })
+    elif league.phase == 'SEL':
+        if request.user.is_authenticated():
+            order_num = Order.objects.get(user=request.user, league=league).number
+            
+            return render(request, 'fantasy_draft/league_detail.html', {
+                'league': league,
+                'ordinal': to_ordinal(order_num)
+            })
         
     # Standard view
     return render(request, 'fantasy_draft/league_detail.html', {
         'invite_sent': True if invite_sent == 't' else False,
         'league': league,
     })
+    
+def bid(request, league_id):
+    if not request.user.is_authenticated() or request.method != "POST":
+        # This should not be happening
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
+        league = get_object_or_404(League, pk=league_id)
+        
+        # Update the user's bid
+        order = Order.objects.get(user=request.user, league=league)
+        order.bid = request.POST['bid']
+        order.is_turn = False
+        order.save()
+        
+        # Transition to the next user's turn
+        remaining_orders = list(Order.objects.filter(league=league) \
+                .filter(is_final=False) \
+                .exclude(bid=-1))
+                
+        user_index = remaining_orders.index(order)
+        if user_index + 1 == len(remaining_orders):
+            next_order = remaining_orders[0]
+        else:
+            next_order = remaining_orders[user_index + 1]
+            
+        next_order.is_turn = True
+        next_order.save()
+        
+        return HttpResponseRedirect(request.GET.get('next', '/'))
+
+def drop_out(request, league_id, on_auction):
+    """Drop out of the bidding round."""
+    if not request.user.is_authenticated() or request.method != "POST":
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
+        league = get_object_or_404(League, pk=league_id)
+        
+        # Grab a list of the orders (and, by extension, users) who are still in
+        remaining_orders = list(Order.objects.filter(league=league) \
+                .filter(is_final=False).exclude(bid=-1))
+        
+        # Edit the bid value to be the "drop out" signal
+        order = Order.objects.get(user=request.user, league=league)
+        order.bid = -1
+        order.is_turn = False
+        order.save()
+        
+        # Check if there's only one user left in the running
+        still_remaining = Order.objects.filter(league=league) \
+                .filter(is_final=False).exclude(bid=-1)
+        if still_remaining.count() == 1:
+            # ...there is!
+            order_to_finalize = still_remaining[0]
+            
+            # Give the user the order that he/she won, and set status to "final"
+            order_to_finalize.number = on_auction
+            order_to_finalize.is_final = True
+            order_to_finalize.save()
+            
+            # Check on the rest of the bidding progress
+            temp_orders = Order.objects.filter(league=league).filter(is_final=False)
+            num_orders_left = temp_orders.count()
+            if num_orders_left == 1:
+                # There's one user left, so he/she gets last pick by default
+                last_pick = temp_orders[0]
+                last_pick.number = int(on_auction) + 1
+                last_pick.is_final = True
+                last_pick.save()
+            
+            if num_orders_left <= 1:
+                # The bidding phase is over!
+                league.phase = 'SEL'
+                league.save()
+            else:
+                # Give the turn to the first player who hasn't got a final order yet
+                next_order = temp_orders[0]
+                next_order.is_turn = True
+                next_order.bid = 0
+                next_order.save()
+                
+                # Reassign all of the rest of the bids to be 0
+                for o in temp_orders.exclude(is_turn=True).all():
+                    o.bid = 0
+                    o.save()
+        else:
+            # Nope. The round continues
+            user_index = remaining_orders.index(order)
+            if user_index + 1 == len(remaining_orders):
+                next_order = remaining_orders[0]
+            else:
+                next_order = remaining_orders[user_index + 1]
+            
+            next_order.is_turn = True
+            next_order.save()
+        
+        return HttpResponseRedirect(request.GET.get('next', '/'))
     
 def user_search(request, league_id):
     if request.method == "GET":

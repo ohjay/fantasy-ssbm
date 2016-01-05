@@ -41,13 +41,65 @@
         </div>
         <div class="col-2 bordered border-right">
             {% if league.phase == 'BID' %}
-            <p style="background-color: #67c8ff">
-                <u>It's the bidding phase!</u><br>
-                We're bidding for {{ auction_ordinal }} pick. The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
-            </p>
+                {% if user.is_authenticated and user == next_user %}
+                    <p style="background-color: #67c8ff">
+                        <u>It's your turn to bid!</u><br>
+                        We're bidding for {{ auction_ordinal }} pick. The high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
+                    </p><br>
+                        
+                    The people still in are:
+                    <ul>
+                        {% for o in temp_orders %}
+                        <li>{{ o.user }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    {% if final_orders.count == 0 %}
+                        No order has been determined yet.
+                    {% else %}
+                    <ol>
+                        Currently, the order is:
+                        
+                        {% for o in final_orders %}
+                        <li>{{ o.user }} ({{ o.number }})</li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                    
+                    <br><br>
+                    
+                    <form method="post" action="{% url 'fantasy_draft:bid' league_id=league.id %}?next={% firstof request.path '/' %}">
+                        {% csrf_token %}
+                        How much do you want to bid?&nbsp; <input type="number" name="bid" value="" />&nbsp; 
+                        <input type="submit" value="Bid" />
+                    </form>
+                    
+                    <form method="post" action="{% url 'fantasy_draft:drop_out' league_id=league.id on_auction=on_auction %}?next={% firstof request.path '/' %}">
+                        {% csrf_token %}
+                        Or you can drop out of the bidding.&nbsp; <input type="submit" value="Fold" />&nbsp; 
+                    </form>
+                {% else %}
+                    <p style="background-color: #67c8ff">
+                        <u>It's the bidding phase!</u><br>
+                        We're bidding for {{ auction_ordinal }} pick. The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
+                        
+                        <ol>
+                            {% if final_orders.count == 0 %}
+                                No order has been determined yet.
+                            {% else %}
+                                Currently, the order is:
+                                
+                                {% for o in final_orders %}
+                                <li>{{ o.user }} ({{ o.number }})</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ol>
+                    </p>
+                {% endif %}
             {% elif league.phase == 'SEL' %}
             <p style="background-color: #67c8ff">
                 <u>Your Turn</u><br>
+                You have {{ ordinal }} pick.<br>
                 Enter Pick
             </p>
             {% endif %}

@@ -1,5 +1,5 @@
 # Fantasy SSBM
-A website that enables the streamlined creation and management of SSBM (Super Smash Bros: Melee) fantasy leagues. Included as part of the package are a countdown to the next tournament and facilities for objective player rankings.
+A website that enables the streamlined creation and management of SSBM (Super Smash Bros: Melee) fantasy leagues. Includes facilities for objective player rankings.
 
 View the public rendition here: http://fantasy-ssbm.appspot.com.
 
