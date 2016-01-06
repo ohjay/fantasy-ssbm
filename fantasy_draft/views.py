@@ -45,12 +45,22 @@ def league_detail(request, invite_sent, league_id):
             'high_bidder': high_bidder,
         })
     elif league.phase == 'SEL':
+        # Figure out whose turn it is
+        league_orders = Order.objects.filter(league=league)
+        next_user = league_orders.get(is_turn=True).user
+        
         if request.user.is_authenticated():
             order_num = Order.objects.get(user=request.user, league=league).number
             
             return render(request, 'fantasy_draft/league_detail.html', {
                 'league': league,
-                'ordinal': to_ordinal(order_num)
+                'ordinal': to_ordinal(order_num),
+                'next_user': next_user,
+            })
+        else:
+            return render(request, 'fantasy_draft/league_detail.html', {
+                'league': league,
+                'next_user': next_user,
             })
         
     # Standard view
@@ -58,6 +68,25 @@ def league_detail(request, invite_sent, league_id):
         'invite_sent': True if invite_sent == 't' else False,
         'league': league,
     })
+    
+def select_player(request, draft_id, player_id):
+    if not request.user.is_authenticated() or request.method != "POST":
+        # Weird. This shouldn't ever be happening
+        return render(request, 'fantasy_draft/index.html', {})
+    else:
+        draft = get_object_or_404(Draft, pk=draft_id)
+        player = get_object_or_404(Player, pk=player_id)
+        
+        # Add the player to the given draft
+        draft.players.add(player)
+        draft.save()
+        
+        # Switch turns
+        # Sort by order, go up from lowest to highest (or, if snake style, go back) otherwise, start at 0 again
+        # Might need to keep track of direction
+        
+        # Quick, back to the league page
+        return HttpResponseRedirect('/league/f/' + draft.league.id)
     
 def bid(request, league_id):
     if not request.user.is_authenticated() or request.method != "POST":
@@ -161,10 +190,11 @@ def user_search(request, league_id):
         users = []
         
         if name_input is not None and name_input != u"":
-            user_set = UserProfile.objects.filter(username__contains = name_input)
+            user_set = UserProfile.objects.filter(username__contains=name_input)
             user_set = user_set.extra(select={'length': 'Length(username)'}).order_by('length')
             tournament = get_object_or_404(League, pk=league_id).tournament
             
+            # Exclude users that already have a league for this tournament
             for u in user_set:
                 exclude = False
                 for l in u.leagues.all():
@@ -180,6 +210,35 @@ def user_search(request, league_id):
         return render(request, 'fantasy_draft/user_search.html', {
             'users': users,
             'league_id': league_id,
+        })
+        
+def player_search(request, league_id):
+    if request.method == "GET":
+        tag_input = request.GET['name_input']
+        players, league = [], get_object_or_404(League, pk=league_id)
+        drafts = league.draft_set
+        
+        if tag_input is not None and tag_input != u"":
+            player_set = league.tournament.player_set.filter(tag__contains=tag_input)
+            player_set = player_set.extra(select={'length': 'Length(tag)'}).order_by('length')
+            
+            # Exclude players that have already been chosen by someone in this league
+            # First we'll compile a list of the players that HAVE been chosen...
+            chosen_players = []
+            for draft in drafts.all():
+                chosen_players.extend(list(draft.players.all()))
+                
+            # And then, if any of those players are in the output, we'll remove them
+            for player in player_set:
+                if player not in chosen_players:
+                    players.append(player)
+                    
+                    # We'll restrict the size of the output to 5 for now
+                    if len(players) > 4:
+                        break
+        return render(request, 'fantasy_draft/player_search.html', {
+            'players': players,
+            'draft': drafts.get(user=request.user)
         })
 
 def invite(request, recipient_id, league_id):
@@ -252,20 +311,6 @@ def activate(request, league_id):
             u_draft.save()
         
         return HttpResponseRedirect(request.GET.get('next', '/'))
-    
-def select_player(request, draft_id):
-    draft = get_object_or_404(Draft, pk=draft_id)
-    try:
-        player = draft.get(pk=request.POST['player_selection'])
-    except (KeyError, Player.DoesNotExist):
-        return render(request, 'fantasy_draft/league_detail.html', {
-            'draft': draft,
-            'error_message': "Filler error message in views.py; change later",
-        })
-    else:
-        draft.players += player
-        draft.save()
-        return HttpResponseRedirect(reverse('fantasy_draft:drafts', args=(d.id,)))
 
 def player_rankings(request):
     context = {'date_now': datetime.now().date, 

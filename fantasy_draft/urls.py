@@ -6,10 +6,10 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     # ex: /fantasy_draft/league/t/2
     url(r'^league/(?P<invite_sent>[tf])/(?P<league_id>[0-9]+)/$', views.league_detail, name='league_detail'),
-    # ex: /fantasy_draft/user_search
+    # ex: /fantasy_draft/user_search/1
     url(r'^user_search/(?P<league_id>[0-9]+)/$', views.user_search, name='user_search'),
-    # ex: /fantasy_draft/2/1/select
-    url(r'^[0-9]+/(?P<draft_id>[0-9]+)/select/$', views.select_player, name='select'),
+    # ex: /fantasy_draft/select_player/483
+    url(r'^select_player/(?P<draft_id>[0-9]+)/(?P<player_id>[0-9]+)/$', views.select_player, name='select_player'),
     # ex: /fantasy_draft/players
     url(r'^player_rankings/$', views.player_rankings, name='player_rankings'),
     # ex: /fantasy_draft/leagues
@@ -40,4 +40,6 @@ urlpatterns = [
     url(r'^drop_out/(?P<league_id>[0-9]+)/(?P<on_auction>[0-9]+)$', views.drop_out, name='drop_out'),
     # ex: /fantasy_draft/bid/10
     url(r'^bid/(?P<league_id>[0-9]+)$', views.bid, name='bid'),
+    # ex: /fantasy_draft/player_search/10
+    url(r'^player_search/(?P<league_id>[0-9]+)/$', views.player_search, name='player_search'),
 ]

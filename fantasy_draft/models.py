@@ -59,10 +59,10 @@ class Result(models.Model):
         
 class Order(models.Model):
     number = models.PositiveSmallIntegerField()
+    is_turn = models.BooleanField(default=False)
     
     # Only used if users bid for order
     is_final = models.BooleanField(default=False) # describes whether the ordering position is final
-    is_turn = models.BooleanField(default=False) # true if it's this user's turn to bid
     bid = models.IntegerField(default=0) # -1 signifies that the user has dropped out for the round
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
