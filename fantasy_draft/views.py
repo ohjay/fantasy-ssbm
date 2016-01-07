@@ -95,7 +95,7 @@ def select_player(request, draft_id, player_id):
                 if handle_completion(draft):
                     return HttpResponseRedirect('/league/f/' + str(draft.league.id))
                 else:
-                    next_order = league_orders[1]
+                    next_order = user_order # it's the user's turn again
                     draft.league.ascending = True
                     draft.league.save()
             else:
@@ -107,7 +107,7 @@ def select_player(request, draft_id, player_id):
                     return HttpResponseRedirect('/league/f/' + str(draft.league.id))
                 elif draft.league.snake_style:
                     # Snake back around
-                    next_order = league_orders[user_index - 1]
+                    next_order = user_order # it's the user's turn again
                     draft.league.ascending = False
                     draft.league.save()
                 else:
