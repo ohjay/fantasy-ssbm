@@ -6,3 +6,12 @@ def to_ordinal(num):
         return str(num + 1) + 'th'
     return str(num + 1) + SUFFIXES.get((num + 1) % 10, 'th')
     
+def handle_completion(draft):
+    """If the league is complete, switches phases and returns True."""
+    if draft.players.count() < draft.league.number_of_picks:
+        return False
+        
+    draft.league.phase = 'COM' # the selection phase is over
+    draft.league.save()
+    return True
+    

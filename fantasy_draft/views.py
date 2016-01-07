@@ -9,7 +9,7 @@ from django.db.models import Max
 
 from .models import *
 from .forms import *
-from .utils import to_ordinal
+from .utils import to_ordinal, handle_completion
 
 from datetime import datetime, timedelta
 import random
@@ -82,11 +82,44 @@ def select_player(request, draft_id, player_id):
         draft.save()
         
         # Switch turns
-        # Sort by order, go up from lowest to highest (or, if snake style, go back) otherwise, start at 0 again
-        # Might need to keep track of direction
+        league_orders = Order.objects.filter(league=draft.league).order_by('number')
+        user_order, league_orders = league_orders.get(user=request.user), list(league_orders)
+        user_index = league_orders.index(user_order)
+        
+        user_order.is_turn = False
+        user_order.save()
+        
+        if draft.league.snake_style and not draft.league.ascending:
+            # Descending order
+            if user_index == 0:
+                if handle_completion(draft):
+                    return HttpResponseRedirect('/league/f/' + str(draft.league.id))
+                else:
+                    next_order = league_orders[1]
+                    draft.league.ascending = True
+                    draft.league.save()
+            else:
+                next_order = league_orders[user_index - 1]
+        else:
+            # Ascending order
+            if user_index + 1 == len(league_orders):
+                if handle_completion(draft):
+                    return HttpResponseRedirect('/league/f/' + str(draft.league.id))
+                elif draft.league.snake_style:
+                    # Snake back around
+                    next_order = league_orders[user_index - 1]
+                    draft.league.ascending = False
+                    draft.league.save()
+                else:
+                    next_order = league_orders[0]
+            else:
+                next_order = league_orders[user_index + 1]
+            
+        next_order.is_turn = True
+        next_order.save()
         
         # Quick, back to the league page
-        return HttpResponseRedirect('/league/f/' + draft.league.id)
+        return HttpResponseRedirect('/league/f/' + str(draft.league.id))
     
 def bid(request, league_id):
     if not request.user.is_authenticated() or request.method != "POST":
@@ -160,6 +193,11 @@ def drop_out(request, league_id, on_auction):
                 # The bidding phase is over!
                 league.phase = 'SEL'
                 league.save()
+                
+                # Give the turn to the player with order 0
+                first_order = Order.objects.filter(league=league).get(number=0)
+                first_order.is_turn = True
+                first_order.save()
             else:
                 # Give the turn to the first player who hasn't got a final order yet
                 next_order = temp_orders[0]

@@ -22,7 +22,11 @@
     </div>
     {% if league.phase != 'PRE' %}
     <div class="row">
+        {% if league.phase == 'COM' %}
+        <div class="col-6 bordered border-left">
+        {% else %}
         <div class="col-4 bordered border-left">
+        {% endif %}
             <p>
                 Drafts:
                 <ul>
@@ -39,7 +43,11 @@
                 </ul>
             </p>
         </div>
+        {% if league.phase != 'COM' %}
         <div class="col-2 bordered border-right">
+            
+            <!-- ========== BIDDING SELECTION BOX ========== -->
+            
             {% if league.phase == 'BID' %}
                 {% if user.is_authenticated and user == next_user %}
                     <p style="background-color: #67c8ff">
@@ -96,6 +104,9 @@
                         </ol>
                     </p>
                 {% endif %}
+                
+            <!-- ========== PLAYER SELECTION BOX ========== -->
+            
             {% elif league.phase == 'SEL' %}
                 {% if user.is_authenticated %}
                     {% if user == next_user %}
@@ -125,6 +136,7 @@
                 {% endif %}
             {% endif %}
         </div>
+        {% endif %}
     </div>
     {% else %}
         <!-- Indent for visual effect -->

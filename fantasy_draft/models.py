@@ -23,6 +23,9 @@ class League(models.Model):
     snake_style = models.BooleanField(default=False) # snake style or cyclic sequential
     number_of_picks = models.PositiveSmallIntegerField()
     
+    # Only used if the league follows snake order
+    ascending = models.BooleanField(default=True)
+    
     name = models.CharField(max_length=30) # a name for this league (could be anything)
     date_created = models.DateTimeField()
     tournament = models.ForeignKey(Tournament)
