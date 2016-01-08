@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
-from django.conf import settings
+from ...models import UserProfile
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not settings.AUTH_USER_MODEL.objects.filter(username="admin").exists():
-            settings.AUTH_USER_MODEL.objects.create_superuser("admin", "admin@admin.com", "admin")
+        if not UserProfile.objects.filter(username="admin").exists():
+            UserProfile.objects.create_superuser("admin", "admin@admin.com", "admin")
