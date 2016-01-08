@@ -1,7 +1,7 @@
 # Fantasy SSBM
 A website that enables the streamlined creation and management of SSBM (Super Smash Bros: Melee) fantasy leagues. Includes facilities for objective player rankings.
 
-View the public rendition here: http://fantasy-ssbm.appspot.com.
+View the public rendition here: ~~http://fantasy-ssbm.appspot.com~~ LINK BROKEN; PLANNING ON SWITCHING PRODUCTION SERVERS IN A FEW DAYS.
 
 ## Shoutouts
 - [FlipClock.js](http://flipclockjs.com/): used to create the countdown timer on the main page
