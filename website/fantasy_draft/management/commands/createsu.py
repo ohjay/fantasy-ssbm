@@ -3,5 +3,5 @@ from ...models import UserProfile
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not UserProfile.objects.filter(username="admin").exists():
-            UserProfile.objects.create_superuser("admin", "admin@admin.com", "admin")
+        if not UserProfile.objects.filter(username="owenjow").exists():
+            UserProfile.objects.create_superuser("owenjow", "owen@owen.com", "changethis")

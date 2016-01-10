@@ -228,7 +228,7 @@ def user_search(request, league_id):
         users = []
         
         if name_input is not None and name_input != u"":
-            user_set = UserProfile.objects.filter(username__contains=name_input)
+            user_set = UserProfile.objects.filter(username__icontains=name_input)
             user_set = user_set.extra(select={'length': 'Length(username)'}).order_by('length')
             tournament = get_object_or_404(League, pk=league_id).tournament
             
@@ -257,7 +257,7 @@ def player_search(request, league_id):
         drafts = league.draft_set
         
         if tag_input is not None and tag_input != u"":
-            player_set = league.tournament.player_set.filter(tag__contains=tag_input)
+            player_set = league.tournament.player_set.filter(tag__icontains=tag_input)
             player_set = player_set.extra(select={'length': 'Length(tag)'}).order_by('length')
             
             # Exclude players that have already been chosen by someone in this league
@@ -268,6 +268,7 @@ def player_search(request, league_id):
                 
             # And then, if any of those players are in the output, we'll remove them
             for player in player_set:
+                print(player)
                 if player not in chosen_players:
                     players.append(player)
                     
