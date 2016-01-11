@@ -335,6 +335,7 @@ def activate(request, league_id):
                 
                 selected_num = random.choice(order_options)
                 user_order.number = selected_num
+                user_order.is_turn = (selected_num == 0) # give the turn to the first user
                 user_order.save()
                 
                 order_options.remove(selected_num) # this spot in the ordering is TAKEN, son
