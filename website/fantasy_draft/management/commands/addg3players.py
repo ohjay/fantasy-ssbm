@@ -55,4 +55,3 @@ class Command(BaseCommand):
                     p = p[0]
                 p.tournaments.add(genesis3)
                 p.save()
-                

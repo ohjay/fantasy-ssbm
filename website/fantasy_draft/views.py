@@ -235,10 +235,13 @@ def user_search(request, league_id):
             # Exclude users that already have a league for this tournament
             for u in user_set:
                 exclude = False
-                for l in u.leagues.all():
-                    # This is acceptable, since each user has a very limited number of leagues
-                    if l.tournament == tournament:
-                        exclude = True
+                if Invitation.objects.filter(recipient=u).filter(sender=request.user):
+                    exclude = True
+                else:
+                    for l in u.leagues.all():
+                        # This is acceptable, since each user has a very limited number of leagues
+                        if l.tournament == tournament:
+                            exclude = True
                         
                 if not exclude:
                     users.append(u)
