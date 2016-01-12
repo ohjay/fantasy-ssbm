@@ -42,4 +42,6 @@ urlpatterns = [
     url(r'^bid/(?P<league_id>[0-9]+)$', views.bid, name='bid'),
     # ex: /fantasy_draft/player_search/10
     url(r'^player_search/(?P<league_id>[0-9]+)/$', views.player_search, name='player_search'),
+    # ex: /fantasy_draft/leave/31
+    url(r'^leave/(?P<league_id>[0-9]+)$', views.leave, name='leave'),
 ]

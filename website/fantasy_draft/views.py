@@ -64,9 +64,16 @@ def league_detail(request, invite_sent, league_id):
             })
         
     # Standard view
+    if request.user.is_authenticated():
+        in_league = Order.objects.filter(user=request.user) \
+                .filter(league=league).count() > 0
+    else:
+        in_league = False
+    
     return render(request, 'fantasy_draft/league_detail.html', {
         'invite_sent': True if invite_sent == 't' else False,
         'league': league,
+        'in_league': in_league,
     })
     
 def select_player(request, draft_id, player_id):
@@ -235,7 +242,7 @@ def user_search(request, league_id):
             # Exclude users that already have a league for this tournament
             for u in user_set:
                 exclude = False
-                if Invitation.objects.filter(recipient=u).filter(sender=request.user):
+                if Invitation.objects.filter(recipient=u).filter(sender=request.user).filter(status="UNA"):
                     exclude = True
                 else:
                     for l in u.leagues.all():
@@ -354,6 +361,13 @@ def activate(request, league_id):
             u_draft.save()
         
         return HttpResponseRedirect(request.GET.get('next', '/'))
+        
+def leave(request, league_id):
+    league = get_object_or_404(League, pk=league_id)
+    if request.user.is_authenticated():
+        # Remove request.user from the league
+        Order.objects.get(user=request.user, league=league).delete()
+    return HttpResponseRedirect('/league/f/' + str(league.id))
 
 def player_rankings(request):
     context = {'date_now': datetime.now().date, 

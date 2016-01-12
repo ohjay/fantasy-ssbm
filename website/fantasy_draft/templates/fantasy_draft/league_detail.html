@@ -166,7 +166,13 @@
                         {% endif %}
                     </div>
                     {% else %}
-                    You don't have permission to add users to the league!
+                        You don't have permission to add users to the league!
+                        {% if in_league %}
+                        <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:leave' league_id=league.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Leave" />
+                        </form>
+                        {% endif %}
                     {% endif %}
                 </p>
             </div>
@@ -175,7 +181,7 @@
         <div class="row bordered border-bottom">
             <div class="col-6 bordered border-left border-right">
                 <p>
-                    {% if league.userprofile_set.count == 1 %}
+                    {% if league.userprofile_set.count < 2 %}
                     [Activation disabled] Before you activate the league, you'll have to let some other users join.
                     {% else %}
                     Activate the league (warning: this will lock in all players). 
