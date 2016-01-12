@@ -17,7 +17,18 @@ from datetime import datetime, date, timedelta
 import random, hashlib
 
 def index(request):
-    return render(request, 'fantasy_draft/index.html', {})
+    message = request.GET.get('m')
+    if not message:
+        return render(request, 'fantasy_draft/index.html', {})
+    elif message == '1':
+        return render(request, 'fantasy_draft/index.html', {
+            'message': "Congratulations! Your account has been successfully activated. You can now access and use all of the site's functions.",
+        })
+    elif message == '2':
+        return render(request, 'fantasy_draft/index.html', {
+            'message': "A link to activate your account has been sent to your email.",
+        })
+        
     
 def league_detail(request, invite_sent, league_id):
     league = get_object_or_404(League, pk=league_id)
@@ -471,22 +482,22 @@ def register(request):
             user = user_form.save() # save the new user to the database
             
             # Set the activation key and save it to the user
-            salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-            user.activation_key = hashlib.sha1(salt + user.email).hexdigest()
+            salt = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
+            user.activation_key = hashlib.sha1((salt + user.email).encode('utf-8')).hexdigest()
             user.key_expires = datetime.today() + timedelta(20)
             user.save()
             
             # Send email with the activation key
             email_subject = 'Account confirmation'
-            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-                    480 hours http://127.0.0.1:8000/confirm/%s" % (user.username, activation_key)
+            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within " % (user.username) \
+                    + "480 hours: http://127.0.0.1:8000/confirm/%s." % (user.activation_key)
             send_mail(email_subject, email_body, 'fantasy.ssbm@gmail.com', [user.email], fail_silently=False)
             
             # Log the user in
             user = authenticate(username=request.POST['username'],
                     password=request.POST['password'])
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('fantasy_draft:index'))
+            return HttpResponseRedirect('/?m=2')
         else:
             # Cut the asterisk label out of the error message
             error_msg = user_form.errors.as_text()
@@ -504,7 +515,7 @@ def register(request):
         })
         
 def confirm_registration(request, activation_key):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_active:
         # No need to register this guy...
         return HttpResponseRedirect('/')
         
@@ -518,8 +529,9 @@ def confirm_registration(request, activation_key):
     user.save()
     
     # Log the user in
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
     auth.login(request, user)
-    return HttpResponseRedirect(reverse('fantasy_draft:index'))
+    return HttpResponseRedirect('/?m=1')
     
 def info(request):
     return render(request, 'fantasy_draft/info.html', {})

@@ -15,6 +15,10 @@
 {% endblock %}
 
 {% block content %}
+{% if message %}
+<span id="message">{{ message }}</span>
+{% endif %}
+
 <!-- Countdown to next tournament -->
 <div style="text-align: center">    
     <div class="opaque" style="display: inline-block">

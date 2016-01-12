@@ -81,9 +81,6 @@ class UserProfile(AbstractUser):
     def __str__(self):
         return self.username
         
-    class Meta:
-        verbose_name_plural=u'User profiles'
-        
 class Invitation(models.Model):
     """An invitation to join a league."""
     league = models.ForeignKey(League)

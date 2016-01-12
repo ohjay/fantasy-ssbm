@@ -28,11 +28,11 @@ class UserForm(forms.ModelForm):
             UserProfile._default_manager.get(email=email)
         except UserProfile.DoesNotExist:
             return email
-        raise forms.ValidationError('duplicate email')
+        raise forms.ValidationError("Duplicate email! This won't do.")
 
     # Save the user (as inactive, pending email confirmation)
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
+        user = super(UserForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
         
         user.email = self.cleaned_data['email']
