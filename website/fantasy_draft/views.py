@@ -437,7 +437,14 @@ def standings(request):
     return render(request, 'fantasy_draft/standings.html', {})
     
 def login(request):
-    return render(request, 'fantasy_draft/login.html', {})
+    error_code = request.GET.get('e')
+    if not error_code:
+        return render(request, 'fantasy_draft/login.html', {})
+    elif error_code == '1':
+        # EC 1 = incorrect login
+        return render(request, 'fantasy_draft/login.html', {
+            'incorrect_login': True,
+        })
     
 def register(request):
     if request.method == 'POST':
@@ -489,11 +496,9 @@ def user_login(request):
             auth.login(request, user)
             return HttpResponseRedirect(reverse('fantasy_draft:index'))
         else:
-            return render_to_response('fantasy_draft/login.html', 
-                    context_instance=RequestContext(request, {'incorrect_log_in': True}))
+            return HttpResponseRedirect('/login?e=1') # incorrect login (error code 1)
     else:
-        return render_to_response('fantasy_draft/login.html', 
-                context_instance=RequestContext(request, {'incorrect_log_in': True}))
+        return HttpResponseRedirect('/login?e=1')
                 
 def user_logout(request):
     logout(request)

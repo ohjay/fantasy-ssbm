@@ -78,8 +78,8 @@
                     
                     <form method="post" action="{% url 'fantasy_draft:bid' league_id=league.id %}?next={% firstof request.path '/' %}">
                         {% csrf_token %}
-                        How much do you want to bid?&nbsp; <input type="number" name="bid" value="" />&nbsp; 
-                        <input type="submit" value="Bid" />
+                        How much do you want to bid?&nbsp; <input id="bid-input" type="number" name="bid" value="" />&nbsp; 
+                        <span id="submit-bid"></span>
                     </form>
                     
                     <form method="post" action="{% url 'fantasy_draft:drop_out' league_id=league.id on_auction=on_auction %}?next={% firstof request.path '/' %}">
@@ -228,6 +228,19 @@
         href = href.substring(0, href.length - 1)
         return href.substr(href.lastIndexOf('/') + 1);
     }
+</script>
+{% elif league.phase == 'BID' %}
+<script type="text/javascript">
+    // Make sure that bids are greater than the current bid
+    $(function() {
+        $('#bid-input').keyup(function() {
+            if ($('#bid-input').val() > {{ high_bid }}) {
+                $('#submit-bid').html('<input type="submit" value="Bid" />');
+            } else {
+                $('#submit-bid').html(''); // you can't bid LOWER
+            }
+        });
+    });
 </script>
 {% endif %}
 {% endblock %}
