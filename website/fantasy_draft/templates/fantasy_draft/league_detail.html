@@ -22,6 +22,9 @@
     </div>
     {% if league.phase != 'PRE' %}
     <div class="row">
+        
+        <!-- ========== DRAFT DISPLAYS ========== -->
+        
         {% if league.phase == 'COM' %}
         <div class="col-6 bordered border-left">
         {% else %}
@@ -30,6 +33,19 @@
             <p>
                 Drafts:
                 <ul>
+                    {% if draft_scores %}
+                    {% for draft, player_placings, score in draft_scores %}
+                    <li>
+                        {{ draft.user }}'s draft (score: {{ score }}):
+                        <ul>
+                            {% for player, placing in player_placings %}
+                            <li>{{ player }} ({{ placing }})</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                    
+                    {% else %}
                     {% for draft in league.draft_set.all %}
                     <li>
                         {{ draft.user }}'s draft:
@@ -40,6 +56,8 @@
                         </ul>
                     </li>
                     {% endfor %}
+                    
+                    {% endif %}
                 </ul>
             </p>
         </div>

@@ -11,7 +11,7 @@ from django.utils import timezone
 
 from .models import *
 from .forms import *
-from .utils import to_ordinal, handle_completion
+from .utils import to_ordinal, handle_completion, get_score
 
 from datetime import datetime, date, timedelta
 import random, hashlib
@@ -77,6 +77,32 @@ def league_detail(request, invite_sent, league_id):
                 'league': league,
                 'next_user': next_user,
             })
+    elif league.phase == 'COM':
+        # Check on scoring (do results exist yet?)
+        tournament_results = Result.objects.filter(tournament=league.tournament)
+        if tournament_results:
+            # Display scores alongside drafts
+            draft_scores = [] # a list of drafts and their associated scores
+            
+            for draft in league.draft_set.all():
+                player_placings = [] # a list of players and their associated placings
+                
+                # Compute the score for each player in the draft
+                score = 0
+                for player in draft.players.all():
+                    placing = tournament_results.get(player=player).placing
+                    score += get_score(placing)
+                    player_placings.append((player, placing))
+                score -= Order.objects.get(user=draft.user, league=league).bid # subtract the bid
+                
+                draft_scores.append((draft, player_placings, score))
+    
+            context = {
+                'tournament_leagues': tournament_leagues, 
+                'today': date.today(), 
+                'draft_scores': draft_scores,
+            }
+            return render(request, 'fantasy_draft/leagues.html', context)
         
     # Standard view
     max_user_ct = league.tournament.player_set.count() // league.number_of_picks
@@ -295,7 +321,6 @@ def player_search(request, league_id):
                 
             # And then, if any of those players are in the output, we'll remove them
             for player in player_set:
-                print(player)
                 if player not in chosen_players:
                     players.append(player)
                     
