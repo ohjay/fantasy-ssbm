@@ -12,17 +12,23 @@
         <div class="col-6 bordered border-left border-right">
             <p>
                 {% if user.is_authenticated %}
-                <ul>
-                    {% for tournament, league in tournament_leagues %}
-                        {% if league %}
-                        <li>{{ tournament.name }}: <a href="/league/f/{{ league.id }}">{{ league.name }}</a></li>
-                        {% elif today < tournament.date %}
-                        <li>{{ tournament.name }}: <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a></li>
-                        {% else %}
-                        <li>{{ tournament.name }}: The tournament date has already passed!</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                    {% if user.is_active %}
+                    <ul>
+                        {% for tournament, league in tournament_leagues %}
+                            {% if league %}
+                            <li>{{ tournament.name }}: <a href="/league/f/{{ league.id }}">{{ league.name }}</a></li>
+                            {% elif today < tournament.date %}
+                            <li>{{ tournament.name }}: <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a></li>
+                            {% else %}
+                            <li>{{ tournament.name }}: The tournament date has already passed!</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    
+                    {% else %}
+                    You must activate your account before you can access this feature.
+                    
+                    {% endif %}
                 {% else %}
                 You must be <a href="{% url 'fantasy_draft:login' %}">logged in</a> to create or edit leagues.
                 {% endif %}

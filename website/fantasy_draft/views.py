@@ -22,7 +22,8 @@ def index(request):
         return render(request, 'fantasy_draft/index.html', {})
     elif message == '1':
         return render(request, 'fantasy_draft/index.html', {
-            'message': "Congratulations! Your account has been successfully activated. You can now access and use all of the site's functions.",
+            'message': "Congratulations! Your account has been successfully activated. " \
+                    + "You can now access and use all of the site's functions.",
         })
     elif message == '2':
         return render(request, 'fantasy_draft/index.html', {
@@ -62,8 +63,9 @@ def league_detail(request, invite_sent, league_id):
         league_orders = Order.objects.filter(league=league)
         next_user = league_orders.get(is_turn=True).user
         
-        if request.user.is_authenticated():
-            order_num = Order.objects.get(user=request.user, league=league).number
+        order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
+        if request.user.is_authenticated() and request.user.is_active and order:
+            order_num = order[0].number
             
             return render(request, 'fantasy_draft/league_detail.html', {
                 'league': league,
@@ -78,7 +80,7 @@ def league_detail(request, invite_sent, league_id):
         
     # Standard view
     max_user_ct = league.tournament.player_set.count() // league.number_of_picks
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_active:
         in_league = Order.objects.filter(user=request.user) \
                 .filter(league=league).count() > 0
     else:
@@ -92,7 +94,7 @@ def league_detail(request, invite_sent, league_id):
     })
     
 def select_player(request, draft_id, player_id):
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # Weird. This shouldn't ever be happening
         return render(request, 'fantasy_draft/index.html', {})
     else:
@@ -144,7 +146,7 @@ def select_player(request, draft_id, player_id):
         return HttpResponseRedirect('/league/f/' + str(draft.league.id))
     
 def bid(request, league_id):
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # This should not be happening
         return render(request, 'fantasy_draft/index.html', {})
     else:
@@ -174,7 +176,7 @@ def bid(request, league_id):
 
 def drop_out(request, league_id, on_auction):
     """Drop out of the bidding round."""
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         return render(request, 'fantasy_draft/index.html', {})
     else:
         league = get_object_or_404(League, pk=league_id)
@@ -306,7 +308,7 @@ def player_search(request, league_id):
         })
 
 def invite(request, recipient_id, league_id):
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # Someone's trying to game the system...
         return render(request, 'fantasy_draft/index.html', {})
     else:
@@ -321,7 +323,7 @@ def invite(request, recipient_id, league_id):
         return HttpResponseRedirect('/league/t/' + league_id)
         
 def accept(request, i_id):
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         return render(request, 'fantasy_draft/index.html', {})
     else:
         invitation = get_object_or_404(Invitation, pk=i_id)
@@ -343,7 +345,7 @@ def accept(request, i_id):
         return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
     
 def decline(request, i_id):
-    if not request.user.is_authenticated() or request.method != "POST":
+    if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         return render(request, 'fantasy_draft/index.html', {})
     else:
         invitation = get_object_or_404(Invitation, pk=i_id)
@@ -354,7 +356,7 @@ def decline(request, i_id):
 def activate(request, league_id):
     """Lock users in and create empty drafts for them."""
     league = get_object_or_404(League, pk=league_id)
-    if not request.user.is_authenticated() or request.user != league.creator:
+    if not request.user.is_authenticated() or not request.user.is_active or request.user != league.creator:
         # Call hax
         return render(request, 'fantasy_draft/index.html', {})
     else:
@@ -388,7 +390,7 @@ def activate(request, league_id):
         
 def leave(request, league_id):
     league = get_object_or_404(League, pk=league_id)
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_active:
         # Remove request.user from the league
         Order.objects.get(user=request.user, league=league).delete()
     return HttpResponseRedirect('/league/f/' + str(league.id))
@@ -399,7 +401,8 @@ def player_rankings(request):
     return render(request, 'fantasy_draft/player_rankings.html', context)
     
 def create_league(request, t_id):
-    if request.user.is_authenticated() and not request.user.leagues.filter(tournament__id=t_id):
+    if request.user.is_authenticated() and request.user.is_active \
+            and not request.user.leagues.filter(tournament__id=t_id):
         if request.method == 'POST':
             league_form = LeagueForm(data=request.POST)
             if league_form.is_valid():
@@ -411,7 +414,8 @@ def create_league(request, t_id):
                 league.save()
                 
                 # Then add it to the user's collection of leagues
-                Order.objects.create(number=0, user=request.user, league=league, is_turn=True)
+                Order.objects.create(number=0, user=request.user, 
+                        league=league, is_turn=True)
                 
                 # Redirect
                 return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
@@ -438,7 +442,7 @@ def create_league(request, t_id):
         return HttpResponseRedirect(reverse('fantasy_draft:leagues'))
     
 def leagues(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_active:
         tournaments, user_leagues = Tournament.objects.all(), request.user.leagues
         tournament_leagues = []
     
@@ -490,7 +494,7 @@ def register(request):
             # Send email with the activation key
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within " % (user.username) \
-                    + "480 hours: http://127.0.0.1:8000/confirm/%s." % (user.activation_key)
+                    + "480 hours: http://127.0.0.1:8000/confirm/%s." % (user.activation_key) # change link for production!
             send_mail(email_subject, email_body, 'fantasy.ssbm@gmail.com', [user.email], fail_silently=False)
             
             # Log the user in
@@ -515,10 +519,6 @@ def register(request):
         })
         
 def confirm_registration(request, activation_key):
-    if request.user.is_authenticated() and request.user.is_active:
-        # No need to register this guy...
-        return HttpResponseRedirect('/')
-        
     # Grab the user who matches the activation key
     user = get_object_or_404(UserProfile, activation_key=activation_key)
 
@@ -537,7 +537,7 @@ def info(request):
     return render(request, 'fantasy_draft/info.html', {})
     
 def profile(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_active:
         context = {'user': request.user}
         return render(request, 'fantasy_draft/profile.html', context)
     else:

@@ -108,7 +108,7 @@
             <!-- ========== PLAYER SELECTION BOX ========== -->
             
             {% elif league.phase == 'SEL' %}
-                {% if user.is_authenticated %}
+                {% if ordinal %}
                     {% if user == next_user %}
                     <p style="background-color: #67c8ff">
                         <u>Your Turn</u><br>
