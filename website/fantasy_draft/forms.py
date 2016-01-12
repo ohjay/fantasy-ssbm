@@ -28,7 +28,7 @@ class UserForm(forms.ModelForm):
             UserProfile._default_manager.get(email=email)
         except UserProfile.DoesNotExist:
             return email
-        raise forms.ValidationError("Duplicate email! This won't do.")
+        raise forms.ValidationError("An account with this email already exists.")
 
     # Save the user (as inactive, pending email confirmation)
     def save(self, commit=True):

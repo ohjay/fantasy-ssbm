@@ -63,20 +63,21 @@ def league_detail(request, invite_sent, league_id):
         league_orders = Order.objects.filter(league=league)
         next_user = league_orders.get(is_turn=True).user
         
-        order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
-        if request.user.is_authenticated() and request.user.is_active and order:
-            order_num = order[0].number
+        if request.user.is_authenticated() and request.user.is_active:
+            order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
+            if order:
+                order_num = order[0].number
             
-            return render(request, 'fantasy_draft/league_detail.html', {
-                'league': league,
-                'ordinal': to_ordinal(order_num),
-                'next_user': next_user,
-            })
-        else:
-            return render(request, 'fantasy_draft/league_detail.html', {
-                'league': league,
-                'next_user': next_user,
-            })
+                return render(request, 'fantasy_draft/league_detail.html', {
+                    'league': league,
+                    'ordinal': to_ordinal(order_num),
+                    'next_user': next_user,
+                })
+                
+        return render(request, 'fantasy_draft/league_detail.html', {
+            'league': league,
+            'next_user': next_user,
+        })
     elif league.phase == 'COM':
         # Check on scoring (do results exist yet?)
         tournament_results = Result.objects.filter(tournament=league.tournament)
@@ -589,4 +590,3 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(request.GET.get('next', '/'))
-    
