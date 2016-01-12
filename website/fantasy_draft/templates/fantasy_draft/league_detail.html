@@ -152,10 +152,16 @@
                 </p>
             </div>
         </div>
+        
+        <!-- ========== USER INVITATION SECTION ========== -->
+        
         <div class="row bordered border-bottom">
             <div class="col-6 bordered border-left border-right">
                 <p>
-                    {% if user.is_authenticated and league.creator == user %}
+                    {% if league.userprofile_set.count >= max_user_ct %}
+                    The league is full! No more players will be allowed to join.
+                    
+                    {% elif user.is_authenticated and league.creator == user %}
                     Invite users to join your league:&nbsp;
                     <input type="text" id="name_input" name="name_input" />
                     <div id="search-results">
@@ -166,6 +172,7 @@
                         {% endif %}
                     </div>
                     {% else %}
+                        <!-- Indent for aesthetics -->
                         You don't have permission to add users to the league!
                         {% if in_league %}
                         <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:leave' league_id=league.id %}">
@@ -177,6 +184,9 @@
                 </p>
             </div>
         </div>
+        
+        <!-- ========== ACTIVATION SECTION ========== -->
+        
         {% if user.is_authenticated and league.creator == user %}
         <div class="row bordered border-bottom">
             <div class="col-6 bordered border-left border-right">

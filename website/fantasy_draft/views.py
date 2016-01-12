@@ -64,15 +64,17 @@ def league_detail(request, invite_sent, league_id):
             })
         
     # Standard view
+    max_user_ct = league.tournament.player_set.count() // league.number_of_picks
     if request.user.is_authenticated():
         in_league = Order.objects.filter(user=request.user) \
                 .filter(league=league).count() > 0
     else:
         in_league = False
-    
+        
     return render(request, 'fantasy_draft/league_detail.html', {
         'invite_sent': True if invite_sent == 't' else False,
         'league': league,
+        'max_user_ct': max_user_ct,
         'in_league': in_league,
     })
     
@@ -315,6 +317,15 @@ def accept(request, i_id):
         
         Order.objects.create(number=invitation.league.userprofile_set.count(), 
                 user=request.user, league=invitation.league)
+                
+        # Check if the league is now full
+        max_user_ct = invitation.league.tournament.player_set.count() \
+                // invitation.league.number_of_picks
+        if invitation.league.userprofile_set.count() >= max_user_ct:
+            # It is, so we'll cancel all outstanding invitations
+            Invitation.objects.filter(league=invitation.league) \
+                    .filter(status='UNA') \
+                    .delete()
         
         return HttpResponseRedirect('/league/f/' + str(invitation.league.id))
     
