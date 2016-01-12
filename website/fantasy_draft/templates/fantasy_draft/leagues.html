@@ -16,8 +16,10 @@
                     {% for tournament, league in tournament_leagues %}
                         {% if league %}
                         <li>{{ tournament.name }}: <a href="/league/f/{{ league.id }}">{{ league.name }}</a></li>
-                        {% else %}
+                        {% elif today < tournament.date %}
                         <li>{{ tournament.name }}: <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a></li>
+                        {% else %}
+                        <li>{{ tournament.name }}: The tournament date has already passed!</li>
                         {% endif %}
                     {% endfor %}
                 </ul>

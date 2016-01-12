@@ -11,7 +11,7 @@ from .models import *
 from .forms import *
 from .utils import to_ordinal, handle_completion
 
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 import random
 
 def index(request):
@@ -426,10 +426,12 @@ def leagues(request):
             else:
                 tournament_leagues.append((t, user_tleague))
     
-        context = {'tournament_leagues': tournament_leagues}
+        context = {'tournament_leagues': tournament_leagues, 'today': date.today(), }
         return render(request, 'fantasy_draft/leagues.html', context)
     else:
-        return render(request, 'fantasy_draft/leagues.html', {})
+        return render(request, 'fantasy_draft/leagues.html', {
+            'today': date.today(),
+        })
     
 def standings(request):
     return render(request, 'fantasy_draft/standings.html', {})
