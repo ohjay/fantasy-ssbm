@@ -119,3 +119,11 @@ TEMPLATES = [
 
 # Custom user model
 AUTH_USER_MODEL = 'fantasy_draft.UserProfile'
+
+# Email settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'fantasy.ssbm@gmail.com'
+EMAIL_HOST_PASSWORD = 'nicetrybuddy'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'fantasy.ssbm@gmail.com'

@@ -12,8 +12,8 @@
 <div class="content-container">
     <span class="greeting">Welcome back to Fantasy SSBM!</span>
     
-    {% if incorrect_login %}
-    <span class="error">That's not right! Did you <a href="#">forget your password</a>?</span>
+    {% if error_msg %}
+    <span class="error">{{ error_msg }}</span>
     {% endif %}
     
     <form class="sized-form" method="post" action="/user_login/">

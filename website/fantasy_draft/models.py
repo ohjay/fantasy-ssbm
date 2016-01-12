@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
+import datetime
+
 class Tournament(models.Model):
     name = models.CharField(max_length=20)
     date = models.DateField()
@@ -73,9 +75,14 @@ class Order(models.Model):
     
 class UserProfile(AbstractUser):
     leagues = models.ManyToManyField(League, through='Order', blank=True)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
     
     def __str__(self):
         return self.username
+        
+    class Meta:
+        verbose_name_plural=u'User profiles'
         
 class Invitation(models.Model):
     """An invitation to join a league."""

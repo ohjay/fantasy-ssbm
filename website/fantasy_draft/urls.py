@@ -44,4 +44,6 @@ urlpatterns = [
     url(r'^player_search/(?P<league_id>[0-9]+)/$', views.player_search, name='player_search'),
     # ex: /fantasy_draft/leave/31
     url(r'^leave/(?P<league_id>[0-9]+)$', views.leave, name='leave'),
+    # ex: /fantasy_draft/confirm/2304238jskaf0h3
+    url(r'^confirm/(?P<activation_key>\w+)/', views.confirm_registration, name='confirm_registration'),
 ]

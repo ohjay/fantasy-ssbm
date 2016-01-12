@@ -3,13 +3,13 @@ from .models import *
 
 class UserForm(forms.ModelForm):
     # Input fields
-    username = forms.CharField(widget=forms.TextInput(attrs={
+    username = forms.CharField(required=True, widget=forms.TextInput(attrs={
         'maxlength': '30', 'size': '50', 'autofocus': 'autofocus'
     }))
-    email = forms.CharField(widget=forms.TextInput(attrs={
+    email = forms.CharField(required=True, widget=forms.TextInput(attrs={
         'maxlength': '50', 'size': '50'
     }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
+    password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
         'maxlength': '50', 'size': '50'
     }))
 
@@ -20,6 +20,27 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('username', 'email', 'password')
+        
+    # Check for duplicate emails
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            UserProfile._default_manager.get(email=email)
+        except UserProfile.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
+
+    # Save the user (as inactive, pending email confirmation)
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.is_active = False
+            user.save()
+
+        return user
         
 class LeagueForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={

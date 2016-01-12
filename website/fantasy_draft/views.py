@@ -6,13 +6,15 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
 from django.db.models import Max
+from django.core.mail import send_mail
+from django.utils import timezone
 
 from .models import *
 from .forms import *
 from .utils import to_ordinal, handle_completion
 
 from datetime import datetime, date, timedelta
-import random
+import random, hashlib
 
 def index(request):
     return render(request, 'fantasy_draft/index.html', {})
@@ -454,17 +456,31 @@ def login(request):
     elif error_code == '1':
         # EC 1 = incorrect login
         return render(request, 'fantasy_draft/login.html', {
-            'incorrect_login': True,
+            'error_msg': "That's not right! Did you forget your password?",
+        })
+    elif error_code == '2':
+        # EC 2 = activation key has expired
+        return render(request, 'fantasy_draft/login.html', {
+            'error_msg': "Your activation key has expired. Please re-register.",
         })
     
 def register(request):
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
-            # Save the new user to the database
-            user = user_form.save()
-            user.set_password(user.password)
+            user = user_form.save() # save the new user to the database
+            
+            # Set the activation key and save it to the user
+            salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+            user.activation_key = hashlib.sha1(salt + user.email).hexdigest()
+            user.key_expires = datetime.today() + timedelta(20)
             user.save()
+            
+            # Send email with the activation key
+            email_subject = 'Account confirmation'
+            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
+                    480 hours http://127.0.0.1:8000/confirm/%s" % (user.username, activation_key)
+            send_mail(email_subject, email_body, 'fantasy.ssbm@gmail.com', [user.email], fail_silently=False)
             
             # Log the user in
             user = authenticate(username=request.POST['username'],
@@ -486,6 +502,24 @@ def register(request):
             'user_form': user_form, 
             'error_msg': False
         })
+        
+def confirm_registration(request, activation_key):
+    if request.user.is_authenticated():
+        # No need to register this guy...
+        return HttpResponseRedirect('/')
+        
+    # Grab the user who matches the activation key
+    user = get_object_or_404(UserProfile, activation_key=activation_key)
+
+    if user.key_expires < timezone.now():
+        return HttpResponseRedirect('/login?e=2') # activation failure (error code 2)
+    
+    user.is_active = True # activate the user
+    user.save()
+    
+    # Log the user in
+    auth.login(request, user)
+    return HttpResponseRedirect(reverse('fantasy_draft:index'))
     
 def info(request):
     return render(request, 'fantasy_draft/info.html', {})
