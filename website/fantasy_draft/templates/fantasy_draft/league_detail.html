@@ -34,9 +34,10 @@
                 Drafts:
                 <ul>
                     {% if draft_scores %}
-                    {% for draft, player_placings, score in draft_scores %}
+                    {% for draft, player_placings, score, bid in draft_scores %}
                     <li>
-                        {{ draft.user }}'s draft (score: {{ score }}):
+                        {{ draft.user }}'s draft (-{{ bid }}):<br>
+                        Score: {{ score }}
                         <ul>
                             {% for player, placing in player_placings %}
                             <li>{{ player }} ({{ placing }})</li>

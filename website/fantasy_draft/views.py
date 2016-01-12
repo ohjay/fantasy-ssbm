@@ -93,9 +93,13 @@ def league_detail(request, invite_sent, league_id):
                     placing = tournament_results.get(player=player).placing
                     score += get_score(placing)
                     player_placings.append((player, placing))
-                score -= Order.objects.get(user=draft.user, league=league).bid # subtract the bid
+                    
+                bid = None
+                if not league.random_order:
+                    bid = Order.objects.get(user=draft.user, league=league).bid
+                    score -= bid
                 
-                draft_scores.append((draft, player_placings, score))
+                draft_scores.append((draft, player_placings, score, bid))
     
             context = {
                 'tournament_leagues': tournament_leagues, 
