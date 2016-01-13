@@ -17,7 +17,10 @@ def handle_completion(draft):
     
 def get_score(placing):
     """Returns a point score based on the given placing."""
-    if placing >= 193: return 50
+    if placing >= 513: return 0
+    elif placing >= 385: return 10
+    elif placing >= 257: return 30
+    elif placing >= 193: return 50
     elif placing >= 129: return 75
     elif placing >= 97: return 100
     elif placing >= 65: return 130
@@ -33,4 +36,3 @@ def get_score(placing):
     elif placing == 3: return 555
     elif placing == 2: return 610
     elif placing == 1: return 670
-    

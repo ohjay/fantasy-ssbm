@@ -13,15 +13,11 @@
             <p>
                 Rankings from {{ date_1yr_ago }} to {{ date_now }} [PST]:
                 <ol>
-                    <li>Armada</li>
-                    <li>Hungrybox</li>
-                    <li>Leffen</li>
-                    <li>Mango</li>
-                    <li>PPMD</li>
-                    <li>Mew2King</li>
-                    <li>Plup</li>
-                    <li>Axe</li>
-                    <li>Westballz</li>
+                    {% for player, score in sorted_ps %}
+                    <li>{{ player }} (Score: {{ score }})</li>
+                    {% empty %}
+                    <li>There are no results in the database yet!</li>
+                    {% endfor %}
                 </ol>
             </p>
         </div>

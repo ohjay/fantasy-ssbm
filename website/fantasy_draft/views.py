@@ -14,7 +14,8 @@ from .forms import *
 from .utils import to_ordinal, handle_completion, get_score
 
 from datetime import datetime, date, timedelta
-import random, hashlib
+from collections import defaultdict
+import random, hashlib, operator
 
 def index(request):
     message = request.GET.get('m')
@@ -426,8 +427,23 @@ def leave(request, league_id):
     return HttpResponseRedirect('/league/f/' + str(league.id))
 
 def player_rankings(request):
-    context = {'date_now': datetime.now().date, 
-               'date_1yr_ago': (datetime.now() - timedelta(days=365)).date}
+    player_scores = defaultdict(int) # {player: score}
+    date_now = date.today()
+    date_1yr_ago = date_now - timedelta(days=365)
+    
+    # Calculate rankings based on tournaments from the past year
+    for tournament in Tournament.objects.filter(date__gt=date_1yr_ago).all():
+        for result in tournament.result_set.all():
+            player_scores[result.player] += get_score(result.placing)
+            
+    sorted_ps = sorted(player_scores.items(), key=operator.itemgetter(1), reverse=True) 
+    # ^ ps = player scores
+    
+    context = {
+        'date_now': date_now, 
+        'date_1yr_ago': date_1yr_ago,
+        'sorted_ps': sorted_ps,
+    }
     return render(request, 'fantasy_draft/player_rankings.html', context)
     
 def create_league(request, t_id):
