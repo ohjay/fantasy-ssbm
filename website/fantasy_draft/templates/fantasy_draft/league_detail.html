@@ -33,7 +33,7 @@
             <p>
                 Drafts:
                 <ul>
-                    {% if draft_scores %}
+                    {% if draft_scores %} <!-- results published -->
                     {% for draft, player_placings, score, bid in draft_scores %}
                     <li>
                         {{ draft.user }}'s draft (-{{ bid }}):<br>
@@ -46,18 +46,32 @@
                     </li>
                     {% endfor %}
                     
-                    {% else %}
-                    {% for draft in league.draft_set.all %}
-                    <li>
-                        {{ draft.user }}'s draft:
-                        <ul>
-                            {% for player in draft.players.all %}
-                            <li>{{ player }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endfor %}
-                    
+                    {% else %} <!-- results not published yet -->
+                        {% if draft_data %} <!-- bids -->
+                        {% for draft, bid in draft_data %}
+                        <li>
+                            {{ draft.user }}'s draft (-{{ bid }}):
+                            <ul>
+                                {% for player in draft.players.all %}
+                                <li>{{ player }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        
+                        {% else %} <!-- no bids -->
+                        {% for draft in league.draft_set.all %}
+                        <li>
+                            {{ draft.user }}'s draft:
+                            <ul>
+                                {% for player in draft.players.all %}
+                                <li>{{ player }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        
+                        {% endif %}
                     {% endif %}
                 </ul>
             </p>

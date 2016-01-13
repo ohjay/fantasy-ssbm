@@ -41,3 +41,7 @@ ul.nav li .h-item:hover {
     z-index: 1;
     position: fixed; 
 }
+
+#username {
+    color: #67c8ff;
+}

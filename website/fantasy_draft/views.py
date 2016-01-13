@@ -64,6 +64,12 @@ def league_detail(request, invite_sent, league_id):
         league_orders = Order.objects.filter(league=league)
         next_user = league_orders.get(is_turn=True).user
         
+        draft_data = None
+        if not league.random_order:
+            draft_data = [] # [(draft, bid)]
+            for draft in league.draft_set.all():
+                draft_data.append((draft, Order.objects.get(user=draft.user, league=league).bid))
+        
         if request.user.is_authenticated() and request.user.is_active:
             order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
             if order:
@@ -73,11 +79,13 @@ def league_detail(request, invite_sent, league_id):
                     'league': league,
                     'ordinal': to_ordinal(order_num),
                     'next_user': next_user,
+                    'draft_data': draft_data,
                 })
                 
         return render(request, 'fantasy_draft/league_detail.html', {
             'league': league,
             'next_user': next_user,
+            'draft_data': draft_data,
         })
     elif league.phase == 'COM':
         # Check on scoring (do results exist yet?)
@@ -109,8 +117,19 @@ def league_detail(request, invite_sent, league_id):
                 'draft_scores': draft_scores,
             }
             return render(request, 'fantasy_draft/leagues.html', context)
-        
-    # Standard view
+        elif not league.random_order:
+            draft_data = [] # [(draft, bid)]
+            for draft in league.draft_set.all():
+                draft_data.append((draft, Order.objects.get(user=draft.user, league=league).bid))
+            return render(request, 'fantasy_draft/leagues.html', {
+                'league': league,
+                'draft_data': draft_data,
+            })
+        else:
+            # Still 'COM' status, but there weren't any bids and results haven't been released
+            return render(request, 'fantasy_draft/league_detail.html', {'league': league})
+            
+    # Standard view ('PRE' phase)
     max_user_ct = league.tournament.player_set.count() // league.number_of_picks
     if request.user.is_authenticated() and request.user.is_active:
         in_league = Order.objects.filter(user=request.user) \
@@ -242,6 +261,7 @@ def drop_out(request, league_id, on_auction):
                 # There's one user left, so he/she gets last pick by default
                 last_pick = temp_orders[0]
                 last_pick.number = int(on_auction) + 1
+                last_pick.bid = 0 # last pick automatically bids 0. Good deal, huh?
                 last_pick.is_final = True
                 last_pick.save()
             
@@ -537,7 +557,7 @@ def register(request):
             # Send email with the activation key
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within " % (user.username) \
-                    + "480 hours: http://127.0.0.1:8000/confirm/%s." % (user.activation_key) # change link for production!
+                    + "480 hours: http://fantasy-ssbm.elasticbeanstalk.com/confirm/%s." % (user.activation_key)
             send_mail(email_subject, email_body, 'fantasy.ssbm@gmail.com', [user.email], fail_silently=False)
             
             # Log the user in
