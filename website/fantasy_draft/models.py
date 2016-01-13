@@ -11,6 +11,9 @@ class Tournament(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def __unicode__(self):
+        return u'%s' % self.name
 
 class League(models.Model):
     PHASES = (
@@ -37,6 +40,9 @@ class League(models.Model):
     def __str__(self):
         return self.name
     
+    def __unicode__(self):
+        return u'%s' % self.name
+    
 class Player(models.Model):
     name = models.CharField(max_length=30) # the player's real name (ex. "Dan Rodriguez")
     tag = models.CharField(max_length=30) # the player's gamer tag (ex. "ROOT | ChuDat")
@@ -44,6 +50,9 @@ class Player(models.Model):
     
     def __str__(self):
         return self.tag
+        
+    def __unicode__(self):
+        return u'%s' % self.tag
         
 class Draft(models.Model):
     league = models.ForeignKey(League) # each draft belongs to a league
@@ -55,6 +64,9 @@ class Draft(models.Model):
     def __str__(self):
         return str(self.user) + "'s " + str(self.league.tournament) + ' draft'
         
+    def __unicode__(self):
+        return u"%s's %s draft" % (str(self.user), str(self.league.tournament))
+        
 class Result(models.Model):
     placing = models.IntegerField()
     player = models.ForeignKey(Player)
@@ -62,6 +74,9 @@ class Result(models.Model):
     
     def __str__(self):
         return self.player.tag + ' (' + str(self.placing) + ')'
+    
+    def __unicode__(self):
+        return u'%s (%s)' % (self.name, self.placing)
         
 class Order(models.Model):
     number = models.PositiveSmallIntegerField()
@@ -74,6 +89,12 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     league = models.ForeignKey(League)
     
+    def __str__(self):
+        return str(self.user) + "'s order for league " + str(self.league)
+    
+    def __unicode__(self):
+        return u"%s's order for league %s" % (str(self.user), str(self.league))
+    
 class UserProfile(AbstractUser):
     leagues = models.ManyToManyField(League, through='Order', blank=True)
     activation_key = models.CharField(max_length=40, blank=True)
@@ -81,6 +102,9 @@ class UserProfile(AbstractUser):
     
     def __str__(self):
         return self.username
+        
+    def __unicode__(self):
+        return u'%s' % self.username
         
 class Invitation(models.Model):
     """An invitation to join a league."""
@@ -95,3 +119,9 @@ class Invitation(models.Model):
         ('DEC', 'declined'),
     )
     status = models.CharField(max_length=3, choices=STATUS_CODES, default='UNA')
+    
+    def __str__(self):
+        return '%s invitation from %s to %s' % (str(self.league), str(self.sender), str(self.recipient))
+    
+    def __unicode__(self):
+        return u'%s invitation from %s to %s' % (str(self.league), str(self.sender), str(self.recipient))
