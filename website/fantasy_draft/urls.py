@@ -14,8 +14,6 @@ urlpatterns = [
     url(r'^player_rankings/$', views.player_rankings, name='player_rankings'),
     # ex: /fantasy_draft/leagues
     url(r'^leagues/$', views.leagues, name='leagues'),
-    # ex: /fantasy_draft/results
-    url(r'^standings/$', views.standings, name='standings'),
     # ex: /fantasy_draft/login
     url(r'^login/$', views.login, name='login'),
     # ex: /fantasy_draft/register

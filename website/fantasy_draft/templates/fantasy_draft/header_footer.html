@@ -28,13 +28,13 @@
                 <a href="{% url 'fantasy_draft:index' %}" class="h-item">Main</a>
             </li>
             <li class="header-section">
+                <a href="{% url 'fantasy_draft:info' %}" class="h-item">Information</a>
+            </li>
+            <li class="header-section">
                 <a href="{% url 'fantasy_draft:player_rankings' %}" class="h-item">Player Rankings</a>
             </li>
             <li class="header-section">
                 <a href="{% url 'fantasy_draft:leagues' %}" class="h-item">Manage Leagues</a>
-            </li>
-            <li class="header-section">
-                <a href="{% url 'fantasy_draft:standings' %}" class="h-item">Standings</a>
             </li>
             <li class="header-section">
                 {% if user.is_authenticated %}

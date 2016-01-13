@@ -507,9 +507,6 @@ def leagues(request):
             'today': date.today(),
         })
     
-def standings(request):
-    return render(request, 'fantasy_draft/standings.html', {})
-    
 def login(request):
     error_code = request.GET.get('e')
     if not error_code:
