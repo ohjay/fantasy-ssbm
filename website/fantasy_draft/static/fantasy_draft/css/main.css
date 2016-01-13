@@ -19,6 +19,10 @@ body {
     padding: 0;
 }
 
+.sky-blue { 
+    color: #67c8ff !important;
+}
+
 #main-content-wrapper { 
     margin-top: 5.115vh; 
     min-height: 300px; 

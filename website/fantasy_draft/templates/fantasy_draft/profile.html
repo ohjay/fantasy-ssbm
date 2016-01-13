@@ -13,5 +13,20 @@
             <p>Email: {{ user.email }}</p>
         </div>
     </div>
+    <div class="row bordered">
+        <div class="col-6 bordered border-left border-right">
+            <p>
+                Leagues participated in:
+                <ul>
+                    {% for league, results_published in league_data %}
+                    <li>
+                        <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
+                        [{{ league.tournament }} – {% if results_published %}<span class="sky-blue">Results Published</span>{% endif %}]
+                    </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
 </div>
 {% endblock %}

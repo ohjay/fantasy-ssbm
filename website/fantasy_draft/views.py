@@ -568,7 +568,13 @@ def info(request):
     
 def profile(request):
     if request.user.is_authenticated() and request.user.is_active:
-        context = {'user': request.user}
+        league_data = [] # (league, results_published) pairs
+        
+        for league in request.user.leagues.all():
+            results_exist = Result.objects.filter(tournament=league.tournament)
+            league_data.append((league, True if results_exist else False))
+
+        context = {'user': request.user, 'league_data': league_data}
         return render(request, 'fantasy_draft/profile.html', context)
     else:
         return HttpResponseRedirect(reverse('fantasy_draft:index'))

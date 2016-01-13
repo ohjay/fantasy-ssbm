@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'a%s&uvs4mhxlsl)0to5&bzst5=#ux+-r^onpo^=+-d0tb1b5)7'
+# [Hidden] SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,6 +77,7 @@ else:
         }
     }
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -98,6 +99,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+
 # Templates
 
 TEMPLATES = [
@@ -117,12 +119,17 @@ TEMPLATES = [
     },
 ]
 
+
 # Custom user model
+
 AUTH_USER_MODEL = 'fantasy_draft.UserProfile'
 
-# Email settings
+
+# Email settings (+ verification data)
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'fantasy.ssbm@gmail.com'
+# [Hidden] EMAIL_HOST_PASSWORD
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'fantasy.ssbm@gmail.com'

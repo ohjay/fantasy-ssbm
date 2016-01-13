@@ -39,7 +39,7 @@
             <li class="header-section">
                 {% if user.is_authenticated %}
                 <span class="h-item">
-                    <a href="{% url 'fantasy_draft:profile' %}" id="username">{{ user.username }}</a> (<a href="{% url 'fantasy_draft:user_logout' %}?next={% firstof request.path '/' %}">Logout</a>)
+                    <a href="{% url 'fantasy_draft:profile' %}" class="sky-blue">{{ user.username }}</a> (<a href="{% url 'fantasy_draft:user_logout' %}?next={% firstof request.path '/' %}">Logout</a>)
                     {% else %}
                     <a href="{% url 'fantasy_draft:login' %}" class="h-item">Login/Register</a>
                 </div>
