@@ -35,12 +35,12 @@ h1 {
     background-color: #464646;
     padding: 0;
     margin: 0;
-    text-align: center; 
-    color: white; 
+    text-align: center;
+    color: white;
 }
 
 .bordered {
-    outline: 1px solid #797979; 
+    outline: 1px solid #797979;
 }
 
 .border-top {

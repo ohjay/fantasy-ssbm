@@ -7,25 +7,25 @@ html {
 }
 
 a { 
-    color: #a2a0a0; 
+    color: #a2a0a0;
 }
 
 body { 
-    background: url("../images/background-tiltshift_1600x900.png") no-repeat top; 
-    position: fixed; 
-    height: 100%; 
-    width: 100%; 
+    background: url("../images/background-tiltshift_1600x900.png") no-repeat top;
+    position: fixed;
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
 }
 
 #main-content-wrapper { 
-    margin-top: 5.115vh; 
-    min-height: 300px; 
+    margin-top: 5.115vh;
+    min-height: 300px;
     color: #fff;
-    font-size: 14px; 
-    line-height: 18px; 
+    font-size: 14px;
+    line-height: 18px;
     font-family: 'Asap', sans-serif;
-    color: #fff; 
-    overflow: hidden; 
+    color: #fff;
+    overflow: hidden;
 }

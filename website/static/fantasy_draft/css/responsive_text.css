@@ -1,0 +1,54 @@
+/** 
+ * responsive_text.css
+ * For responsive text, place this file after all other CSS files.
+ */
+
+@media(max-width: 1200px) {
+    ul.nav li .h-item, .h-item a, .top-row-title, input, input[type="submit"] {
+        font-size: 1.275vw;
+    }
+}
+
+@media(max-width: 1000px) {
+    ul.nav li .h-item, .h-item a, .top-row-title, input, input[type="submit"] {
+        font-size: 1.475vw;
+    }
+}
+
+@media(max-width: 700px) {
+    ul.nav li .h-item, .h-item a, .top-row-title, input, input[type="submit"] {
+        font-size: 1.975vw;
+    }
+}
+
+/* Footer-exclusive */
+
+@media(max-width: 1200px) {
+    #footer-wrapper {
+        font-size: 1.098vw;
+    }
+}
+
+@media(max-width: 1000px) {
+    #footer-wrapper {
+        font-size: 1.27vw;
+    }
+}
+
+@media(max-width: 700px) {
+    #footer-wrapper {
+        font-size: 1.7vw;
+    }
+}
+
+@media(max-width: 1200px) {
+    #footer-top-wrapper {
+        line-height: 1.35vmax;
+    }
+}
+
+@media(max-width: 1000px) {
+    #footer-top-wrapper {
+        line-height: 1.4vmax;
+    }
+}
