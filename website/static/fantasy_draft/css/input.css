@@ -84,9 +84,21 @@ input[type="submit"] {
     }
 }
 
-.sized-form { 
-    width: 25.836vw;/* 371px wide on my computer */
+form {
+    display: inline-block;
+}
+
+.form-wrapper {
+    text-align: center;
+}
+
+.sized-form {
     margin: 3.836vh auto;
+    text-align: left;
+}
+
+#main-content-wrapper {
+    position: static;
 }
 
 #main-content-wrapper .content-container { 

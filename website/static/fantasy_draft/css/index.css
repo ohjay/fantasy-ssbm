@@ -15,7 +15,7 @@
     background-color: black;
     z-index: 0;
     opacity: 0.75;
-    margin-top: 18vh;
+    margin-top: 22vh;
 }
 
 .center-text { 
@@ -32,6 +32,10 @@
         background: url("../images/background-tiltshift_675x900.png") no-repeat top;
         background-size: cover;
     }
+}
+
+#main-content-wrapper {
+    position: static;
 }
 
 #message {

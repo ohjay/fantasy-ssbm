@@ -4,9 +4,9 @@
 
 {% block stylesheets %}
 {% compress css %}
-<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/input.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
 {% endcompress %}
@@ -20,17 +20,19 @@
     <span class="error"><strong>{{ error_msg }}</strong></span>
     {% endif %}
     
-    <form class="sized-form" method="post" action="/register/">
-        {% csrf_token %}
+    <div class="form-wrapper">
+        <form class="sized-form" method="post" action="/register/">
+            {% csrf_token %}
         
-        <label>{{ user_form.username.label }}</label>
-        {{ user_form.username }}
-        <label>{{ user_form.email.label }}</label>
-        {{ user_form.email }}
-        <label>{{ user_form.password.label }}</label>
-        {{ user_form.password }}
+            <label>{{ user_form.username.label }}</label>
+            {{ user_form.username }}
+            <label>{{ user_form.email.label }}</label>
+            {{ user_form.email }}
+            <label>{{ user_form.password.label }}</label>
+            {{ user_form.password }}
         
-        <input type="submit" class="btn-green" value="Register" />
-    </form>
+            <input type="submit" class="btn-green" value="Register" />
+        </form>
+    </div>
 </div>
 {% endblock %}
