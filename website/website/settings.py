@@ -105,10 +105,16 @@ STATICFILES_FINDERS = (
 )
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, "fantasy_draft", "static")
-COMPRESS_PRECOMPILERS = (
-    ('text/x-sass', 'sass {infile} {outfile}'),
-    ('text/x-scss', 'sass --scss {infile} {outfile}'),
-)
+COMPRESS_ENABLED = True
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter', # URL normalization (necessary?)
+    'compressor.filters.cssmin.CSSMinFilter'
+]
+
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter'
+]
 
 
 # Templates

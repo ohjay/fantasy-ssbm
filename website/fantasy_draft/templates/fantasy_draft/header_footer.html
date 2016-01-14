@@ -1,3 +1,4 @@
+{% load compress %}
 {% load staticfiles %}
 
 <!DOCTYPE html>
@@ -14,10 +15,12 @@
     {% endblock %}
 
     {% block stylesheets %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/broganband.css" %}" media="screen" />
+    {% endcompress %}
     {% endblock %}
     
     {% block javascript %}

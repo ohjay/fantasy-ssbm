@@ -2,6 +2,15 @@
     z-index: 1;
 }
 
+@media all and (max-width: 768px) {
+  .clock {
+    zoom: 0.6;
+    -moz-transform: scale(0.6); } }
+@media all and (max-width: 479px) {
+  .clock {
+    zoom: 0.45;
+    -moz-transform: scale(0.45); } }
+
 .opaque { 
     background-color: black; 
     z-index: 0; 

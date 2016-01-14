@@ -4,18 +4,19 @@
 
 {% block stylesheets %}
 {% compress css %}
-<link rel="stylesheet" type="text/x-sass" href="{% static "fantasy_draft/sass/clock_mixins.sass" %}" />
-{% endcompress %}
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
-<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/index.css" %}" media="screen"/>
 <link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block javascript %}
+{% compress js %}
 <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
 <script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block content %}
