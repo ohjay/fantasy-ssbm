@@ -43,7 +43,11 @@ class Command(BaseCommand):
               
             for player_wrapper in attendees.values():
                 player = player_wrapper['player']
-                prefix, name, tag = player['prefix'], player['name'], player['gamerTag']
+                name = player['name']
+                if not name: # for some reason they put crews in the attendee listings
+                    continue
+                
+                prefix, tag = player['prefix'], player['gamerTag']
                 if prefix:
                     tag = prefix + ' | ' + tag
                 
