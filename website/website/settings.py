@@ -104,7 +104,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_ROOT = os.path.join(BASE_DIR, "fantasy_draft", "static")
+COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 COMPRESS_ENABLED = True
 
 COMPRESS_CSS_FILTERS = [
