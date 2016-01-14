@@ -1,7 +1,11 @@
 {% extends "fantasy_draft/header_footer.html" %}
+{% load compress %}
 {% load staticfiles %}
 
 {% block stylesheets %}
+{% compress css %}
+<link rel="stylesheet" type="text/x-sass" href="{% static "fantasy_draft/sass/clock_mixins.sass" %}" />
+{% endcompress %}
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />

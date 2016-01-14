@@ -1,0 +1,29 @@
+// Mixins for different screen sizes
+
+=screen-xs
+  @media all and (max-width: 320px)
+    @content
+
+=screen-sm
+  @media all and (max-width: 479px)
+    @content
+
+=screen-md
+  @media all and (max-width: 768px)
+    @content
+
+=screen-lg
+  @media all and (max-width: 900px)
+    @content
+
+=screen-xl
+  @media all and (max-width: 1300px)
+    @content
+    
+.clock
+  +screen-md
+    zoom: 0.6
+    -moz-transform: scale(0.6)
+  +screen-sm
+    zoom: 0.45
+    -moz-transform: scale(0.45)

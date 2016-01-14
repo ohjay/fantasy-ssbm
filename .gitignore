@@ -1,5 +1,7 @@
 *.pyc
 db.sqlite3
+.sass-cache/
+CACHE/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
