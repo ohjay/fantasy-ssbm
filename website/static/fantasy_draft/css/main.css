@@ -4,7 +4,7 @@ html {
     padding: 0;
 }
 
-a {
+a, .gray {
     color: #a2a0a0;
 }
 

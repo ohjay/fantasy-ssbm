@@ -16,6 +16,10 @@ h1 {
     box-sizing: border-box;
 }
 
+.row {
+    overflow: hidden; 
+}
+
 .row:before,
 .row:after {
     content: "";
@@ -24,11 +28,13 @@ h1 {
 }
 
 [class*='col-'] {
-    float: left;
     min-height: 1px;
     padding: 12px; /* gutter size */
     background-color: #000000;
     opacity: 0.7;
+    float: none;
+    display: table-cell;
+    vertical-align: top;
 }
 
 [class*='col-'] > p {

@@ -1,4 +1,8 @@
-input { 
+form {
+    display: inline-block;
+}
+
+input {
     margin: 5px 0;
     display: block;
     height: 2.558vh;
@@ -17,11 +21,11 @@ input {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
-input:focus { 
+input:focus {
     outline: none;
 }
 
-input[type="submit"] { 
+input[type="submit"] {
     padding: 6px 12px;
     font-size: 0.975vw;
     font-weight: 400;
@@ -44,20 +48,20 @@ input[type="submit"] {
     display: block;
 }
 
-.error { 
+.error {
     color: red;
     display: block;
     text-align: center;
     margin-top: 1.92vh;
 }
 
-.btn-green { 
+.btn-green {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
 
-.greeting { 
+.greeting {
     font-size: 1.95vw;
     font-weight: 700;
     display: block;
@@ -84,10 +88,6 @@ input[type="submit"] {
     }
 }
 
-form {
-    display: inline-block;
-}
-
 .form-wrapper {
     text-align: center;
 }
@@ -101,9 +101,10 @@ form {
     position: static;
 }
 
-#main-content-wrapper .content-container { 
+#main-content-wrapper .content-container {
     position: absolute;
     width: 100%;
+    margin-top: 5vmin;
     left: 0%;
     height: 75%;
     overflow: hidden;
