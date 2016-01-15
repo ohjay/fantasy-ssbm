@@ -8,9 +8,16 @@ a, .gray {
     color: #a2a0a0;
 }
 
+a:link { 
+    text-decoration: none;
+}
+
+a:hover { 
+    text-decoration: underline;
+}
+
 body {
     background: url("../images/background-tiltshift_1600x900.png") no-repeat top;
-    position: fixed;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -23,8 +30,12 @@ body {
     line-height: 18px;
     font-family: 'Asap', sans-serif;
     color: #fff;
-    position: fixed;
-    top: 40px;
-    bottom: 33.84vh;
+    margin-top: 40px;
     overflow: auto;
+}
+
+@media(max-width: 600px) {
+    #main-content-wrapper {
+        margin-top: 26.13765px;
+    }
 }

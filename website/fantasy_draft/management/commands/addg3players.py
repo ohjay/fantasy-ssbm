@@ -20,8 +20,8 @@ class Command(BaseCommand):
         
         # Scraping
         BASE_URL = 'https://smash.gg/tournament/genesis-3/attendees?per_page=50&filter=%7B%22eventIds%22%3A10617%7D&page='
-        PATTERN_A = '"attendee":(\{.*\}\})\}\}\},"plugins"'
-        PATTERN_B = '"attendee":(\{.*\}\})\},"RankingIterationStore"'
+        PATTERN_A = '"attendee":(\{.*\}\})\},"RankingIterationStore"'
+        PATTERN_B = '"attendee":(\{.*\}\})\}\}\},"plugins"'
         
         for i in range(1, 38):
             self.stdout.write('Scraping page ' + str(i) + '...')

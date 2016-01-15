@@ -20,35 +20,3 @@
         font-size: 1.975vw;
     }
 }
-
-/* Footer-exclusive */
-
-@media(max-width: 1200px) {
-    #footer-wrapper {
-        font-size: 1.098vw;
-    }
-}
-
-@media(max-width: 1000px) {
-    #footer-wrapper {
-        font-size: 1.27vw;
-    }
-}
-
-@media(max-width: 700px) {
-    #footer-wrapper {
-        font-size: 1.7vw;
-    }
-}
-
-@media(max-width: 1200px) {
-    #footer-top-wrapper {
-        line-height: 1.35vmax;
-    }
-}
-
-@media(max-width: 1000px) {
-    #footer-top-wrapper {
-        line-height: 1.4vmax;
-    }
-}

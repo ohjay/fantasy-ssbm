@@ -17,7 +17,6 @@
     {% block stylesheets %}
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/broganband.css" %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
@@ -58,44 +57,5 @@
     {% block content %}
     {% endblock %}
     </div>
-
-    <footer id="footer-wrapper">
-        <!-- Top portion of the footer -->
-        <div id="footer-top-wrapper">
-            <div id="footer-top">
-                <!-- Left half of the top row -->
-                <div class="top-row">
-                    <div class="top-row-title"><span>About</span></div>
-                    <div class="top-row-info">
-                          <p>This is a website tailored to manage Super Smash Bros: Melee fantasy drafts and leagues for the duration of major tournament seasons. The concept is simple: form a league with your friends and choose 1-10 players for your draft. At the end of each tournament, everyone will receive points based on how well their players performed. Come the season's finish, the person with the highest number of points wins!
-                              <br><br>
-                              For further details (including the tournament season listings), take a look at the <a href="{% url 'fantasy_draft:info' %}">Information</a> page.
-                          </p>
-                    </div>
-                </div>
-                
-                <!-- Right half of the top row -->
-                <div class="top-row">
-                    <div class="top-row-title"><span>Contact</span></div>
-                    <div class="top-row-info">
-                        <p>Want to contribute – or complain? If you need someone to talk to (preferably about this website), feel free to contact the following site administrators:
-                            <br><br>
-                            <b>Owen Jow</b><br>
-                            <a href="mailto:owen.jow01@gmail.com">owen.jow01@gmail.com</a><br>
-                        </p>
-                    </div><!-- /top-row-info -->
-                </div><!-- /top-row -->
-            </div><!-- /footer-top -->
-        </div><!-- /footer-top-wrapper -->
-        
-        <!-- Bottom portion of the footer -->
-        <div id="footer-bottom-wrapper">
-            <div id="footer-bottom">
-                <div id="last-updated">
-                    Last updated January 14th, 2016 by <span class="gray">ohjay</span>
-                </div><!-- /last-updated -->
-            </div><!-- /footer-bottom -->
-        </div><!-- /footer-bottom-wrapper -->
-    </footer><!-- /footer-wrapper -->
 </body>
 </html>

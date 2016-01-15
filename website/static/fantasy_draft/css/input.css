@@ -21,6 +21,12 @@ input {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+@media(max-width: 600px) {
+    input {
+        margin: 1.5px 0;
+    }
+}
+
 input:focus {
     outline: none;
 }
@@ -48,6 +54,12 @@ input[type="submit"] {
     display: block;
 }
 
+@media(max-width: 600px) {
+    input[type="submit"]#login-submit {
+        margin: 2.1px auto;
+    }
+}
+
 .error {
     color: red;
     display: block;
@@ -62,29 +74,30 @@ input[type="submit"] {
 }
 
 .greeting {
-    font-size: 1.95vw;
+    font-family: 'Jura', sans-serif;
+    font-size: 2.1vw;
     font-weight: 700;
     display: block;
     text-align: center;
-    text-shadow: 1px 1px #000000;
+    text-shadow: 1px 2px #000000;
     margin: 12vh auto 0px auto;
 }
 
 @media(max-width: 1200px) {
     .greeting {
-        font-size: 2.55vw;
+        font-size: 2.65vw;
     }
 }
 
 @media(max-width: 1000px) {
     .greeting {
-        font-size: 2.95vw;
+        font-size: 2.05vw;
     }
 }
 
 @media(max-width: 700px) {
     .greeting {
-        font-size: 3.95vw;
+        font-size: 4.05vw;
     }
 }
 
@@ -110,4 +123,21 @@ input[type="submit"] {
     overflow: hidden;
     font-family: 'Asap', sans-serif;
     color: white;
+}
+
+@media(max-width: 600px) {
+    #main-content-wrapper .content-container {
+        margin-top: 2.5vmin;
+    }
+}
+
+#new-user {
+    color: #67c8ff;
+    font-size: 0.905vmax;
+}
+
+@media(max-width: 600px) {
+    #new-user {
+        font-size: 1.705vmax;
+    }
 }

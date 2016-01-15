@@ -5,7 +5,6 @@
 {% block stylesheets %}
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
-<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/footer.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/input.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
@@ -23,9 +22,9 @@
     <div class="form-wrapper">
         <form class="sized-form" method="post" action="/user_login/">
             {% csrf_token %}
-            Username <a style="color: #67c8ff; font-size: 0.905vmax;" href="{% url 'fantasy_draft:register' %}">(New user?)</a></span> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
+            Username <a id="new-user" href="{% url 'fantasy_draft:register' %}">(New user?)</a></span> <input type="text" name="username" value="" maxlength="30" size="50" autofocus /><br>
             Password <input type="password" name="password" value="" maxlength="50" size="50" /><br>
-            <input type="submit" class="btn-green" value="Login" />
+            <input type="submit" class="btn-green" id="login-submit" value="Login" />
         </form>
     </div>
 </div>

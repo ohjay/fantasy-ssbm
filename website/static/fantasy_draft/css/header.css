@@ -28,7 +28,7 @@ ul.nav li .h-item, .h-item a {
 
 @media(max-width: 600px) {
     ul.nav li .h-item, .h-item a {
-        line-height: 5.115vh;
+        line-height: 26.13765px;
     }
 }
 
@@ -48,11 +48,12 @@ ul.nav li .h-item:hover {
     height: 40px;
     z-index: 1;
     position: fixed;
+    top: 0;
 }
 
 @media(max-width: 600px) {
     #header-wrapper {
-        height: 5.115vh;
+        height: 26.13765px;
     }
 }
 

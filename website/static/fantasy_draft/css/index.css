@@ -15,7 +15,13 @@
     background-color: black;
     z-index: 0;
     opacity: 0.75;
-    margin-top: 13vh;
+    margin-top: 12vh;
+}
+
+@media(max-width: 600px) {
+    .opaque {
+        margin-top: 2vh;
+    }
 }
 
 .center-text { 
@@ -53,7 +59,7 @@
 }
 
 #message {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
