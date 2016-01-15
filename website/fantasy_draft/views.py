@@ -23,12 +23,11 @@ def index(request):
         return render(request, 'fantasy_draft/index.html', {})
     elif message == '1':
         return render(request, 'fantasy_draft/index.html', {
-            'message': "Congratulations! Your account has been successfully activated. " \
-                    + "You can now access and use all of the site's functions.",
+            'message': "Your account has been successfully activated!",
         })
     elif message == '2':
         return render(request, 'fantasy_draft/index.html', {
-            'message': "A link to activate your account has been sent to your email.",
+            'message': "An activation link has been sent to your email.",
         })
         
     
@@ -567,9 +566,24 @@ def register(request):
             auth.login(request, user)
             return HttpResponseRedirect('/?m=2')
         else:
-            # Cut the asterisk label out of the error message
             error_msg = user_form.errors.as_text()
-            error_msg = error_msg[error_msg.find('*', 1) + 2:]
+            if 'username' in error_msg and 'email' in error_msg and 'password' in error_msg:
+                error_msg = 'Invalid username, email, and password.'
+            elif 'username' in error_msg and 'email' in error_msg:
+                error_msg = 'Invalid username and email.'
+            elif 'username' in error_msg and 'password' in error_msg:
+                error_msg = 'Invalid username and password.'
+            elif 'email' in error_msg and 'password' in error_msg:
+                error_msg = 'Invalid email and password.'
+            elif 'username' in error_msg and 'required' in error_msg:
+                error_msg = 'You must enter a username.'
+            elif 'email' in error_msg and 'required' in error_msg:
+                error_msg = 'You must enter an email.'
+            elif 'password' in error_msg and 'required' in error_msg:
+                error_msg = 'You must enter a password.'
+            else:
+                # Cut the asterisk label out of the error message
+                error_msg = error_msg[error_msg.find('*', 1) + 2:]
             
             return render(request, 'fantasy_draft/register.html', {
                 'user_form': user_form, 
