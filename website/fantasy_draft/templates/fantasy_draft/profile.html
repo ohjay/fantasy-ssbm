@@ -21,7 +21,7 @@
                     {% for league, results_published in league_data %}
                     <li>
                         <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
-                        [{{ league.tournament }} – {% if results_published %}<span style="color: #67c8ff;">Results Published</span>{% endif %}]
+                        [{{ league.tournament }}{% if results_published %}<span style="color: #67c8ff;"> – Results Published</span>{% endif %}]
                     </li>
                     {% empty %}
                     <li>No leagues found!</li>

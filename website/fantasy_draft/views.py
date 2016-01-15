@@ -520,12 +520,13 @@ def leagues(request):
             else:
                 tournament_leagues.append((t, user_tleague))
     
-        context = {'tournament_leagues': tournament_leagues, 'today': date.today(), }
+        context = {
+            'tournament_leagues': tournament_leagues, 
+            'today_adj': date.today() - timedelta(1), # today "adjusted"
+        }
         return render(request, 'fantasy_draft/leagues.html', context)
     else:
-        return render(request, 'fantasy_draft/leagues.html', {
-            'today': date.today(),
-        })
+        return render(request, 'fantasy_draft/leagues.html', {})
     
 def login(request):
     error_code = request.GET.get('e')
@@ -558,7 +559,7 @@ def register(request):
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within " % (user.username) \
                     + "480 hours: http://fantasy-ssbm.elasticbeanstalk.com/confirm/%s." % (user.activation_key)
-            send_mail(email_subject, email_body, 'fantasy.ssbm@gmail.com', [user.email], fail_silently=False)
+            send_mail(email_subject, email_body, 'Fantasy SSBM <fantasy.ssbm@gmail.com>', [user.email], fail_silently=False)
             
             # Log the user in
             user = authenticate(username=request.POST['username'],

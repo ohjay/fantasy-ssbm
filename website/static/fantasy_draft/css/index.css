@@ -15,7 +15,7 @@
     background-color: black;
     z-index: 0;
     opacity: 0.75;
-    margin-top: 12.5vh;
+    margin-top: 13vh;
 }
 
 .center-text { 
@@ -49,7 +49,7 @@
 }
 
 #flashbox-dummy {
-    height: 34px;
+    height: 30px;
 }
 
 #message {
