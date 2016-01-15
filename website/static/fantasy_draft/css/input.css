@@ -61,10 +61,31 @@ input[type="submit"] {
 }
 
 .error {
-    color: red;
-    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.flashbox {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+    width: 90%;
+    height: 30px;
+    margin: 0 auto;
+    border: 2px double #797979;
     text-align: center;
-    margin-top: 1.92vh;
+}
+
+.flashbox-dummy {
+    height: 34px;
+}
+
+.error-text {
+    z-index: 1;
+    color: white;
+    text-shadow: 0 0 10px red;
+    margin-top: 5px;
 }
 
 .btn-green {
@@ -115,12 +136,8 @@ input[type="submit"] {
 }
 
 #main-content-wrapper .content-container {
-    position: absolute;
     width: 100%;
-    margin-top: 5vmin;
-    left: 0%;
     height: 75%;
-    overflow: hidden;
     font-family: 'Asap', sans-serif;
     color: white;
 }

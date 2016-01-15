@@ -13,11 +13,17 @@
 
 {% block content %}
 <div class="content-container">
-    <span class="greeting">Welcome back to Fantasy SSBM!</span>
+    <div class="error">
+        {% if error_msg %}
+        <div class="flashbox">
+            <div class="error-text">{{ error_msg }}</div>
+        </div>
+        {% else %}
+        <div class="flashbox-dummy"></div>
+        {% endif %}
+    </div>
     
-    {% if error_msg %}
-    <span class="error">{{ error_msg }}</span>
-    {% endif %}
+    <span class="greeting">Welcome back to Fantasy SSBM!</span>
     
     <div class="form-wrapper">
         <form class="sized-form" method="post" action="/user_login/">
