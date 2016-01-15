@@ -24,7 +24,7 @@ body {
     font-family: 'Asap', sans-serif;
     color: #fff;
     position: fixed;
-    top: 5.115vh;
+    top: 40px;
     bottom: 33.84vh;
     overflow: auto;
 }

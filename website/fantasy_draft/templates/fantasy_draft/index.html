@@ -21,9 +21,16 @@
 {% endblock %}
 
 {% block content %}
-{% if message %}
-<span id="message">{{ message }}</span>
-{% endif %}
+<!-- Flash messages -->
+<div id="message" style="display: inline-block">
+    {% if message %}
+    <div id="flashbox">
+        <div id="message-text">{{ message }}</div>
+    </div>
+    {% else %}
+    <div id="flashbox-dummy"></div><!-- for uniform height -->
+    {% endif %}
+</div>
 
 <!-- Countdown to next tournament -->
 <div style="text-align: center">    
@@ -44,7 +51,7 @@
         var currentDate = new Date();
 
         // Current tournament: GENESIS 3; next tournament: BEAST 6 (2/18)
-        var futureDate  = new Date("January 15, 2016 0:00:00");
+        var futureDate  = new Date("January 15, 2016 10:00:00");
 
         // Calculate the difference in seconds between the future and current date
         var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;

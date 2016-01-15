@@ -45,7 +45,7 @@ a:hover {
 #footer-top-wrapper { 
     font-family: 'Asap', sans-serif;
     background: #122;
-    overflow: hidden;
+    overflow: auto;
     padding-top: 0px;
     line-height: 1.3vmax;
     opacity: 0.97;
@@ -72,5 +72,5 @@ a:hover {
 #last-updated { 
     padding-right: 15%;
     float: right;
-    line-height: 3.84vh;
+    line-height: 30px;
 }

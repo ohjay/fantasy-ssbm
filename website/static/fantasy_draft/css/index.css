@@ -15,7 +15,7 @@
     background-color: black;
     z-index: 0;
     opacity: 0.75;
-    margin-top: 22vh;
+    margin-top: 12.5vh;
 }
 
 .center-text { 
@@ -38,6 +38,30 @@
     position: static;
 }
 
+#flashbox {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+    width: 90%;
+    height: 30px;
+    margin: 0 auto;
+    border: 2px double #797979;
+    text-align: center;
+}
+
+#flashbox-dummy {
+    height: 34px;
+}
+
 #message {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+#message-text {
+    z-index: 1;
     color: white;
+    text-shadow: 0 0 10px #ffde00;
+    margin-top: 5px;
 }
