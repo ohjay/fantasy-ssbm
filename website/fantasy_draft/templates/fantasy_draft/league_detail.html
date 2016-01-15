@@ -1,14 +1,17 @@
 {% extends "fantasy_draft/header_footer.html" %}
+{% load compress %}
 {% load staticfiles %}
 
 {% block javascript %}
+{% compress js %}
 <script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block content %}
 <div class="grid-container">
     <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right">
+        <div class="col-6 bordered border-left border-right header">
             <p><h1>{{ league.name }}</h1></p>
         </div>
     </div>
@@ -21,7 +24,7 @@
         </div>
     </div>
     {% if league.phase != 'PRE' %}
-    <div class="row">
+    <div class="row border-bottom">
         
         <!-- ========== DRAFT DISPLAYS ========== -->
         
@@ -173,7 +176,7 @@
     </div>
     {% else %}
         <!-- Indent for visual effect -->
-        <div class="row bordered">
+        <div class="row bordered border-bottom">
             <div class="col-6 bordered border-left border-right">
                 <p>
                     Users currently part of this league:

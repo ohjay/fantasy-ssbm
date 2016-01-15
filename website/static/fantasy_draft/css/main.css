@@ -24,6 +24,19 @@ body {
     padding: 0;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+.hipster-btn {
+    color: #fff;
+    background-color: #000000;
+    border-color: #4cae4c;
+    font-family: 'Asap', sans-serif;
+}
+
 #main-content-wrapper {
     color: #fff;
     font-size: 14px;

@@ -1,5 +1,12 @@
 {% extends "fantasy_draft/header_footer.html" %}
+{% load compress %}
 {% load staticfiles %}
+
+{% block javascript %}
+{% compress js %}
+<script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
+{% endcompress %}
+{% endblock %}
 
 {% block content %}
 <div class="grid-container">
@@ -11,7 +18,7 @@
             <p><h1>Join a league</h1></p>
         </div>
     </div>
-    <div class="row">
+    <div class="row border-bottom">
         <!-- Create a league -->
         <div class="col-3 bordered border-left">
             {% if error_msg %}
@@ -37,7 +44,7 @@
                 <label>{{ league_form.snake_style.label }}</label>&nbsp;
                 {{ league_form.snake_style }}<br><br>
         
-                <input type="submit" value="Create League" />
+                <input id="creation-submit" class="hipster-btn" type="submit" value="Required fields left blank!" disabled />
             </form>
         </div>
         
@@ -73,4 +80,27 @@
         </div> 
     </div> 
 </div>
+
+<script type="text/javascript">
+    // Ensure that the league creation form is valid
+    $(function() {
+        $('#id_name, #id_number_of_picks').keyup(function() {
+            if ($('#id_name').val() && $('#id_number_of_picks').val()) {
+                $('#creation-submit').prop("disabled", false);
+                $('#creation-submit').prop("value", "Create league");
+                $('#creation-submit').css({
+                    "background-color": "#5cb85c",
+                    "cursor": "pointer"
+                });
+            } else {
+                $('#creation-submit').prop("disabled", true);
+                $('#creation-submit').prop("value", "Required fields left blank!");
+                $('#creation-submit').css({
+                    "background-color": "#000000",
+                    "cursor": "default"
+                });
+            }
+        });
+    });
+</script>
 {% endblock %}

@@ -43,6 +43,10 @@ h1 {
     color: white;
 }
 
+[class*='col-6'].header > p {
+    padding: 5px 0;
+}
+
 .bordered {
     outline: 1px solid #797979;
 }
