@@ -38,13 +38,6 @@
     text-align: center;
     line-height: 0.97em;
 }​
-                  
-@media screen and (max-width: 480px) {
-    body {
-        background: url("../images/background-tiltshift_675x900.png") no-repeat top;
-        background-size: cover;
-    }
-}
 
 #main-content-wrapper {
     padding-bottom: 33.84vh;

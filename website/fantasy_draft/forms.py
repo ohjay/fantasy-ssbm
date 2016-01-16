@@ -4,10 +4,10 @@ from .models import *
 class UserForm(forms.ModelForm):
     # Input fields
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={
-        'maxlength': '30', 'size': '50', 'autofocus': 'autofocus'
+        'maxlength': '30', 'size': '50', 'autofocus': 'autofocus', 'autocomplete': 'off'
     }))
     email = forms.CharField(required=True, widget=forms.TextInput(attrs={
-        'maxlength': '50', 'size': '50'
+        'maxlength': '50', 'size': '50', 'autocomplete': 'off'
     }))
     password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
         'maxlength': '50', 'size': '50'
@@ -44,10 +44,10 @@ class UserForm(forms.ModelForm):
         
 class LeagueForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
-        'maxlength': '50', 'size': '50', 'autofocus': 'autofocus'
+        'maxlength': '50', 'size': '50', 'autofocus': 'autofocus', 'autocomplete': 'off'
     }))
     number_of_picks = forms.IntegerField(widget=forms.NumberInput(attrs={
-        'min': '1', 'max': '10', 'step': '1'
+        'min': '1', 'max': '10', 'step': '1', 'autocomplete': 'off'
     }))
     random_order = forms.BooleanField(required=False)
     snake_style = forms.BooleanField(required=False)

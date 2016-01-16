@@ -24,6 +24,13 @@ body {
     padding: 0;
 }
 
+@media screen and (max-width: 480px) {
+    body {
+        background: url("../images/background-tiltshift_705x1000.png") no-repeat top;
+        background-size: cover;
+    }
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 

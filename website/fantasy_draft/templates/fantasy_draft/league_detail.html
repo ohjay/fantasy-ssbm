@@ -147,7 +147,7 @@
                     <p style="background-color: #67c8ff">
                         <u>Your Turn</u><br>
                         You have {{ ordinal }} pick.<br>
-                        Enter Pick <input type="text" id="name_input" name="name_input" />
+                        Enter Pick <input type="text" id="name_input" name="name_input" autocomplete="off" />
                         <div id="search-results">
                             {% if invite_sent %}
                             <p>Invitation successfully sent!</p>
@@ -197,7 +197,7 @@
                     
                     {% elif user.is_authenticated and league.creator == user %}
                     Invite users to join your league:&nbsp;
-                    <input type="text" id="name_input" name="name_input" />
+                    <input type="text" id="name_input" name="name_input" autocomplete="off" />
                     <div id="search-results">
                         {% if invite_sent %}
                         <p>Invitation successfully sent!</p>
