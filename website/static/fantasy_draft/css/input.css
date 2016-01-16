@@ -5,9 +5,8 @@ form {
 input {
     margin: 5px 0;
     display: block;
-    height: 2.558vh;
     padding: 6px 6px;
-    font-size: 0.975vw;
+    font-size: 0.975vmax;
     line-height: 1.42857143;
     color: #fff;
     background-color: #221;
@@ -33,7 +32,6 @@ input:focus {
 
 input[type="submit"] {
     padding: 6px 12px;
-    font-size: 0.975vw;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
@@ -48,13 +46,17 @@ input[type="submit"] {
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
-    height: 4.476vh;
-    width: 14.9vw;
+    width: 14.9vmax;
     margin: 3.197vh auto;
-    display: block;
 }
 
 @media(max-width: 600px) {
+    input[type="submit"] {
+        font-weight: 500;
+        text-shadow: 0 0 5px #000000;
+        padding: 4px 12px;
+    }
+    
     input[type="submit"]#login-submit {
         margin: 2.1px auto;
     }

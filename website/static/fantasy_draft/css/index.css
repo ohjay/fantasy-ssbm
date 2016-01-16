@@ -37,6 +37,7 @@
     font-weight: 900;
     text-align: center;
     line-height: 0.97em;
+    text-shadow: 1px 1px 1px #000000;
 }​
 
 #main-content-wrapper {

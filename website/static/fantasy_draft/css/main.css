@@ -20,14 +20,20 @@ body {
     background: url("../images/background-tiltshift_1600x900.png") no-repeat top;
     height: 100%;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
-@media screen and (max-width: 480px) {
+@media only screen and (max-device-width: 480px) {
     body {
-        background: url("../images/background-tiltshift_705x1000.png") no-repeat top;
+        background: url("../images/background-tiltshift_700x1125.png") no-repeat top fixed;
         background-size: cover;
+    }
+}
+
+@media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 0) {
+    body {
+        background-position: 1px 0; /* fixes a Chrome bug that causes a 1px white line to appear on the right */
     }
 }
 
