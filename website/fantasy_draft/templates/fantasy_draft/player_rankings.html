@@ -24,11 +24,11 @@
         <div class="col-5 bordered border-left">
             <p>
                 Rankings from {{ date_1yr_ago }} to {{ date_now }} [PST]:
-                <ol>
+                <ol style="margin: 6px 0; padding: 0">
                     {% for player, score in sorted_ps %}
-                    <li>{{ player }} (Score: {{ score }})</li>
+                    <li style="margin-left: 1.5%;">{{ player }} (Score: {{ score }})</li>
                     {% empty %}
-                    <li>There are no results in the database yet!</li>
+                    There are no results in the database yet!
                     {% endfor %}
                 </ol>
             </p>

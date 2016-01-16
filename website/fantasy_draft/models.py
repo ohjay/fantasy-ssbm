@@ -76,7 +76,7 @@ class Result(models.Model):
         return self.player.tag + ' (' + str(self.placing) + ')'
     
     def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.placing)
+        return u'%s (%s)' % (self.player.tag, self.placing)
         
 class Order(models.Model):
     number = models.PositiveSmallIntegerField()
