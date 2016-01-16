@@ -20,6 +20,12 @@
 
 @media(max-width: 600px) {
     .opaque {
+        margin-top: 6vh;
+    }
+}
+
+@media(max-width: 360px) {
+    .opaque {
         margin-top: 2vh;
     }
 }
@@ -41,7 +47,7 @@
 }
 
 #main-content-wrapper {
-    position: static;
+    padding-bottom: 33.84vh;
 }
 
 #message {

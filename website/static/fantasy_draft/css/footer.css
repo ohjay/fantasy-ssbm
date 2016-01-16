@@ -102,3 +102,9 @@
     float: right;
     line-height: 30px;
 }
+
+@media(max-width: 700px) {
+    #last-updated {
+        line-height: 20px;
+    }
+}

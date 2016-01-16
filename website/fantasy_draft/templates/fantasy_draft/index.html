@@ -9,14 +9,14 @@
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/index.css" %}" media="screen"/>
 <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
-<link rel="stylesheet" href="{% static "fantasy_draft/flipclock/compiled/flipclock.css" %}"/>
+<link rel="stylesheet" href="{% static "flipclock/compiled/flipclock.css" %}"/>
 {% endcompress %}
 {% endblock %}
 
 {% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 {% compress js %}
-<script src="{% static "fantasy_draft/js/jquery-1.11.3.min.js" %}"></script>
-<script src="{% static "fantasy_draft/flipclock/compiled/flipclock.js" %}"></script>
+<script src="{% static "flipclock/compiled/flipclock.js" %}"></script>
 {% endcompress %}
 {% endblock %}
 
@@ -41,7 +41,7 @@
 
 <!-- Display text -->
 <p class="center-text">    
-    GENESIS 3 : January 15, 2016
+    BEAST 6: February 19, 2016
 </p>
 
 <footer id="footer-wrapper">
@@ -89,8 +89,8 @@
     $(document).ready(function() {
         var currentDate = new Date();
 
-        // Current tournament: GENESIS 3; next tournament: BEAST 6 (2/18)
-        var futureDate  = new Date("January 15, 2016 10:00:00");
+        // Current tournament: BEAST 6; next tournament: Pound 2016 (4/2)
+        var futureDate  = new Date("February 19, 2016 0:00:00");
 
         // Calculate the difference in seconds between the future and current date
         var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
