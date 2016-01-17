@@ -25,58 +25,53 @@
     <div class="row border-bottom">
         
         <!-- ========== DRAFT DISPLAYS ========== -->
-        
-        {% if league.phase == 'COM' %}
-        <div class="col-6 bordered border-left">
-        {% else %}
-        <div class="col-4 bordered border-left">
-        {% endif %}
+        {% if draft_scores %} <!-- results published -->
+        {% for draft, player_placings, score, bid in draft_scores %}
+        <div class="col-2 bordered border-left">
             <p>
-                Drafts:
+                {{ draft.user }}'s draft (-{{ bid }}):<br>
+                Score: {{ score }}
                 <ul>
-                    {% if draft_scores %} <!-- results published -->
-                    {% for draft, player_placings, score, bid in draft_scores %}
-                    <li>
-                        {{ draft.user }}'s draft (-{{ bid }}):<br>
-                        Score: {{ score }}
-                        <ul>
-                            {% for player, placing in player_placings %}
-                            <li>{{ player }} ({{ placing }})</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
+                    {% for player, placing in player_placings %}
+                    <li>{{ player }} ({{ placing }})</li>
                     {% endfor %}
-                    
-                    {% else %} <!-- results not published yet -->
-                        {% if draft_data %} <!-- bids -->
-                        {% for draft, bid in draft_data %}
-                        <li>
-                            {{ draft.user }}'s draft (-{{ bid }}):
-                            <ul>
-                                {% for player in draft.players.all %}
-                                <li>{{ player }}</li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% endfor %}
-                        
-                        {% else %} <!-- no bids -->
-                        {% for draft in league.draft_set.all %}
-                        <li>
-                            {{ draft.user }}'s draft:
-                            <ul>
-                                {% for player in draft.players.all %}
-                                <li>{{ player }}</li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% endfor %}
-                        
-                        {% endif %}
-                    {% endif %}
                 </ul>
             </p>
         </div>
+        {% endfor %}
+            
+        {% else %} <!-- results not published yet -->
+            {% if draft_data %} <!-- bids -->
+            {% for draft, bid in draft_data %}
+            <div class="col-2 bordered border-left">
+                <p>
+                    {{ draft.user }}'s draft (-{{ bid }}):
+                    <ul>
+                        {% for player in draft.players.all %}
+                        <li>{{ player }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </div>
+            {% endfor %}
+            
+            {% else %} <!-- no bids -->
+            {% for draft in league.draft_set.all %}
+            <div class="col-2 bordered border-left">
+                <p>
+                    {{ draft.user }}'s draft:
+                    <ul>
+                        {% for player in draft.players.all %}
+                        <li>{{ player }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </div>
+            {% endfor %}
+            
+            {% endif %}
+        {% endif %}
+        
         {% if league.phase != 'COM' %}
         <div class="col-2 bordered border-right">
             

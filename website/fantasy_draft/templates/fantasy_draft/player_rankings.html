@@ -20,23 +20,31 @@
             <p><h1>Rankings</h1></p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-6 bordered border-left border-right">
+            <p>From {{ date_1yr_ago }} to {{ date_now }} [PST]</p>
+        </div>
+    </div>
+    
     <div class="row bordered border-bottom">
         <div class="col-5 bordered border-left">
             <p>
-                Rankings from {{ date_1yr_ago }} to {{ date_now }} [PST]:
-                <ol style="margin: 6px 0; padding: 0">
+                <ol style="padding: 0 1.75%">
                     {% for player, score in sorted_ps %}
-                    <li style="margin-left: 1.5%;">{{ player }} (Score: {{ score }})</li>
+                    <li>{{ player }} (Score: {{ score }})</li>
+                    {% if forloop.last %}</ol>{% endif %}
+                    
                     {% empty %}
-                    There are no results in the database yet!
+                    </ol>There are no results in the database!
+                    
                     {% endfor %}
-                </ol>
             </p>
         </div>
         <div class="col-1 bordered border-right">
             <p>
                 <h2>Scoring System</h2>
-                Players will earn points for each <a href="{% url 'fantasy_draft:info' %}">season tournament</a> that they participate in.
+                Players will earn points for each <a href="{% url 'fantasy_draft:info' %}">season tournament</a> that they participate in.<br><br>
+                They are ranked by their average tournament score, multiplied by a slight (but not insignificant) activity bonus.
                 
                 <table class="scoring-table">
                     <thead>

@@ -146,7 +146,7 @@ def league_detail(request, invite_sent, league_id):
 def select_player(request, draft_id, player_id):
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # Weird. This shouldn't ever be happening
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         draft = get_object_or_404(Draft, pk=draft_id)
         player = get_object_or_404(Player, pk=player_id)
@@ -198,7 +198,7 @@ def select_player(request, draft_id, player_id):
 def bid(request, league_id):
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # This should not be happening
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         league = get_object_or_404(League, pk=league_id)
         
@@ -227,7 +227,7 @@ def bid(request, league_id):
 def drop_out(request, league_id, on_auction):
     """Drop out of the bidding round."""
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         league = get_object_or_404(League, pk=league_id)
         
@@ -360,7 +360,7 @@ def player_search(request, league_id):
 def invite(request, recipient_id, league_id):
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
         # Someone's trying to game the system...
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         # Create and send a new invitation
         invitation = Invitation()
@@ -374,7 +374,7 @@ def invite(request, recipient_id, league_id):
         
 def accept(request, i_id):
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         invitation = get_object_or_404(Invitation, pk=i_id)
         invitation.status = "ACC"
@@ -396,7 +396,7 @@ def accept(request, i_id):
     
 def decline(request, i_id):
     if not request.user.is_authenticated() or not request.user.is_active or request.method != "POST":
-        return render(request, 'fantasy_draft/index.html', {})
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
     else:
         invitation = get_object_or_404(Invitation, pk=i_id)
         invitation.delete()
@@ -447,13 +447,35 @@ def leave(request, league_id):
 
 def player_rankings(request):
     player_scores = defaultdict(int) # {player: score}
+    player_tourn_ct = defaultdict(int) # {player: num_tournaments}
+    
     date_now = date.today()
     date_1yr_ago = date_now - timedelta(days=365)
     
     # Calculate rankings based on tournaments from the past year
+    """ 
+    Calculation:
+    Average the scores of players over every season tournament that they attend,
+    and then apply a multiplicative "activity bonus" to that result.
+    
+    score_avg = AVG(SCORE(placing) for tournament in tournaments)
+    score_final = ACTIVITY BONUS (1.# tournaments attended) * score_avg
+    """
     for tournament in Tournament.objects.filter(date__gt=date_1yr_ago).all():
         for result in tournament.result_set.all():
             player_scores[result.player] += get_score(result.placing)
+            player_tourn_ct[result.player] += 1
+            
+    for player, score in player_scores:
+        num_tournaments = player_tourn_ct[player]
+        score_avg = float(score) / num_tournaments
+        
+        activity_bonus = float(num_tournaments)
+        while activity_bonus > 1:
+            activity_bonus /= 10
+        activity_bonus += 1.0
+        
+        player_scores[player] = round(score_avg * activity_bonus, 2) # score_final
             
     sorted_ps = sorted(player_scores.items(), key=operator.itemgetter(1), reverse=True) 
     # ^ ps = player scores
@@ -514,10 +536,19 @@ def leagues(request):
         # Fill in tournament_leagues (a list of tournaments and their corresponding leagues)
         for t in tournaments:
             user_tleague = user_leagues.filter(tournament__name=t.name).first()
-            if user_tleague is None:
-                tournament_leagues.append((t, None))
+            is_ready = t.player_set.count() > 0
+            
+            if t.date < date(year=2016, month=7, day=1):
+                season_desc = "[2015 Season 1]"
+            elif t.date < date(year=2017, month=1, day=1):
+                season_desc = "[2015 Season 2]"
             else:
-                tournament_leagues.append((t, user_tleague))
+                season_desc = "Season Unknown"
+            
+            if user_tleague is None:
+                tournament_leagues.append((t, None, season_desc, is_ready))
+            else:
+                tournament_leagues.append((t, user_tleague, season_desc, is_ready))
     
         context = {
             'tournament_leagues': tournament_leagues, 
@@ -528,22 +559,27 @@ def leagues(request):
         return render(request, 'fantasy_draft/leagues.html', {})
     
 def login(request):
-    error_code = request.GET.get('e')
-    if not error_code:
-        return render(request, 'fantasy_draft/login.html', {})
-    elif error_code == '1':
-        # EC 1 = incorrect login
-        return render(request, 'fantasy_draft/login.html', {
-            'error_msg': "That's not right! Did you forget your password?",
-        })
-    elif error_code == '2':
-        # EC 2 = activation key has expired
-        return render(request, 'fantasy_draft/login.html', {
-            'error_msg': "Your activation key has expired. Please re-register.",
-        })
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
+    else:
+        error_code = request.GET.get('e')
+        if not error_code:
+            return render(request, 'fantasy_draft/login.html', {})
+        elif error_code == '1':
+            # EC 1 = incorrect login
+            return render(request, 'fantasy_draft/login.html', {
+                'error_msg': "That's not right! Did you forget your password?",
+            })
+        elif error_code == '2':
+            # EC 2 = activation key has expired
+            return render(request, 'fantasy_draft/login.html', {
+                'error_msg': "Your activation key has expired. Please re-register.",
+            })
     
 def register(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('fantasy_draft:index'))
+    elif request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
             user = user_form.save() # save the new user to the database
