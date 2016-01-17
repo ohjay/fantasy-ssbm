@@ -8,11 +8,11 @@
             <p><h1>Leagues</h1></p>
         </div>
     </div>
-    <div class="row">
+    <div class="row border-left border-bottom">
         {% if user.is_authenticated %}
             {% if user.is_active %}
             {% for tournament, league, season_desc, is_ready in tournament_leagues %}
-            <div class="col-2 bordered border-left">
+            <div class="col-2 bordered border-right">
                 <p>
                     {{ tournament.name }}<br>
                     {{ season_desc }}<br>
