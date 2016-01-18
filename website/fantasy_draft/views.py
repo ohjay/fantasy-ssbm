@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.template import RequestContext, loader
 from django.db.models import Max
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.utils import timezone
 
 from .models import *
@@ -488,7 +488,10 @@ def player_rankings(request):
     return render(request, 'fantasy_draft/player_rankings.html', context)
     
 def create_league(request, t_id):
+    tournament = get_object_or_404(Tournament, pk=t_id)
+    
     if request.user.is_authenticated() and request.user.is_active \
+            and date.today() - timedelta(1) < tournament.date \
             and not request.user.leagues.filter(tournament__id=t_id):
         if request.method == 'POST':
             league_form = LeagueForm(data=request.POST)
@@ -496,7 +499,7 @@ def create_league(request, t_id):
                 # Create a new league and save it
                 league = league_form.save(commit=False)
                 league.creator = request.user
-                league.tournament = Tournament.objects.get(pk=t_id)
+                league.tournament = tournament
                 league.date_created = datetime.now()
                 league.save()
                 
@@ -512,7 +515,7 @@ def create_league(request, t_id):
                 return render(request, 'fantasy_draft/create_league.html', {
                     'league_form': league_form,
                     't_id': t_id,
-                    't_name': Tournament.objects.get(pk=t_id),
+                    't_name': tournament.name,
                     'error_msg': "[ERROR] " + error_msg,
                 })
         else:
@@ -592,9 +595,11 @@ def register(request):
             
             # Send email with the activation key
             email_subject = 'Account confirmation'
-            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within " % (user.username) \
-                    + "480 hours: http://fantasy-ssbm.elasticbeanstalk.com/confirm/%s." % (user.activation_key)
-            send_mail(email_subject, email_body, 'Fantasy SSBM <fantasy.ssbm@gmail.com>', [user.email], fail_silently=False)
+            email_body = "Hey %s,<br><br>Thanks for signing up! To activate your account, click this link within " % (user.username) \
+                    + "480 hours: http://fantasy-ssbm.elasticbeanstalk.com/confirm/%s.<br><br>All the best,<br>Fantasy SSBM" % (user.activation_key)
+            msg = EmailMessage(email_subject, email_body, 'Fantasy SSBM <fantasy.ssbm@gmail.com>', [user.email])
+            msg.content_subtype = "html"
+            msg.send(fail_silently=False)
             
             # Log the user in
             user = authenticate(username=request.POST['username'],

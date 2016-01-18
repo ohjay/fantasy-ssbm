@@ -9,15 +9,15 @@ input {
     font-size: 0.975vmax;
     line-height: 1.42857143;
     color: #fff;
-    background-color: #221;
+    background-color: #272727;
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s,-webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
 }
 
 @media(max-width: 600px) {
@@ -28,6 +28,7 @@ input {
 
 input:focus {
     outline: none;
+    background-color: #464646;
 }
 
 input[type="submit"] {
