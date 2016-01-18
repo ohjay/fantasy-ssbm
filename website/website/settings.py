@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'fantasy_draft',
     'compressor',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -93,18 +94,42 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Storage
+
+AWS_HEADERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'Cache-Control': 'max-age=94608000',
+}
+
+AWS_STORAGE_BUCKET_NAME = 'fantasy-ssbm'
+AWS_ACCESS_KEY_ID = 'AKIAIOPKRGNNHZVBZD7Q'
+# [Hidden] AWS_SECRET_ACCESS_KEY
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+STATICFILES_STORAGE = 'website.custom_storages.CachedS3BotoStorage'
+
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "fantasy_draft", "static"),
+)
 
 STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
-COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
+COMPRESS_URL = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE
+COMPRESS_ROOT = STATIC_ROOT
+
 COMPRESS_ENABLED = True
 
 COMPRESS_CSS_FILTERS = [
