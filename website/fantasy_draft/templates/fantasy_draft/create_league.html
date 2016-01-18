@@ -2,10 +2,6 @@
 {% load compress %}
 {% load staticfiles %}
 
-{% block javascript %}
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-{% endblock %}
-
 {% block content %}
 <div class="grid-container">
     <div class="row">
@@ -78,7 +74,12 @@
         </div> 
     </div> 
 </div>
+{% endblock %}
 
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+{% compress js %}
 <script type="text/javascript">
     // Ensure that the league creation form is valid
     $(function() {
@@ -101,4 +102,5 @@
         });
     });
 </script>
+{% endcompress %}
 {% endblock %}

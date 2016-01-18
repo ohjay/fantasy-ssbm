@@ -22,9 +22,6 @@
     <link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
     {% endcompress %}
     {% endblock %}
-    
-    {% block javascript %}
-    {% endblock %}
 </head>
 <body>
     <header id="header-wrapper">
@@ -65,5 +62,8 @@
     {% block content %}
     {% endblock %}
     </div>
+    
+    {% block javascript %}
+    {% endblock %}
 </body>
 </html>

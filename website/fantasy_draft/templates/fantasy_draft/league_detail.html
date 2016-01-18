@@ -2,10 +2,6 @@
 {% load compress %}
 {% load staticfiles %}
 
-{% block javascript %}
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-{% endblock %}
-
 {% block content %}
 <div class="grid-container">
     <div class="row">
@@ -233,8 +229,13 @@
         {% endif %}
     {% endif %}
 </div>
+{% endblock %}
 
 <!-- Scripts -->
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+{% compress js %}
 {% if league.phase == 'PRE' or league.phase == 'SEL' %}
 <script type="text/javascript">
     // Ajax live search
@@ -280,4 +281,5 @@
     });
 </script>
 {% endif %}
+{% endcompress %}
 {% endblock %}

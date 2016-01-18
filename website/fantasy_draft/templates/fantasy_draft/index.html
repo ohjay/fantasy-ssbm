@@ -13,13 +13,6 @@
 {% endcompress %}
 {% endblock %}
 
-{% block javascript %}
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-{% compress js %}
-<script src="{% static "flipclock/compiled/flipclock.js" %}"></script>
-{% endcompress %}
-{% endblock %}
-
 {% block content %}
 <!-- Flash messages -->
 <div id="message" style="display: inline-block">
@@ -82,6 +75,13 @@
         </div><!-- /footer-bottom -->
     </div><!-- /footer-bottom-wrapper -->
 </footer><!-- /footer-wrapper -->
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+{% compress js %}
+<script src="{% static "flipclock/compiled/flipclock.js" %}"></script>
 
 <!-- Clock script -->
 <script type="text/javascript">
@@ -100,4 +100,5 @@
         });
     });
 </script>
+{% endcompress %}
 {% endblock %}

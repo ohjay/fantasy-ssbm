@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
+        <div class="col-3" id="sec1">
             <h2 class="centered">Getting Started</h2>
             <h3 class="centered">Available to the Public</h3>
             <ul class="centered">
@@ -35,7 +35,7 @@
                 <li><i>To log in to your account</i>, click <a href="{% url 'fantasy_draft:login' %}">here</a>.</li>
             </ul>
         </div> 
-        <div class="col-3">
+        <div class="col-3" id="sec2">
             <h2 class="centered">Season Listings</h2>
             <h3 class="centered">2015 Season 1 [01/01/2016 &ndash; 06/30/2016]</h3>
             <table class="centered">
@@ -73,7 +73,42 @@
             </table>
             
             <br>
-        </div> 
+        </div>
     </div> 
+    <div class="row">
+        <div id="sec2-xsmall"></div>
+    </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+{% compress js %}
+<script type="text/javascript">
+    function responsivize() {
+        if ($(window).width() <= 650) {
+            // Stick everything in the same column
+            $('#sec1').removeClass('col-3');
+            $('#sec1').addClass('col-6');
+            
+            $('#sec2').removeClass('col-3');
+            $('#sec2-xsmall').addClass('col-6');
+
+            var sec2Html = $('#sec2').html();
+            if (sec2Html) {
+                $('#sec2-xsmall').html(sec2Html);
+                $('#sec2').html('');
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        responsivize();
+        $(window).resize(function() {
+            responsivize();
+        });
+    });
+</script>
+{% endcompress %}
 {% endblock %}
