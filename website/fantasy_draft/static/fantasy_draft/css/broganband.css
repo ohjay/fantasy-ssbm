@@ -57,26 +57,35 @@ h1 {
     padding: 5px 0;
 }
 
-.col-1 {
-    width: 16.66vw;
+.col-1 { width: 16.66vw; }
+.col-2 { width: 33.33vw; }
+.col-3 { width: 50vw; }
+.col-4 { width: 66.664vw; }
+.col-5 { width: 83.33vw; }
+.col-6 { width: 100vw; }
+
+@media all and (max-width: 800px) {
+    .col-1 { width: 33.33vw; }
+    .col-2 { width: 50vw; }
+    .col-3 { width: 83.33vw; }
+    .col-4 { width: 100vw; }
+    .col-5 { width: 100vw; }
+    .col-6 { width: 100vw; }
+
+    .row .col-2:last-of-type {
+        width: 100vw; 
+    }
+
+    .row .col-5 ~ .col-1 {
+        width: 100vw; 
+    }
 }
 
-.col-2 {
-    width: 33.33vw;
-}
-
-.col-3 {
-    width: 50vw;
-}
-
-.col-4 {
-    width: 66.664vw;
-}
-
-.col-5 {
-    width: 83.33vw;
-}
-
-.col-6 {
-    width: 100vw;
+@media all and (max-width: 650px) {
+    .col-1 { width: 50vw; }
+    .col-2 { width: 100vw; }
+    .col-3 { width: 100vw; }
+    .col-4 { width: 100vw; }
+    .col-5 { width: 100vw; }
+    .col-6 { width: 100vw; }
 }
