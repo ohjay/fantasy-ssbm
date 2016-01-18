@@ -23,7 +23,6 @@ ul.centered {
     display: table;
     margin-left: auto;
     margin-right: auto;
-    white-space: nowrap;
 }
 
 table.centered {
@@ -34,5 +33,5 @@ table.centered {
 }
 
 td {
-    padding-left: 3em;
+    padding-left: 3vw;
 }
