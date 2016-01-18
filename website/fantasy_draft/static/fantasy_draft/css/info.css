@@ -1,0 +1,38 @@
+h2.centered {
+    text-align: center;
+    padding: 1% 0;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    font-family: 'Jura', sans-serif;
+}
+
+h3.centered {
+    text-align: center;
+}
+
+span.centered {
+    width: 100%;
+    text-align: center;
+}
+
+ul.centered {
+    list-style-type: lower-greek;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+
+table.centered {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+
+td {
+    padding-left: 3em;
+}

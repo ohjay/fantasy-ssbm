@@ -1,7 +1,6 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
 {% load compress %}
 {% load staticfiles %}
-{% load static from staticfiles %}
 
 {% block javascript %}
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -9,17 +8,17 @@
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-3 bordered border-left">
+    <div class="row">
+        <div class="col-3">
             <p><h1>New league</h1></p>
         </div>
-        <div class="col-3 bordered border-right">
+        <div class="col-3">
             <p><h1>Join a league</h1></p>
         </div>
     </div>
-    <div class="row border-bottom">
+    <div class="row">
         <!-- Create a league -->
-        <div class="col-3 bordered border-left">
+        <div class="col-3">
             {% if error_msg %}
             <span style="color: red"><strong>{{ error_msg }}</strong></span>
             {% endif %}
@@ -48,7 +47,7 @@
         </div>
         
         <!-- Join a league -->
-        <div class="col-3 bordered border-right">
+        <div class="col-3">
             <p>
                 {% if user.invites_received.count > 0 %}
                 <h2>Open invitations</h2>

@@ -1,7 +1,6 @@
 /*!
  * Broganband v1.0
- * Built using this tutorial as a foundation: 
- * http://j4n.co/blog/Creating-your-own-css-grid-system
+ * Responsive grid system designed for Fantasy SSBM by Owen Jow.
  */
 
 h1 {
@@ -12,17 +11,28 @@ h1 {
 
 .grid-container {
     width: 100vw;
+    display: table;
+    border-spacing: 5.5px 1.9px;
+    border-collapse: separate;
 }
 
 .grid-container * {
     box-sizing: border-box;
 }
 
+.row:nth-child(1) {
+    margin-top: 7.9px;
+}
+
+.row:nth-last-child(1) {
+    margin-bottom: 7.9px;
+}
+
 .row:before,
 .row:after {
     content: "";
-    display: table;
     clear: both;
+    display: table-row;
 }
 
 [class*='col-'] {
@@ -37,7 +47,7 @@ h1 {
 
 [class*='col-'] > p {
     background-color: #464646;
-    padding: 0;
+    padding: 1px 0;
     margin: 0;
     text-align: center;
     color: white;
@@ -45,26 +55,6 @@ h1 {
 
 [class*='col-6'].header > p {
     padding: 5px 0;
-}
-
-.bordered {
-    outline: 1px solid #797979;
-}
-
-.border-top {
-    border-top: 1px solid #797979;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #797979;
-}
-
-.border-left {
-    border-left: 1px solid #797979;
-}
-
-.border-right {
-    border-right: 1px solid #797979;
 }
 
 .col-1 {

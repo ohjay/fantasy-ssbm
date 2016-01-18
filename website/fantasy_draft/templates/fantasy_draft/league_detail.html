@@ -1,7 +1,6 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
 {% load compress %}
 {% load staticfiles %}
-{% load static from staticfiles %}
 
 {% block javascript %}
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -9,13 +8,13 @@
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right header">
+    <div class="row">
+        <div class="col-6 header">
             <p><h1>{{ league.name }}</h1></p>
         </div>
     </div>
-    <div class="row bordered">
-        <div class="col-6 bordered border-left border-right">
+    <div class="row">
+        <div class="col-6">
             <p>
                 Tournament: {{ league.tournament }}<br>
                 Created on {{ league.date_created }} by {{ league.creator }}.
@@ -23,50 +22,46 @@
         </div>
     </div>
     {% if league.phase != 'PRE' %}
-    <div class="row border-bottom">
+    <div class="row">
         
         <!-- ========== DRAFT DISPLAYS ========== -->
         {% if draft_scores %} <!-- results published -->
         {% for draft, player_placings, score, bid in draft_scores %}
-        <div class="col-2 bordered border-left">
+        <div class="col-2">
             <p>
                 {{ draft.user }}'s draft (-{{ bid }}):<br>
                 Score: {{ score }}
-                <ul>
-                    {% for player, placing in player_placings %}
-                    <li>{{ player }} ({{ placing }})</li>
-                    {% endfor %}
-                </ul>
             </p>
+            <ul>
+                {% for player, placing in player_placings %}
+                <li>{{ player }} ({{ placing }})</li>
+                {% endfor %}
+            </ul>
         </div>
         {% endfor %}
             
         {% else %} <!-- results not published yet -->
             {% if draft_data %} <!-- bids -->
             {% for draft, bid in draft_data %}
-            <div class="col-2 bordered border-left">
-                <p>
-                    {{ draft.user }}'s draft (-{{ bid }}):
-                    <ul>
-                        {% for player in draft.players.all %}
-                        <li>{{ player }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
+            <div class="col-2">
+                <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
+                <ul>
+                    {% for player in draft.players.all %}
+                    <li>{{ player }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             {% endfor %}
             
             {% else %} <!-- no bids -->
             {% for draft in league.draft_set.all %}
-            <div class="col-2 bordered border-left">
-                <p>
-                    {{ draft.user }}'s draft:
-                    <ul>
-                        {% for player in draft.players.all %}
-                        <li>{{ player }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
+            <div class="col-2">
+                <p>{{ draft.user }}'s draft:</p>
+                <ul>
+                    {% for player in draft.players.all %}
+                    <li>{{ player }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             {% endfor %}
             
@@ -74,7 +69,7 @@
         {% endif %}
         
         {% if league.phase != 'COM' %}
-        <div class="col-2 bordered border-right">
+        <div class="col-2">
             
             <!-- ========== BIDDING SELECTION BOX ========== -->
             
@@ -120,19 +115,19 @@
                     <p style="background-color: #67c8ff">
                         <u>It's the bidding phase!</u><br>
                         We're bidding for {{ auction_ordinal }} pick. The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
-                        
-                        <ol>
-                            {% if final_orders.count == 0 %}
-                                No order has been determined yet.
-                            {% else %}
-                                Currently, the order is:
-                                
-                                {% for o in final_orders %}
-                                <li>{{ o.user }} ({{ o.number }})</li>
-                                {% endfor %}
-                            {% endif %}
-                        </ol>
                     </p>
+                        
+                    <ol>
+                        {% if final_orders.count == 0 %}
+                            No order has been determined yet.
+                        {% else %}
+                            Currently, the order is:
+                            
+                            {% for o in final_orders %}
+                            <li>{{ o.user }} ({{ o.number }})</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ol>
                 {% endif %}
                 
             <!-- ========== PLAYER SELECTION BOX ========== -->
@@ -152,11 +147,13 @@
                             {% endif %}
                         </div>
                     </p>
+                    
                     {% else %}
                     <p>
                         <u>It's {{ next_user }}'s turn to pick!</u><br>
                         You have {{ ordinal }} pick. Go harass {{ next_user}} on all forms of social media.
                     </p>
+                    
                     {% endif %}
                 {% else %}
                 <p>
@@ -170,8 +167,8 @@
     </div>
     {% else %}
         <!-- Indent for visual effect -->
-        <div class="row bordered border-bottom">
-            <div class="col-6 bordered border-left border-right">
+        <div class="row">
+            <div class="col-6">
                 <p>
                     Users currently part of this league:
                     <ul>
@@ -185,8 +182,8 @@
         
         <!-- ========== USER INVITATION SECTION ========== -->
         
-        <div class="row bordered border-bottom">
-            <div class="col-6 bordered border-left border-right">
+        <div class="row">
+            <div class="col-6">
                 <p>
                     {% if league.userprofile_set.count >= max_user_ct %}
                     The league is full! No more players will be allowed to join.
@@ -218,8 +215,8 @@
         <!-- ========== ACTIVATION SECTION ========== -->
         
         {% if user.is_authenticated and league.creator == user %}
-        <div class="row bordered border-bottom">
-            <div class="col-6 bordered border-left border-right">
+        <div class="row">
+            <div class="col-6">
                 <p>
                     {% if league.userprofile_set.count < 2 %}
                     [Activation disabled] Before you activate the league, you'll have to let some other users join.

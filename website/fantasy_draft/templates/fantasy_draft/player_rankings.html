@@ -1,7 +1,6 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
 {% load compress %}
 {% load staticfiles %}
-{% load static from staticfiles %}
 
 {% block stylesheets %}
 {% compress css %}
@@ -16,124 +15,66 @@
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right header">
+    <div class="row">
+        <div class="col-6 header">
             <p><h1>Rankings</h1></p>
         </div>
     </div>
     <div class="row">
-        <div class="col-6 bordered border-left border-right">
+        <div class="col-6">
             <p>From {{ date_1yr_ago }} to {{ date_now }} [PST]</p>
         </div>
     </div>
     
-    <div class="row bordered border-bottom">
-        <div class="col-5 bordered border-left">
-            <p>
-                <ol style="padding: 0 1.75%">
-                    {% for player, score in sorted_ps %}
-                    <li>{{ player }} (Score: {{ score }})</li>
-                    {% if forloop.last %}</ol>{% endif %}
-                    
-                    {% empty %}
-                    </ol>There are no results in the database!
-                    
-                    {% endfor %}
-            </p>
-        </div>
-        <div class="col-1 bordered border-right">
-            <p>
-                <h2>Scoring System</h2>
-                Players will earn points for each <a href="{% url 'fantasy_draft:info' %}">season tournament</a> that they participate in.<br><br>
-                They are ranked by their average tournament score, multiplied by a slight (but not insignificant) activity bonus.
+    <div class="row">
+        <div class="col-5">
+            <ol style="padding: 0 1.75%">
+                {% for player, score in sorted_ps %}
+                <li>{{ player }} (Score: {{ score }})</li>
+                {% if forloop.last %}</ol>{% endif %}
                 
-                <table class="scoring-table">
-                    <thead>
-                        <tr>
-                            <th>Placing</th>
-                            <th>Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1st</th>
-                            <td>670</td>
-                        </tr>
-                        <tr>
-                            <th><b>2nd</b></th>
-                            <td>610</td>
-                        </tr>
-                        <tr>
-                            <th><b>3rd</b></th>
-                            <td>555</td>
-                        </tr>
-                        <tr>
-                            <th><b>4th</b></th>
-                            <td>500</td>
-                        </tr>
-                        <tr>
-                            <th><b>5th</b></th>
-                            <td>450</td>
-                        </tr>
-                        <tr>
-                            <th><b>7th</b></th>
-                            <td>400</td>
-                        </tr>
-                        <tr>
-                            <th><b>9th</b></th>
-                            <td>355</td>
-                        </tr>
-                        <tr>
-                            <th><b>13th</b></th>
-                            <td>310</td>
-                        </tr>
-                        <tr>
-                            <th><b>17th</b></th>
-                            <td>270</td>
-                        </tr>
-                        <tr>
-                            <th><b>25th</b></th>
-                            <td>230</td>
-                        </tr>
-                        <tr>
-                            <th><b>33rd</b></th>
-                            <td>195</td>
-                        </tr>
-                        <tr>
-                            <th><b>49th</b></th>
-                            <td>160</td>
-                        </tr>
-                        <tr>
-                            <th><b>65th</b></th>
-                            <td>130</td>
-                        </tr>
-                        <tr>
-                            <th><b>97th</b></th>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <th><b>129th</b></th>
-                            <td>75</td>
-                        </tr>
-                        <tr>
-                            <th><b>193rd</b></th>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <th><b>257th</b></th>
-                            <td>30</td>
-                        </tr>
-                        <tr>
-                            <th><b>385th</b></th>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <th><b>~</b></th>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </p>
+                {% empty %}
+                </ol><div style="text-align: center">Whoa! There are no results in the database!</div>
+                
+                {% endfor %}
+        </div>
+        <div class="col-1">
+            <h2>Scoring System</h2>
+            Players can earn points for each <a href="{% url 'fantasy_draft:info' %}">season tournament</a> that they participate in.
+            <br><br>
+            They are ranked by their average tournament score, multiplied by an activity bonus of (1 + 0.# tournaments attended).
+            <br><br>
+            For example, if John went to two tournaments and placed 1st and 2nd, he would be awarded an overall score of 640 * 1.2, or 768.
+            <br><br>
+            Tournament scores are given by the following table:
+            <table class="scoring-table">
+                <thead>
+                    <tr><th>Placing</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><th>1st</th>   <td>670</td></tr>
+                    <tr><th>2nd</th>   <td>610</td></tr>
+                    <tr><th>3rd</th>   <td>555</td></tr>
+                    <tr><th>4th</th>   <td>500</td></tr>
+                    <tr><th>5th</th>   <td>450</td></tr>
+                    <tr><th>7th</th>   <td>400</td></tr>
+                    <tr><th>9th</th>   <td>355</td></tr>
+                    <tr><th>13th</th>  <td>310</td></tr>
+                    <tr><th>17th</th>  <td>270</td></tr>
+                    <tr><th>25th</th>  <td>230</td></tr>
+                    <tr><th>33rd</th>  <td>195</td></tr>
+                    <tr><th>49th</th>  <td>160</td></tr>
+                    <tr><th>65th</th>  <td>130</td></tr>
+                    <tr><th>97th</th>  <td>100</td></tr>
+                    <tr><th>129th</th>  <td>75</td></tr>
+                    <tr><th>193rd</th>  <td>50</td></tr>
+                    <tr><th>257th</th>  <td>30</td></tr>
+                    <tr><th>385th</th>  <td>10</td></tr>
+                    <tr><th>~</th>       <td>0</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

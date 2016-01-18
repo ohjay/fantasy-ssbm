@@ -1,52 +1,78 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
+{% load compress %}
 {% load staticfiles %}
-{% load static from staticfiles %}
+
+{% block stylesheets %}
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/header.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/main.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/info.css" %}" media="screen"/>
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/broganband.css" %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/responsive_text.css" %}" media="screen"/>
+{% endcompress %}
+{% endblock %}
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right header">
+    <div class="row">
+        <div class="col-6 header">
             <p><h1>Fantasy SSBM Info</h1></p>
         </div>
     </div>
-    <div class="row bordered border-bottom">
-        <div class="col-3 bordered border-left">
-            <p>
-                <h2><u>Getting Started</u></h2>
-                Available to the Public
-                <ul style="list-style-type: lower-greek">
-                    <li><i>To see a countdown to the next major tournament</i>, click <a href="{% url 'fantasy_draft:index' %}">here</a>.</li>
-                    <li><i>To view an objective ranking of players</i>, click <a href="{% url 'fantasy_draft:player_rankings' %}">here</a>.</li>
-                </ul>
-                
-                Available to Users Only
-                <ul style="list-style-type: lower-greek">
-                    <li><i>To create and edit leagues</i>, click <a href="{% url 'fantasy_draft:leagues' %}">here</a>.</li>
-                    <li><i>To login to an existing account</i>, click <a href="{% url 'fantasy_draft:login' %}">here</a>.</li>
-                    <li><i>To create a new account</i>, click <a href="{% url 'fantasy_draft:register' %}">here</a>.</li>
-                </ul>
-            </p>
+    <div class="row">
+        <div class="col-3">
+            <h2 class="centered">Getting Started</h2>
+            <h3 class="centered">Available to the Public</h3>
+            <ul class="centered">
+                <li><i>To see a countdown to the next major tournament</i>, click <a href="{% url 'fantasy_draft:index' %}">here</a>.</li>
+                <li><i>To create a Fantasy SSBM account</i>, click <a href="{% url 'fantasy_draft:register' %}">here</a>.</li>
+                <li><i>To view an objective ranking of Melee players</i>, click <a href="{% url 'fantasy_draft:player_rankings' %}">here</a>.</li>
+            </ul>
+            
+            <h3 class="centered">Available to Users Only</h3>
+            <ul class="centered">
+                <li><i>To create and examine leagues</i>, click <a href="{% url 'fantasy_draft:leagues' %}">here</a>.</li>
+                <li><i>To log in to your account</i>, click <a href="{% url 'fantasy_draft:login' %}">here</a>.</li>
+            </ul>
         </div> 
-        <div class="col-3 bordered border-right">
-            <p>
-                <h2><u>Season Listings</u></h2>
-                2015 Season 1 [01/01/2016 &ndash; 06/30/2016]
-                <ul style="list-style-type: lower-greek">
-                    <li>Genesis 3 [01/15 &ndash; 01/17]</li>
-                    <li>BEAST 6 [02/19 &ndash; 02/21]</li>
-                    <li>Pound 2016 [04/02 &ndash; 04/03]</li>
-                    <li>DreamHack Austin [05/06 &ndash; 05/08]</li>
-                    <li>CEO 2016 [06/24 &ndash; 06/26]</li>
-                </ul>
-                
-                2015 Season 2 [07/01/2016 &ndash; 12/31/2016]
-                <ul style="list-style-type: lower-greek">
-                    <li>EVO 2016 [07/15 &ndash; 07/17]</li>
-                    <li>Super Smash Con [08/11 &ndash; 08/14]</li>
-                    <li>The Big House 6 [10/??]</li>
-                    <li>DreamHack Winter [11/24 &ndash; 11/27]</li>
-                </ul>
-            </p>
+        <div class="col-3">
+            <h2 class="centered">Season Listings</h2>
+            <h3 class="centered">2015 Season 1 [01/01/2016 &ndash; 06/30/2016]</h3>
+            <table class="centered">
+                <tr>
+                    <th>Genesis 3</th><td>[01/15 &ndash; 01/17]</td>
+                </tr>
+                <tr>
+                    <th>BEAST 6</th><td>[02/19 &ndash; 02/21]</td>
+                </tr>
+                <tr>
+                    <th>Pound 2016</th><td>[04/02 &ndash; 04/03]</td>
+                </tr>
+                <tr>
+                    <th>DreamHack Austin</th><td>[05/06 &ndash; 05/08]</td>
+                </tr>
+                <tr>
+                    <th>CEO 2016</th><td>[06/24 &ndash; 06/26]</td>
+                </tr>
+            </table>
+            
+            <h3 class="centered">2015 Season 2 [07/01/2016 &ndash; 12/31/2016]</h3>
+            <table class="centered">
+                <tr>
+                    <th>EVO 2016</th><td>[07/15 &ndash; 07/17]</td>
+                </tr>
+                <tr>
+                    <th>Super Smash Con</th><td>[08/11 &ndash; 08/14]</td>
+                </tr>
+                <tr>
+                    <th>The Big House 6</th><td>[10/??]</td>
+                </tr>
+                <tr>
+                    <th>DreamHack Winter</th><td>[11/24 &ndash; 11/27]</td>
+                </tr>
+            </table>
+            
+            <br>
         </div> 
     </div> 
 </div>

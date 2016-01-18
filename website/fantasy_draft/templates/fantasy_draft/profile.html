@@ -1,21 +1,20 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
 {% load staticfiles %}
-{% load static from staticfiles %}
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right header">
+    <div class="row">
+        <div class="col-6 header">
             <p><h1>{{ user.username }}'s Profile</h1></p>
         </div>
     </div>
-    <div class="row bordered">
-        <div class="col-6 bordered border-left border-right">
+    <div class="row">
+        <div class="col-6">
             <p>Email: {{ user.email }}</p>
         </div>
     </div>
-    <div class="row bordered border-bottom">
-        <div class="col-6 bordered border-left border-right">
+    <div class="row">
+        <div class="col-6">
             <p>
                 Leagues participated in:
                 <ul>

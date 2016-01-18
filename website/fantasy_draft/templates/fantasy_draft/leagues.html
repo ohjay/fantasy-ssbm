@@ -1,19 +1,18 @@
-{% extends "fantasy_draft/header_footer.html" %}
+{% extends "fantasy_draft/header.html" %}
 {% load staticfiles %}
-{% load static from staticfiles %}
 
 {% block content %}
 <div class="grid-container">
-    <div class="row bordered border-top">
-        <div class="col-6 bordered border-left border-right header">
+    <div class="row">
+        <div class="col-6 header">
             <p><h1>Leagues</h1></p>
         </div>
     </div>
-    <div class="row border-left border-bottom">
+    <div class="row">
         {% if user.is_authenticated %}
             {% if user.is_active %}
             {% for tournament, league, season_desc, is_ready in tournament_leagues %}
-            <div class="col-2 bordered border-right">
+            <div class="col-2">
                 <p>
                     {{ tournament.name }}<br>
                     {{ season_desc }}<br>
@@ -39,13 +38,13 @@
             {% endfor %}
             
             {% else %}
-            <div class="col-6 bordered border-left border-right">
+            <div class="col-6">
                 <p>You must activate your account before you can access this feature.</p>
             </div>
             
             {% endif %}
         {% else %}
-        <div class="col-6 bordered border-left border-right">
+        <div class="col-6">
             <p>You must be <a href="{% url 'fantasy_draft:login' %}">logged in</a> to create or edit leagues.</p>
         </div>
         {% endif %}
