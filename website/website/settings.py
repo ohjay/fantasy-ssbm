@@ -20,9 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # [Hidden] SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+IS_PRODUCTION = 'RDS_DB_NAME' in os.environ
+if not IS_PRODUCTION:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = [
+        ".fantasy-ssbm.elasticbeanstalk.com",
+        ".fantasy-ssbm.elasticbeanstalk.com.",
+    ]
 
 
 # Application definition
