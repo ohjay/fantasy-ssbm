@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="grid-container">
+<div class="grid-container" id="bigrid">
     <div class="row">
         <div class="col-6 header">
             <p><h1>Leagues</h1></p>
@@ -21,6 +21,9 @@
     </div>
     {% if user.is_authenticated %}
         {% if user.is_active %}
+        
+        <!-- ========== TOURNAMENT LISTING ========== -->
+        
         {% for tournament, league, season_desc, is_ready in tournament_leagues %}
             {% if forloop.counter0|divisibleby:3 %}
             <!-- 1st in the sequence -->
@@ -29,83 +32,86 @@
                     <p>
                         <span class="tname">{{ tournament.name }}</span><br>
                         {{ season_desc }}<br>
-                
+            
                         {% if league %}
                         <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
-                
+            
                         {% elif today_adj < tournament.date %}
                             {% if is_ready %}
                             <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a>
-                    
+                
                             {% else %}
-                            Leagues cannot be created yet. Check back soon!
-                    
+                            <i>Leagues cannot be created yet. Check back soon!</i>
+                
                             {% endif %}
-                
+            
                         {% else %}
-                        The tournament date has already passed.
-                
+                        <i>The tournament date has already passed.</i>
+            
                         {% endif %}
                     </p>
                 </div>
-            
+        
             {% elif forloop.counter|divisibleby:3 %}
             <!-- 3rd in the sequence -->
                 <div class="col-2">
                     <p>
                         <span class="tname">{{ tournament.name }}</span><br>
                         {{ season_desc }}<br>
-                
+            
                         {% if league %}
                         <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
-                
+            
                         {% elif today_adj < tournament.date %}
                             {% if is_ready %}
                             <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a>
-                    
+                
                             {% else %}
-                            Leagues cannot be created yet. Check back soon!
-                    
+                            <i>Leagues cannot be created yet. Check back soon!</i>
+                
                             {% endif %}
-                
+            
                         {% else %}
-                        The tournament date has already passed.
-                
+                        <i>The tournament date has already passed.</i>
+            
                         {% endif %}
                     </p>
                 </div>
             </div>
-            
+        
             {% else %}
             <!-- 2nd in the sequence -->
                 <div class="col-2">
                     <p>
                         <span class="tname">{{ tournament.name }}</span><br>
                         {{ season_desc }}<br>
-                
+            
                         {% if league %}
                         <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
-                
+            
                         {% elif today_adj < tournament.date %}
                             {% if is_ready %}
                             <a href="{% url 'fantasy_draft:create_league' t_id=tournament.id %}">Create or join a league</a>
-                    
+                        
                             {% else %}
-                            Leagues cannot be created yet. Check back soon!
-                    
+                            <i>Leagues cannot be created yet. Check back soon!</i>
+                
                             {% endif %}
-                
+            
                         {% else %}
-                        The tournament date has already passed.
-                
+                        <i>The tournament date has already passed.</i>
+                        
                         {% endif %}
                     </p>
                 </div>
-            
+        
             {% endif %}
         {% endfor %}
         
         {% else %}
+        
+        <!-- ========== "YOU NEED TO ACTIVATE..." ========== -->
+        
         <div class="row">
             <div class="col-6">
                 <p>You must activate your account before you can access this feature.</p>
@@ -113,8 +119,11 @@
         </div>
         
         {% endif %}
-        
+    
     {% else %}
+    
+    <!-- ========== "YOU MUST BE LOGGED IN..." ========== -->
+    
     <div class="row">
         <div class="col-6">
             <p>You must be <a href="{% url 'fantasy_draft:login' %}">logged in</a> to create or edit leagues.</p>
@@ -124,3 +133,51 @@
     {% endif %}
 </div>
 {% endblock %}
+
+{% if user.is_authenticated and user.is_active %}
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+{% compress js %}
+<script type="text/javascript">
+    function responsivize() {
+        if ($(window).width() <= 650) {
+            // Generate mobile-friendly HTML
+            var mobileHtml = '<div class="row"><div class="col-6 header"><p><h1>Leagues</h1></p></div></div>';
+        
+            {% for tournament, league, season_desc, is_ready in tournament_leagues %}
+            mobileHtml += '<div class="row"><div class="col-6"><p>'
+                    + '<span class="tname">{{ tournament.name }}</span><br>'
+                    + '{{ season_desc }}<br>';
+    
+            {% if league %}
+            mobileHtml += '<a href="/league/f/{{ league.id }}">{{ league.name }}</a>';
+
+            {% elif today_adj < tournament.date %}
+                {% if is_ready %}
+                mobileHtml += '<a href="' + "{% url 'fantasy_draft:create_league' t_id=tournament.id %}" + '">Create or join a league</a>';
+                {% else %}
+                mobileHtml += '<i>Leagues cannot be created yet. Check back soon!</i>'
+                {% endif %}
+
+            {% else %}
+            mobileHtml += '<i>The tournament date has already passed.</i>'
+
+            {% endif %}
+        
+            mobileHtml += '</p></div></div>';
+            {% endfor %}
+        
+            $('#bigrid').html(mobileHtml);
+            $(window).off("resize");
+        }
+    }
+    
+    $(document).ready(function() {
+        $(window).resize(responsivize);
+        responsivize();
+    });
+</script>
+{% endcompress %}
+{% endblock %}
+{% endif %}
