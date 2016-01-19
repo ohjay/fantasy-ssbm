@@ -27,16 +27,23 @@
     </div>
     
     <div class="row">
-        <div class="col-5">
-            <ol style="padding: 0 1.75%">
+        <div class="col-5" style="text-align: center">
+            {% if sorted_ps %}
+            <h2>Without further ado...</h2>
+            <div class="rank-container">
                 {% for player, score in sorted_ps %}
-                <li>{{ player }} (Score: {{ score }})</li>
-                {% if forloop.last %}</ol>{% endif %}
-                
-                {% empty %}
-                </ol><div style="text-align: center">Whoa! There are no results in the database!</div>
-                
+                <div class="rank-item">
+                    <span class="jura-name">#{{ forloop.counter }}: {{ player }}</span><br>
+                    Score: {{ score }}
+                </div>
                 {% endfor %}
+            </div>
+            
+            {% else %}
+            Whoa! There are no results in the database!
+            
+            {% endif %}
+            
         </div>
         <div class="col-1">
             <h2>Scoring System</h2>

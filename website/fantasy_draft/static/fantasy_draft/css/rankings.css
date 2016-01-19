@@ -13,3 +13,42 @@ th, td {
 tr:hover, thead {
     background-color: #464646;
 }
+
+.jura-name {
+    font-family: 'Jura', sans-serif;
+    font-size: 1.1em;
+}
+
+.rank-container {
+    max-width: 100%;
+    background-color: #ccc;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    font-size: 12px;
+    margin: -1px;
+}
+
+.rank-item {
+    width: 25%;
+    border: 1px solid #000;
+    height: 40px;
+    flex: 80px 1 25%;
+    text-align: center;
+    color: #000;
+    flex: 1 0 25%;
+    overflow: auto;
+    margin: 1px;
+}
+
+@media(max-width: 800px) {
+    .rank-container {
+        font-size: 10px;
+    }
+    
+    .rank-item {
+        width: 100px;
+        flex: 80px 1;
+    }
+}

@@ -469,12 +469,12 @@ def player_rankings(request):
             player_scores[result.player] += get_score(result.placing)
             player_tourn_ct[result.player] += 1
             
-    for player, score in player_scores:
+    for player, score in player_scores.items():
         num_tournaments = player_tourn_ct[player]
         score_avg = float(score) / num_tournaments
         
         activity_bonus = float(num_tournaments)
-        while activity_bonus > 1:
+        while activity_bonus >= 1.0:
             activity_bonus /= 10
         activity_bonus += 1.0
         
