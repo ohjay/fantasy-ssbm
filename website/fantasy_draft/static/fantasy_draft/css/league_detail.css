@@ -80,3 +80,10 @@ input:focus {
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 1;
 }
+
+#draft-header {
+    opacity: 0.7;
+    font-family: 'Jura', sans-serif;
+    font-size: 1.4em;
+    padding: 0.75vh 0;
+}

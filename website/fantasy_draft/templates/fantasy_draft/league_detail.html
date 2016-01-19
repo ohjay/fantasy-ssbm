@@ -30,58 +30,84 @@
         <!-- ========== DRAFT DISPLAYS ========== -->
         
         <div class="col-4" id="col-container">
+            <p id="draft-header">Drafts</p><br>
+            
             {% if draft_scores %} <!-- results published -->
             {% for draft, player_placings, score, bid in draft_scores %}
-            <div class="col-2">
-                <p>
-                    {{ draft.user }}'s draft (-{{ bid }}):<br>
-                    Score: {{ score }}
-                </p>
-                <ul class="centered">
-                    {% for player, placing in player_placings %}
-                    <li>{{ player }} ({{ placing }})</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
+                {% if forloop.counter0|divisibleby:2 %}
+                <div class="row">
+                {% endif %}
             
+                <div class="col-2">
+                    <p>
+                        {{ draft.user }}'s draft (-{{ bid }}):<br>
+                        Score: {{ score }}
+                    </p>
+                    <ul class="centered">
+                        {% for player, placing in player_placings %}
+                        <li>{{ player }} ({{ placing }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            
+                {% if not forloop.counter0|divisibleby:2 %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        
             {% else %} <!-- results not published yet -->
                 {% if draft_data %} <!-- bids -->
                 {% for draft, bid in draft_data %}
-                <div class="col-2">
-                    <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
-                    
-                    {% if draft.players.count > 0 %}
-                    <ul class="centered">
-                        {% for player in draft.players.all %}
-                        <li>{{ player }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                    {% if forloop.counter0|divisibleby:2 %}
+                    <div class="row">
                     {% endif %}
-                </div>
+                    
+                    <div class="col-2">
+                        <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
+                
+                        {% if draft.players.count > 0 %}
+                        <ul class="centered">
+                            {% for player in draft.players.all %}
+                            <li>{{ player }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if not forloop.counter0|divisibleby:2 %}
+                    </div>
+                    {% endif %}
                 {% endfor %}
-        
+    
                 {% else %} <!-- no bids -->
                 {% for draft in league.draft_set.all %}
-                <div class="col-2">
-                    <p>{{ draft.user }}'s draft:</p>
-                    
-                    {% if draft.players.count > 0 %}
-                    <ul class="centered">
-                        {% for player in draft.players.all %}
-                        <li>{{ player }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                    {% if forloop.counter0|divisibleby:2 %}
+                    <div class="row">
                     {% endif %}
-                </div>
+                    
+                    <div class="col-2">
+                        <p>{{ draft.user }}'s draft:</p>
+                
+                        {% if draft.players.count > 0 %}
+                        <ul class="centered">
+                            {% for player in draft.players.all %}
+                            <li>{{ player }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if not forloop.counter0|divisibleby:2 %}
+                    </div>
+                    {% endif %}
                 {% endfor %}
-        
+    
                 {% endif %}
-            
+        
             {% endif %}
         </div>
         
@@ -309,6 +335,90 @@
                 $('#submit-bid').html(''); // you can't bid LOWER
             }
         });
+    });
+</script>
+{% endif %}
+
+{% if league.phase != 'PRE' %}
+<script type="text/javascript">
+    function responsivize() {
+        if ($(window).width() <= 650) {
+            var mobileHtml = '<p id="draft-header">Drafts</p><br>';
+            
+            // IF [results published]
+            
+            {% if draft_scores %}
+            {% for draft, player_placings, score, bid in draft_scores %}
+            mobileHtml += '<div class="row"><div class="col-6"><p>'
+                    + "{{ draft.user }}'s draft (-{{ bid }}):<br>"
+                    + 'Score: {{ score }}</p>'
+                    + '<ul class="centered">';
+            
+                {% for player, placing in player_placings %}
+                mobileHtml += '<li>{{ player }} ({{ placing }})</li>';
+                {% endfor %}
+            
+            mobileHtml += '</ul></div></div>';
+            {% endfor %}
+            
+            // ELIF [results not published; bids]
+            
+            {% elif draft_data %}
+            {% for draft, bid in draft_data %}
+            mobileHtml += '<div class="row"><div class="col-6"><p>'
+                    + "{{ draft.user }}'s draft (-{{ bid }}):</p>";
+            
+                {% if draft.players.count > 0 %}
+                mobileHtml += '<ul class="centered">';
+                    
+                    {% for player in draft.players.all %}
+                    mobileHtml += '<li>{{ player }}</li>';
+                    {% endfor %}
+                    
+                mobileHtml += '</ul>';
+                
+                {% else %}
+                mobileHtml += '<div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>';
+                
+                {% endif %}
+                
+            mobileHtml += '</div></div>';
+            {% endfor %}
+            
+            // ELSE [results not published; no bids]
+            
+            {% else %}
+            {% for draft in league.draft_set.all %}
+            mobileHtml += '<div class="row"><div class="col-6"><p>'
+                    + "{{ draft.user }}'s draft:</p>";
+                
+                {% if draft.players.count > 0 %}
+                mobileHtml += '<ul class="centered">';
+                    
+                    {% for player in draft.players.all %}
+                    mobileHtml += '<li>{{ player }}</li>';
+                    {% endfor %}
+                    
+                mobileHtml += '</ul>';
+                
+                {% else %}
+                mobileHtml += '<div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>';
+            
+                {% endif %}
+                
+            mobileHtml += '</div></div>';
+            {% endfor %}
+            
+            {% endif %}
+            
+            $('#col-container').html(mobileHtml);
+            $(window).off("resize");
+        }
+    }
+    
+    $(document).ready(function() {
+        $(window).resize(responsivize);
+        responsivize();
     });
 </script>
 {% endif %}
