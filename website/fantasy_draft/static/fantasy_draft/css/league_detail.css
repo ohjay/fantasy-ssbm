@@ -59,6 +59,10 @@ input:focus {
     outline: none;
 }
 
+[class*='col-'] > p {
+    padding: 3px;
+}
+
 .big-jura {
     font-family: 'Jura', sans-serif;
     font-size: 1.1em;
@@ -74,6 +78,12 @@ input:focus {
 .search-results {
     height: 135px !important;
     padding: 10px;
+}
+
+@media(max-width: 650px) {
+    .player-list {
+        font-size: 1.2vmax;
+    }
 }
 
 #col-container {

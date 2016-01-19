@@ -43,7 +43,7 @@
                         {{ draft.user }}'s draft (-{{ bid }}):<br>
                         Score: {{ score }}
                     </p>
-                    <ul class="centered">
+                    <ul class="centered player-list">
                         {% for player, placing in player_placings %}
                         <li>{{ player }} ({{ placing }})</li>
                         {% endfor %}
@@ -66,7 +66,7 @@
                         <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
                 
                         {% if draft.players.count > 0 %}
-                        <ul class="centered">
+                        <ul class="centered player-list">
                             {% for player in draft.players.all %}
                             <li>{{ player }}</li>
                             {% endfor %}
@@ -91,7 +91,7 @@
                         <p>{{ draft.user }}'s draft:</p>
                 
                         {% if draft.players.count > 0 %}
-                        <ul class="centered">
+                        <ul class="centered player-list">
                             {% for player in draft.players.all %}
                             <li>{{ player }}</li>
                             {% endfor %}
@@ -352,7 +352,7 @@
             mobileHtml += '<div class="row"><div class="col-6"><p>'
                     + "{{ draft.user }}'s draft (-{{ bid }}):<br>"
                     + 'Score: {{ score }}</p>'
-                    + '<ul class="centered">';
+                    + '<ul class="centered player-list">';
             
                 {% for player, placing in player_placings %}
                 mobileHtml += '<li>{{ player }} ({{ placing }})</li>';
@@ -369,7 +369,7 @@
                     + "{{ draft.user }}'s draft (-{{ bid }}):</p>";
             
                 {% if draft.players.count > 0 %}
-                mobileHtml += '<ul class="centered">';
+                mobileHtml += '<ul class="centered player-list">';
                     
                     {% for player in draft.players.all %}
                     mobileHtml += '<li>{{ player }}</li>';
@@ -393,7 +393,7 @@
                     + "{{ draft.user }}'s draft:</p>";
                 
                 {% if draft.players.count > 0 %}
-                mobileHtml += '<ul class="centered">';
+                mobileHtml += '<ul class="centered player-list">';
                     
                     {% for player in draft.players.all %}
                     mobileHtml += '<li>{{ player }}</li>';
