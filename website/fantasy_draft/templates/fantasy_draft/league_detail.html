@@ -2,6 +2,13 @@
 {% load compress %}
 {% load staticfiles %}
 
+{% block stylesheets %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/league_detail.css" %}" media="screen" />
+{% endcompress %}
+{% endblock %}
+
 {% block content %}
 <div class="grid-container">
     <div class="row">
@@ -135,6 +142,7 @@
                         <u>Your Turn</u><br>
                         You have {{ ordinal }} pick.<br>
                         Enter Pick <input type="text" id="name_input" name="name_input" autocomplete="off" />
+                    </p>
                         <div id="search-results">
                             {% if invite_sent %}
                             <p>Invitation successfully sent!</p>
@@ -142,7 +150,6 @@
                             <p>No players found.</p>
                             {% endif %}
                         </div>
-                    </p>
                     
                     {% else %}
                     <p>
@@ -167,44 +174,45 @@
             <div class="col-6">
                 <p>
                     Users currently part of this league:
-                    <ul>
-                        {% for u in league.userprofile_set.all %}
-                        <li>{{ u }}</li>
-                        {% endfor %}
-                    </ul>
                 </p>
+                <ul class="centered">
+                    {% for u in league.userprofile_set.all %}
+                    <li>{{ u }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
         
         <!-- ========== USER INVITATION SECTION ========== -->
         
         <div class="row">
-            <div class="col-6">
+            <div class="col-6" style="text-align: center">
+                {% if league.userprofile_set.count >= max_user_ct %}
+                <p>The league is full! No more players will be allowed to join.</p>
+            
+                {% elif user.is_authenticated and league.creator == user %}
                 <p>
-                    {% if league.userprofile_set.count >= max_user_ct %}
-                    The league is full! No more players will be allowed to join.
-                    
-                    {% elif user.is_authenticated and league.creator == user %}
                     Invite users to join your league:&nbsp;
-                    <input type="text" id="name_input" name="name_input" autocomplete="off" />
-                    <div id="search-results">
-                        {% if invite_sent %}
-                        <p>Invitation successfully sent!</p>
-                        {% else %}
-                        <p>No users found.</p>
-                        {% endif %}
-                    </div>
-                    {% else %}
-                        <!-- Indent for aesthetics -->
-                        You don't have permission to add users to the league!
-                        {% if in_league %}
-                        <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:leave' league_id=league.id %}">
-                            {% csrf_token %}
-                            <input type="submit" value="Leave" />
-                        </form>
-                        {% endif %}
-                    {% endif %}
+                    <input type="text" id="name_input" maxlength="50" size="30" name="name_input" autocomplete="off" placeholder="Search for a user..." />
                 </p>
+                <div id="search-results" style="text-align: center">
+                    {% if invite_sent %}
+                    <span>Invitation successfully sent!</span>
+                    {% else %}
+                    <span>No users found.</span>
+                    {% endif %}
+                </div>
+                
+                {% else %}
+                    <!-- Indent for aesthetics -->
+                    You don't have permission to add users to the league!
+                    {% if in_league %}
+                    <form style="margin-top: 1vh" method="post" action="{% url 'fantasy_draft:leave' league_id=league.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Leave" />
+                    </form>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         
@@ -212,18 +220,16 @@
         
         {% if user.is_authenticated and league.creator == user %}
         <div class="row">
-            <div class="col-6">
-                <p>
-                    {% if league.userprofile_set.count < 2 %}
-                    [Activation disabled] Before you activate the league, you'll have to let some other users join.
-                    {% else %}
-                    Activate the league (warning: this will lock in all players). 
-                    <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:activate' league_id=league.id %}?next={% firstof request.path '/' %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Activate" />
-                    </form>
-                    {% endif %}
-                </p>
+            <div class="col-6" style="text-align: center">
+                {% if league.userprofile_set.count < 2 %}
+                [Activation disabled] Before you activate the league, you'll have to let some other users join.
+                {% else %}
+                Activate the league (warning: this will lock in all players). 
+                <form style="text-align: center; margin-top: 1vh" method="post" action="{% url 'fantasy_draft:activate' league_id=league.id %}?next={% firstof request.path '/' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Activate" />
+                </form>
+                {% endif %}
             </div>
         </div>
         {% endif %}

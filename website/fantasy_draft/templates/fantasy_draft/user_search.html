@@ -1,15 +1,17 @@
 {% if users %}
-    <ul>
+    <table class="centered">
         {% for user in users %}
-        <li>
-            {{ user.username }}&nbsp;
-            <form style="display: inline" method="post" action="{% url 'fantasy_draft:invite' recipient_id=user.id league_id=league_id %}">
-                {% csrf_token %}
-                <input type="submit" value="Invite" />
-            </form>
-        </li>
+        <tr>
+            <th>{{ user.username }}</th>
+            <td>
+                <form style="display: inline" method="post" action="{% url 'fantasy_draft:invite' recipient_id=user.id league_id=league_id %}">
+                    {% csrf_token %}
+                    <input class="condensed" type="submit" value="Invite" />
+                </form>
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
-    <p>No users found.</p>
+    <span>No users found.</span>
 {% endif %}

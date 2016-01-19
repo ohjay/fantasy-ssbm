@@ -29,7 +29,6 @@ table.centered {
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    white-space: nowrap;
 }
 
 td {

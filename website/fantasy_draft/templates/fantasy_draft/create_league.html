@@ -2,77 +2,96 @@
 {% load compress %}
 {% load staticfiles %}
 
+{% block stylesheets %}
+{{ block.super }}
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{% static "fantasy_draft/css/create_league.css" %}" media="screen" />
+{% endcompress %}
+{% endblock %}
+
 {% block content %}
 <div class="grid-container">
     <div class="row">
-        <div class="col-3">
+        <div class="col-3" id="header1">
             <p><h1>New league</h1></p>
         </div>
-        <div class="col-3">
+        <div class="col-3" id="header2">
             <p><h1>Join a league</h1></p>
         </div>
     </div>
     <div class="row">
         <!-- Create a league -->
-        <div class="col-3">
+        <div class="col-3" style="width: 49.65vw;" id="sec1">
             {% if error_msg %}
             <span style="color: red"><strong>{{ error_msg }}</strong></span>
             {% endif %}
             
-            <h2>Enter a name for your {{ t_name }} league!</h2>
+            <h2>Required fields:</h2>
     
             <form method="post" action="{% url 'fantasy_draft:create_league' t_id=t_id %}">
                 {% csrf_token %}
         
                 <label>{{ league_form.name.label }}</label>&nbsp;
-                {{ league_form.name }}<br><br>
-                
-                <h2>Customize your {{ t_name }} league!</h2>
+                {{ league_form.name }}<br>
                 
                 <label>{{ league_form.number_of_picks.label }}</label>&nbsp;
-                {{ league_form.number_of_picks }}<br><br>
+                {{ league_form.number_of_picks }}<br>
+                
+                <h2>Options:</h2>
                 
                 <label>{{ league_form.random_order.label }}</label>&nbsp;
-                {{ league_form.random_order }}<br><br>
+              	<div class="checkbar">
+              		{{ league_form.random_order }}
+                    <label for="id_random_order"></label>
+              	</div><br>
                 
                 <label>{{ league_form.snake_style.label }}</label>&nbsp;
-                {{ league_form.snake_style }}<br><br>
+                <div class="checkbar">
+                    {{ league_form.snake_style }}
+                    <label for="id_snake_style"></label>
+                </div><br><br>
         
-                <input id="creation-submit" class="hipster-btn" type="submit" value="Required fields left blank!" disabled />
+                <input id="creation-submit" class="hipster-btn" type="submit" value="Required field(s) left blank!" disabled />
             </form>
         </div>
         
         <!-- Join a league -->
-        <div class="col-3">
-            <p>
-                {% if user.invites_received.count > 0 %}
-                <h2>Open invitations</h2>
-                <ul>
-                    {% for invitation in user.invites_received.all %}
-                        {% if invitation.status == "UNA" %}
-                        <li>
-                            {{ invitation.league }}, sent by {{ invitation.sender }} on {{ invitation.date_issued }}&nbsp;
-                            <!-- Accept?... -->
-                            <form style="display: inline" method="post" action="{% url 'fantasy_draft:accept' i_id=invitation.id %}">
-                                {% csrf_token %}
-                                <input type="submit" value="Accept" />
-                            </form>
-                        
-                            <!-- ...or decline? -->
-                            <form style="display: inline" method="post" action="{% url 'fantasy_draft:decline' i_id=invitation.id %}?next={% firstof request.path '/' %}">
-                                {% csrf_token %}
-                                <input type="submit" value="Decline" />
-                            </form>
-                        </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                {% else %}
-                You have no open invitations.
-                {% endif %}
-            </p>
+        <div class="col-3" id="sec2">
+            {% if user.invites_received.count > 0 %}
+            <h2>Open invitations</h2>
+            <ul style="list-style-type: circle">
+                {% for invitation in user.invites_received.all %}
+                    {% if invitation.status == "UNA" %}
+                    <li>
+                        {{ invitation.league }}, sent by {{ invitation.sender }} on {{ invitation.date_issued }}&nbsp;
+                        <!-- Accept?... -->
+                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:accept' i_id=invitation.id %}">
+                            {% csrf_token %}
+                            <input class="noblock" type="submit" value="Accept" />
+                        </form>
+                    
+                        <!-- ...or decline? -->
+                        <form style="display: inline" method="post" action="{% url 'fantasy_draft:decline' i_id=invitation.id %}?next={% firstof request.path '/' %}">
+                            {% csrf_token %}
+                            <input class="noblock" type="submit" value="Decline" />
+                        </form>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% else %}
+            You have no open invitations.
+            {% endif %}
         </div> 
-    </div> 
+    </div>
+    
+    <!-- HIDDEN BOSSES (aka ROWS 3 AND 4) -->
+    <div class="row">
+        <div id="header2-xsmall"></div>
+    </div>
+    <div class="row">
+        <div id="sec2-xsmall"></div>
+    </div>
 </div>
 {% endblock %}
 
@@ -81,8 +100,43 @@
 
 {% compress js %}
 <script type="text/javascript">
-    // Ensure that the league creation form is valid
+    function responsivize() {
+        if ($(window).width() <= 650) {
+            // Expand header1, sec1
+            $('#header1').removeClass('col-3');
+            $('#header1').addClass('col-6');
+            
+            $('#sec1').removeClass('col-3');
+            $('#sec1').addClass('col-6');
+            $('#sec1').css('width', '100vw');
+            
+            // Let header2 emigrate
+            $('#header2').removeClass('col-3');
+            $('#header2-xsmall').addClass('col-6');
+
+            var header2Html = $('#header2').html();
+            if (header2Html) {
+                $('#header2-xsmall').html(header2Html);
+                $('#header2').html('');
+            }
+            
+            // Let sec2 emigrate
+            $('#sec2').removeClass('col-3');
+            $('#sec2-xsmall').addClass('col-6');
+
+            var sec2Html = $('#sec2').html();
+            if (sec2Html) {
+                $('#sec2-xsmall').html(sec2Html);
+                $('#sec2').html('');
+            }
+        }
+    }
+    
     $(function() {
+        responsivize();
+        $(window).resize(responsivize);
+        
+        // Ensure that the league creation form is valid
         $('#id_name, #id_number_of_picks').keyup(function() {
             if ($('#id_name').val() && $('#id_number_of_picks').val()) {
                 $('#creation-submit').prop("disabled", false);
@@ -93,7 +147,7 @@
                 });
             } else {
                 $('#creation-submit').prop("disabled", true);
-                $('#creation-submit').prop("value", "Required fields left blank!");
+                $('#creation-submit').prop("value", "Required field(s) left blank!");
                 $('#creation-submit').css({
                     "background-color": "#000000",
                     "cursor": "default"
