@@ -28,48 +28,62 @@
     <div class="row">
         
         <!-- ========== DRAFT DISPLAYS ========== -->
-        {% if draft_scores %} <!-- results published -->
-        {% for draft, player_placings, score, bid in draft_scores %}
-        <div class="col-2">
-            <p>
-                {{ draft.user }}'s draft (-{{ bid }}):<br>
-                Score: {{ score }}
-            </p>
-            <ul>
-                {% for player, placing in player_placings %}
-                <li>{{ player }} ({{ placing }})</li>
+        
+        <div class="col-4" id="col-container">
+            {% if draft_scores %} <!-- results published -->
+            {% for draft, player_placings, score, bid in draft_scores %}
+            <div class="col-2">
+                <p>
+                    {{ draft.user }}'s draft (-{{ bid }}):<br>
+                    Score: {{ score }}
+                </p>
+                <ul class="centered">
+                    {% for player, placing in player_placings %}
+                    <li>{{ player }} ({{ placing }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            
+            {% else %} <!-- results not published yet -->
+                {% if draft_data %} <!-- bids -->
+                {% for draft, bid in draft_data %}
+                <div class="col-2">
+                    <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
+                    
+                    {% if draft.players.count > 0 %}
+                    <ul class="centered">
+                        {% for player in draft.players.all %}
+                        <li>{{ player }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                    {% endif %}
+                </div>
                 {% endfor %}
-            </ul>
-        </div>
-        {% endfor %}
-            
-        {% else %} <!-- results not published yet -->
-            {% if draft_data %} <!-- bids -->
-            {% for draft, bid in draft_data %}
-            <div class="col-2">
-                <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
-                <ul>
-                    {% for player in draft.players.all %}
-                    <li>{{ player }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
-            
-            {% else %} <!-- no bids -->
-            {% for draft in league.draft_set.all %}
-            <div class="col-2">
-                <p>{{ draft.user }}'s draft:</p>
-                <ul>
-                    {% for player in draft.players.all %}
-                    <li>{{ player }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
+        
+                {% else %} <!-- no bids -->
+                {% for draft in league.draft_set.all %}
+                <div class="col-2">
+                    <p>{{ draft.user }}'s draft:</p>
+                    
+                    {% if draft.players.count > 0 %}
+                    <ul class="centered">
+                        {% for player in draft.players.all %}
+                        <li>{{ player }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div style="text-align: center; margin-top: 0.75vh;">There are no players in this draft.</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+        
+                {% endif %}
             
             {% endif %}
-        {% endif %}
+        </div>
         
         {% if league.phase != 'COM' %}
         <div class="col-2">
@@ -78,22 +92,25 @@
             
             {% if league.phase == 'BID' %}
                 {% if user.is_authenticated and user == next_user %}
-                    <p style="background-color: #67c8ff">
-                        <u>It's your turn to bid!</u><br>
-                        We're bidding for {{ auction_ordinal }} pick. The high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
+                    <p style="background-color: #67c8ff; padding: 3px;">
+                        <u><span class="big-jura">It's your turn to bid!</span></u><br>
+                        You're bidding for {{ auction_ordinal }} pick.<br>
+                        The high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
                     </p><br>
                         
-                    The people still in are:
-                    <ul>
+                    There are {{ temp_orders.count }} users still "in" for this bidding round:
+                    <ul class="aligned">
                         {% for o in temp_orders %}
                         <li>{{ o.user }}</li>
                         {% endfor %}
                     </ul>
                     
+                    <div class="rect-div"></div>
+                    
                     {% if final_orders.count == 0 %}
                         No order has been determined yet.
                     {% else %}
-                    <ol>
+                    <ol class="aligned">
                         Currently, the order is:
                         
                         {% for o in final_orders %}
@@ -106,21 +123,25 @@
                     
                     <form method="post" action="{% url 'fantasy_draft:bid' league_id=league.id %}?next={% firstof request.path '/' %}">
                         {% csrf_token %}
-                        How much do you want to bid?&nbsp; <input id="bid-input" type="number" name="bid" value="" />&nbsp; 
+                        What's your bid?&nbsp; <input id="bid-input" type="number" name="bid" value="" placeholder="Insert bid here..." />&nbsp; 
                         <span id="submit-bid"></span>
                     </form>
                     
                     <form method="post" action="{% url 'fantasy_draft:drop_out' league_id=league.id on_auction=on_auction %}?next={% firstof request.path '/' %}">
                         {% csrf_token %}
-                        Or you can drop out of the bidding.&nbsp; <input type="submit" value="Fold" />&nbsp; 
+                        Or you can drop out...&nbsp; <input type="submit" value="Fold" />&nbsp; 
                     </form>
                 {% else %}
-                    <p style="background-color: #67c8ff">
+                    <p style="background-color: #67c8ff; padding: 3px;">
                         <u>It's the bidding phase!</u><br>
-                        We're bidding for {{ auction_ordinal }} pick. The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.
+                        We're bidding for {{ auction_ordinal }} pick.<br>
                     </p>
+                    
+                    <div style="margin: 1vh 0">The next user to bid is {{ next_user }} and the high bid is currently {{ high_bid }}, made by {{ high_bidder }}.</div>
+                    
+                    <div class="rect-div"></div>
                         
-                    <ol>
+                    <ol class="aligned">
                         {% if final_orders.count == 0 %}
                             No order has been determined yet.
                         {% else %}
@@ -138,18 +159,22 @@
             {% elif league.phase == 'SEL' %}
                 {% if ordinal %}
                     {% if user == next_user %}
-                    <p style="background-color: #67c8ff">
-                        <u>Your Turn</u><br>
-                        You have {{ ordinal }} pick.<br>
-                        Enter Pick <input type="text" id="name_input" name="name_input" autocomplete="off" />
+                    <p style="background-color: #67c8ff; padding: 3px;">
+                        <u><span class="big-jura">It's your turn to pick!</span></u><br>
+                        (You have {{ ordinal }} pick.)
                     </p>
-                        <div id="search-results">
-                            {% if invite_sent %}
-                            <p>Invitation successfully sent!</p>
-                            {% else %}
-                            <p>No players found.</p>
-                            {% endif %}
-                        </div>
+                    
+                    <div style="text-align: center; margin: 1vh 0;">
+                        Select a player:&nbsp; <input type="text" id="name_input" name="name_input" autocomplete="off" placeholder="Player name here..." />
+                    </div>
+                    
+                    <div class="search-results" style="text-align: center">
+                        {% if invite_sent %}
+                        <span>Invitation successfully sent!</span>
+                        {% else %}
+                        <span>No players found.</span>
+                        {% endif %}
+                    </div>
                     
                     {% else %}
                     <p>
@@ -195,7 +220,7 @@
                     Invite users to join your league:&nbsp;
                     <input type="text" id="name_input" maxlength="50" size="30" name="name_input" autocomplete="off" placeholder="Search for a user..." />
                 </p>
-                <div id="search-results" style="text-align: center">
+                <div class="search-results" style="text-align: center">
                     {% if invite_sent %}
                     <span>Invitation successfully sent!</span>
                     {% else %}
@@ -265,7 +290,7 @@
     });
 
     function liveUpdate(data, textStatus, jqXHR) {
-        $('#search-results').html(data);
+        $('.search-results').html(data);
     }
 
     function getLeagueId(href) {

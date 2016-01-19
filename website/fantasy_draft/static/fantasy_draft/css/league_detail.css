@@ -3,6 +3,14 @@ ul {
     padding-left: 0;
 }
 
+ol.aligned {
+    padding-left: 0;
+}
+
+ul.aligned li, ol.aligned li {
+    list-style-position: inside;
+}
+
 ul.centered {
     display: table;
     margin-left: auto;
@@ -51,7 +59,24 @@ input:focus {
     outline: none;
 }
 
-#search-results {
+.big-jura {
+    font-family: 'Jura', sans-serif;
+    font-size: 1.1em;
+}
+
+.rect-div {
+    height: 4px;
+    width: 100%;
+    background-color: #464646;
+    margin-bottom: 1vh;
+}
+
+.search-results {
     height: 135px !important;
     padding: 10px;
+}
+
+#col-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
 }

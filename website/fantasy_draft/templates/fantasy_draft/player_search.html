@@ -1,15 +1,17 @@
 {% if players %}
-    <ul>
+    <table class="centered">
         {% for player in players %}
-        <li>
-            {{ player }}&nbsp;
-            <form style="display: inline" method="post" action="{% url 'fantasy_draft:select_player' draft_id=draft.id player_id=player.id %}">
-                {% csrf_token %}
-                <input type="submit" value="Select" />
-            </form>
-        </li>
+        <tr>
+            <th>{{ player }}</th>
+            <td>
+                <form style="display: inline" method="post" action="{% url 'fantasy_draft:select_player' draft_id=draft.id player_id=player.id %}">
+                    {% csrf_token %}
+                    <input class="condensed" type="submit" value="Select" />
+                </form>
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
-    <p>No players found.</p>
+    <span>No players found.</span>
 {% endif %}

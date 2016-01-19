@@ -68,6 +68,9 @@ def league_detail(request, invite_sent, league_id):
             draft_data = [] # [(draft, bid)]
             for draft in league.draft_set.all():
                 draft_data.append((draft, Order.objects.get(user=draft.user, league=league).bid))
+            
+            # Sort by increasing bid amount
+            draft_data = sorted(draft_data, key=operator.itemgetter(1), reverse=True)
         
         if request.user.is_authenticated() and request.user.is_active:
             order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
@@ -477,7 +480,7 @@ def player_rankings(request):
         
         player_scores[player] = round(score_avg * activity_bonus, 2) # score_final
             
-    sorted_ps = sorted(player_scores.items(), key=operator.itemgetter(1), reverse=True) 
+    sorted_ps = sorted(player_scores.items(), key=operator.itemgetter(1), reverse=True)
     # ^ ps = player scores
     
     context = {
