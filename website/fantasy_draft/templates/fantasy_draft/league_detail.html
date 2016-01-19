@@ -38,7 +38,11 @@
                 <div class="row">
                 {% endif %}
             
+                {% if forloop.counter0|divisibleby:2 and forloop.last %}
+                <div class="col-6">
+                {% else %}
                 <div class="col-2">
+                {% endif %}
                     <p>
                         {{ draft.user }}'s draft (-{{ bid }}):<br>
                         Score: {{ score }}
@@ -50,7 +54,7 @@
                     </ul>
                 </div>
             
-                {% if not forloop.counter0|divisibleby:2 %}
+                {% if not forloop.counter0|divisibleby:2 or forloop.last %}
                 </div>
                 {% endif %}
             {% endfor %}
@@ -62,7 +66,11 @@
                     <div class="row">
                     {% endif %}
                     
+                    {% if forloop.counter0|divisibleby:2 and forloop.last %}
+                    <div class="col-6">
+                    {% else %}
                     <div class="col-2">
+                    {% endif %}
                         <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
                 
                         {% if draft.players.count > 0 %}
@@ -76,7 +84,7 @@
                         {% endif %}
                     </div>
                     
-                    {% if not forloop.counter0|divisibleby:2 %}
+                    {% if not forloop.counter0|divisibleby:2 or forloop.last %}
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -87,7 +95,11 @@
                     <div class="row">
                     {% endif %}
                     
+                    {% if forloop.counter0|divisibleby:2 and forloop.last %}
+                    <div class="col-6">
+                    {% else %}
                     <div class="col-2">
+                    {% endif %}
                         <p>{{ draft.user }}'s draft:</p>
                 
                         {% if draft.players.count > 0 %}
@@ -101,7 +113,7 @@
                         {% endif %}
                     </div>
                     
-                    {% if not forloop.counter0|divisibleby:2 %}
+                    {% if not forloop.counter0|divisibleby:2 or forloop.last %}
                     </div>
                     {% endif %}
                 {% endfor %}
