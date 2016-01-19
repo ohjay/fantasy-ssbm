@@ -1,5 +1,16 @@
 {% extends "fantasy_draft/header.html" %}
+{% load compress %}
 {% load staticfiles %}
+
+{% block stylesheets %}
+{{ block.super }}
+{% compress css %}
+<style type="text/css">
+    table { border: 5px solid green; border-collapse: collapse; margin: 1.5vh auto 0 auto; }
+    th, td { border: 1px solid white; padding: 0.5vh 1vw; }
+</style>
+{% endcompress %}
+{% endblock %}
 
 {% block content %}
 <div class="grid-container">
@@ -14,20 +25,40 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" style="text-align: center">
             <p>
                 Leagues participated in:
-            <p>
-            <ul>
-                {% for league, results_published in league_data %}
-                <li>
-                    <a href="/league/f/{{ league.id }}">{{ league.name }}</a>
-                    [{{ league.tournament }}{% if results_published %}<span style="color: #67c8ff;"> – Results Published</span>{% endif %}]
-                </li>
-                {% empty %}
-                <li>No leagues found!</li>
-                {% endfor %}
-            </ul>
+            </p>
+            {% if league_data %}
+            <table style="border: 1px solid white;">
+                <thead>
+                    <tr>
+                        <th>Tournament</th>
+                        <th>League</th>
+                        <th>Results Published?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for league, results_published in league_data %}
+                    <tr>
+                        <td>{{ league.tournament }}</td>
+                        <td><a href="/league/f/{{ league.id }}">{{ league.name }}</a></td>
+                        <td>
+                            {% if results_published %}
+                            <span style="color: #67c8ff;">Yes!</span>
+                            {% else %}
+                            <span>No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% else %}
+            <div style="margin-top: 1vh">No leagues found! Would you like to <a href="{% url 'fantasy_draft:leagues' %}">create one?</a></div>
+            
+            {% endif %}
         </div>
     </div>
 </div>
