@@ -542,9 +542,9 @@ def leagues(request):
             is_ready = t.player_set.count() > 0
             
             if t.date < date(year=2016, month=7, day=1):
-                season_desc = "[2015 Season 1]"
+                season_desc = "[ 2015 Season 1 ]"
             elif t.date < date(year=2017, month=1, day=1):
-                season_desc = "[2015 Season 2]"
+                season_desc = "[ 2015 Season 2 ]"
             else:
                 season_desc = "Season Unknown"
             
