@@ -65,12 +65,18 @@ def league_detail(request, invite_sent, league_id):
         
         draft_data = None
         if not league.random_order:
-            draft_data = [] # [(draft, bid)]
+            draft_data = [] # [(draft, bid, number)]
             for draft in league.draft_set.all():
-                draft_data.append((draft, Order.objects.get(user=draft.user, league=league).bid))
+                d_order = Order.objects.get(user=draft.user, league=league)
+                draft_data.append((draft, d_order.bid, d_order.number))
             
             # Sort by increasing bid amount
-            draft_data = sorted(draft_data, key=operator.itemgetter(1), reverse=True)
+            draft_data = sorted(draft_data, key=operator.itemgetter(2))
+            
+            temp = []
+            for draft, bid, number in draft_data:
+                temp.append((draft, bid))
+            draft_data = temp # [(draft, bid)]
         
         if request.user.is_authenticated() and request.user.is_active:
             order = Order.objects.filter(user=request.user).filter(league=league) # the user's order
@@ -102,8 +108,12 @@ def league_detail(request, invite_sent, league_id):
                 # Compute the score for each player in the draft
                 score = 0
                 for player in draft.players.all():
-                    placing = tournament_results.get(player=player).placing
-                    score += get_score(placing)
+                    player_result = tournament_results.filter(player=player)
+                    if player_result:
+                        placing = player_result.placing
+                        score += get_score(placing)
+                    else:
+                        placing = '?'
                     player_placings.append((player, placing))
                     
                 bid = None
@@ -114,16 +124,15 @@ def league_detail(request, invite_sent, league_id):
                 draft_scores.append((draft, player_placings, score, bid))
     
             context = {
-                'tournament_leagues': tournament_leagues, 
-                'today': date.today(), 
-                'draft_scores': draft_scores,
+                'league': league,
+                'draft_scores': draft_scores
             }
-            return render(request, 'fantasy_draft/leagues.html', context)
+            return render(request, 'fantasy_draft/league_detail.html', context)
         elif not league.random_order:
             draft_data = [] # [(draft, bid)]
             for draft in league.draft_set.all():
                 draft_data.append((draft, Order.objects.get(user=draft.user, league=league).bid))
-            return render(request, 'fantasy_draft/leagues.html', {
+            return render(request, 'fantasy_draft/league_detail.html', {
                 'league': league,
                 'draft_data': draft_data,
             })

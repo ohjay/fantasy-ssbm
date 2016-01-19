@@ -3,11 +3,7 @@ ul {
     padding-left: 0;
 }
 
-ol.aligned {
-    padding-left: 0;
-}
-
-ul.aligned li, ol.aligned li {
+ul.aligned li {
     list-style-position: inside;
 }
 

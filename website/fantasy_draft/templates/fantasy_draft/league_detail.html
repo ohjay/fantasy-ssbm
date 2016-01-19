@@ -29,22 +29,38 @@
         
         <!-- ========== DRAFT DISPLAYS ========== -->
         
+        {% if league.phase == 'COM' %}
+        <div class="col-6" id="col-container">
+        {% else %}
         <div class="col-4" id="col-container">
+        {% endif %}
             <p id="draft-header">Drafts</p><br>
             
             {% if draft_scores %} <!-- results published -->
             {% for draft, player_placings, score, bid in draft_scores %}
-                {% if forloop.counter0|divisibleby:2 %}
-                <div class="row">
+                {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 %} <div class="row">
+                {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 %} <div class="row">
                 {% endif %}
             
-                {% if forloop.counter0|divisibleby:2 and forloop.last %}
-                <div class="col-6">
-                {% else %}
-                <div class="col-2">
+                {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 and forloop.last %} <div class="col-6">
+                {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 and forloop.last %} <div class="col-6">
+                {% elif league.phase == 'COM' and forloop.revcounter0 < 2 %} <!-- it's either last or 2nd to last -->
+                    {% if forloop.last %} <!-- it's either in the 2nd spot or the 3rd spot -->
+                        {% if forloop.counter|divisibleby:3 %} <!-- it's in the third spot -->
+                            <div class="col-2">
+                        {% else %} <div class="col-3">
+                        {% endif %}
+                    {% else %} <!-- it's the 2nd to last block -->
+                        {% if forloop.counter|divisibleby:3 or not forloop.counter0|divisibleby:3 %}
+                            <div class="col-2">
+                        {% elif forloop.counter0|divisibleby:3 %} <!-- it's in the first spot -->
+                            <div class="col-3">
+                        {% endif %}
+                    {% endif %}
+                {% else %} <div class="col-2">
                 {% endif %}
                     <p>
-                        {{ draft.user }}'s draft (-{{ bid }}):<br>
+                        {{ draft.user }}'s draft (-{{ bid }} pts):<br>
                         Score: {{ score }}
                     </p>
                     <ul class="centered player-list">
@@ -53,25 +69,38 @@
                         {% endfor %}
                     </ul>
                 </div>
-            
-                {% if not forloop.counter0|divisibleby:2 or forloop.last %}
-                </div>
+                
+                {% if forloop.last %} </div>
+                {% elif league.phase != 'COM' and not forloop.counter0|divisibleby:2 %} </div>
+                {% elif league.phase == 'COM' and forloop.counter|divisibleby:3 %} </div>
                 {% endif %}
             {% endfor %}
         
             {% else %} <!-- results not published yet -->
                 {% if draft_data %} <!-- bids -->
                 {% for draft, bid in draft_data %}
-                    {% if forloop.counter0|divisibleby:2 %}
-                    <div class="row">
+                    {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 %} <div class="row">
+                    {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 %} <div class="row">
                     {% endif %}
                     
-                    {% if forloop.counter0|divisibleby:2 and forloop.last %}
-                    <div class="col-6">
-                    {% else %}
-                    <div class="col-2">
+                    {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 and forloop.last %} <div class="col-6">
+                    {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 and forloop.last %} <div class="col-6">
+                    {% elif league.phase == 'COM' and forloop.revcounter0 < 2 %} <!-- it's either last or 2nd to last -->
+                        {% if forloop.last %} <!-- it's either in the 2nd spot or the 3rd spot -->
+                            {% if forloop.counter|divisibleby:3 %} <!-- it's in the third spot -->
+                                <div class="col-2">
+                            {% else %} <div class="col-3">
+                            {% endif %}
+                        {% else %} <!-- it's the 2nd to last block -->
+                            {% if forloop.counter|divisibleby:3 or not forloop.counter0|divisibleby:3 %}
+                                <div class="col-2">
+                            {% elif forloop.counter0|divisibleby:3 %} <!-- it's in the first spot -->
+                                <div class="col-3">
+                            {% endif %}
+                        {% endif %}
+                    {% else %} <div class="col-2">
                     {% endif %}
-                        <p>{{ draft.user }}'s draft (-{{ bid }}):</p>
+                        <p>{{ draft.user }}'s draft (-{{ bid }} pts):</p>
                 
                         {% if draft.players.count > 0 %}
                         <ul class="centered player-list">
@@ -84,21 +113,34 @@
                         {% endif %}
                     </div>
                     
-                    {% if not forloop.counter0|divisibleby:2 or forloop.last %}
-                    </div>
+                    {% if forloop.last %} </div>
+                    {% elif league.phase != 'COM' and not forloop.counter0|divisibleby:2 %} </div>
+                    {% elif league.phase == 'COM' and forloop.counter|divisibleby:3 %} </div>
                     {% endif %}
                 {% endfor %}
     
                 {% else %} <!-- no bids -->
                 {% for draft in league.draft_set.all %}
-                    {% if forloop.counter0|divisibleby:2 %}
-                    <div class="row">
+                    {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 %} <div class="row">
+                    {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 %} <div class="row">
                     {% endif %}
                     
-                    {% if forloop.counter0|divisibleby:2 and forloop.last %}
-                    <div class="col-6">
-                    {% else %}
-                    <div class="col-2">
+                    {% if league.phase != 'COM' and forloop.counter0|divisibleby:2 and forloop.last %} <div class="col-6">
+                    {% elif league.phase == 'COM' and forloop.counter0|divisibleby:3 and forloop.last %} <div class="col-6">
+                    {% elif league.phase == 'COM' and forloop.revcounter0 < 2 %} <!-- it's either last or 2nd to last -->
+                        {% if forloop.last %} <!-- it's either in the 2nd spot or the 3rd spot -->
+                            {% if forloop.counter|divisibleby:3 %} <!-- it's in the third spot -->
+                                <div class="col-2">
+                            {% else %} <div class="col-3">
+                            {% endif %}
+                        {% else %} <!-- it's the 2nd to last block -->
+                            {% if forloop.counter|divisibleby:3 or not forloop.counter0|divisibleby:3 %}
+                                <div class="col-2">
+                            {% elif forloop.counter0|divisibleby:3 %} <!-- it's in the first spot -->
+                                <div class="col-3">
+                            {% endif %}
+                        {% endif %}
+                    {% else %} <div class="col-2">
                     {% endif %}
                         <p>{{ draft.user }}'s draft:</p>
                 
@@ -113,8 +155,9 @@
                         {% endif %}
                     </div>
                     
-                    {% if not forloop.counter0|divisibleby:2 or forloop.last %}
-                    </div>
+                    {% if forloop.last %} </div>
+                    {% elif league.phase != 'COM' and not forloop.counter0|divisibleby:2 %} </div>
+                    {% elif league.phase == 'COM' and forloop.counter|divisibleby:3 %} </div>
                     {% endif %}
                 {% endfor %}
     
@@ -148,13 +191,13 @@
                     {% if final_orders.count == 0 %}
                         No order has been determined yet.
                     {% else %}
-                    <ol class="aligned">
+                    <ul class="aligned">
                         Currently, the order is:
                         
                         {% for o in final_orders %}
-                        <li>{{ o.user }} ({{ o.number }})</li>
+                        <li>{{ o.user }} (#{{ o.number|add:"1" }})</li>
                         {% endfor %}
-                    </ol>
+                    </ul>
                     {% endif %}
                     
                     <br><br>
@@ -179,17 +222,17 @@
                     
                     <div class="rect-div"></div>
                         
-                    <ol class="aligned">
+                    <ul class="aligned">
                         {% if final_orders.count == 0 %}
                             No order has been determined yet.
                         {% else %}
                             Currently, the order is:
                             
                             {% for o in final_orders %}
-                            <li>{{ o.user }} ({{ o.number }})</li>
+                            <li>{{ o.user }} (#{{ o.number|add:"1" }})</li>
                             {% endfor %}
                         {% endif %}
-                    </ol>
+                    </ul>
                 {% endif %}
                 
             <!-- ========== PLAYER SELECTION BOX ========== -->
@@ -362,7 +405,7 @@
             {% if draft_scores %}
             {% for draft, player_placings, score, bid in draft_scores %}
             mobileHtml += '<div class="row"><div class="col-6"><p>'
-                    + "{{ draft.user }}'s draft (-{{ bid }}):<br>"
+                    + "{{ draft.user }}'s draft (-{{ bid }} pts):<br>"
                     + 'Score: {{ score }}</p>'
                     + '<ul class="centered player-list">';
             
@@ -378,7 +421,7 @@
             {% elif draft_data %}
             {% for draft, bid in draft_data %}
             mobileHtml += '<div class="row"><div class="col-6"><p>'
-                    + "{{ draft.user }}'s draft (-{{ bid }}):</p>";
+                    + "{{ draft.user }}'s draft (-{{ bid }} pts):</p>";
             
                 {% if draft.players.count > 0 %}
                 mobileHtml += '<ul class="centered player-list">';
