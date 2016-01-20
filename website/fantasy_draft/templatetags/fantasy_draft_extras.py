@@ -8,4 +8,3 @@ register = template.Library()
 def no_spaces(value):
     """Removes all spaces from a string."""
     return value.replace(' ', '')
-    

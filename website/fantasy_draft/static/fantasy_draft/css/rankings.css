@@ -19,6 +19,10 @@ tr:hover, thead {
     font-size: 1.1em;
 }
 
+h2 {
+    margin-top: 0.47em;
+}
+
 .rank-container {
     max-width: 100%;
     background-color: #ccc;
@@ -28,6 +32,7 @@ tr:hover, thead {
     -webkit-flex-wrap: wrap;
     font-size: 12px;
     margin: -1px;
+    margin-top: 0.67em;
 }
 
 .rank-item {
