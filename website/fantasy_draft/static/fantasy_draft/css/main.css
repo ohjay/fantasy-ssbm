@@ -24,6 +24,12 @@ body {
     padding: 0;
 }
 
+@media only screen and (min-width: 1601px) {
+    body {
+        background: url("../images/background-tiltshift_2000x1125.png") no-repeat top fixed;
+    }
+}
+
 @media only screen and (max-device-width: 480px) {
     body {
         background: url("../images/background-tiltshift_700x1125.png") no-repeat top fixed;

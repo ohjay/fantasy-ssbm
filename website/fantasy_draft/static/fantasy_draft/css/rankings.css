@@ -29,7 +29,9 @@ h2 {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
+    flex-direction: row;
     -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     font-size: 12px;
     margin: -1px;
     margin-top: 0.67em;
