@@ -164,7 +164,7 @@
                     mobileHtml += '<a href="' + "{% url 'fantasy_draft:create_league' t_id=tournament.id %}" + '" class="blue">Create or join a league</a>';
                     {% else %}
                     mobileHtml += '<i>Leagues cannot be created yet. Check back soon!</i>';
-                {% endif %}
+                    {% endif %}
 
                 {% else %}
                 mobileHtml += '<i>The tournament date has already passed.</i>';

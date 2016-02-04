@@ -4,7 +4,7 @@ html {
     padding: 0;
 }
 
-a, .gray {
+a {
     color: #a2a0a0;
 }
 
@@ -34,12 +34,6 @@ body {
     body {
         background: url("../images/background-tiltshift_700x1125.png") no-repeat top fixed;
         background-size: cover;
-    }
-}
-
-@media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 0) {
-    body {
-        background-position: 1px 0; /* fixes a Chrome bug that causes a 1px white line to appear on the right */
     }
 }
 
