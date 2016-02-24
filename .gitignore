@@ -2,6 +2,7 @@
 db.sqlite3
 .sass-cache/
 CACHE/
+venv/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

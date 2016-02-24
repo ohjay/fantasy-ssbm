@@ -26,16 +26,20 @@
 </div>
 
 <!-- Countdown to next tournament -->
-<div style="text-align: center">    
+<div style="text-align: center">
     <div class="opaque" style="display: inline-block">
         <div class="clock"></div>
     </div>
 </div>
 
 <!-- Display text -->
-<p class="center-text">    
-    BEAST 6: February 19, 2016
-</p>
+<div id="text-wrapper">
+    <p class="center-text">
+        {% if next_tournament != 'No tournaments found.' %}{{ next_tournament }}: {{ next_date }}
+        {% else %}{{ next_tournament }}
+        {% endif %}
+    </p>
+</div>
 
 <footer id="footer-wrapper">
     <!-- Top portion of the footer -->
@@ -70,7 +74,7 @@
     <div id="footer-bottom-wrapper">
         <div id="footer-bottom">
             <div id="last-updated">
-                Last updated February 4th, 2016 by <a href="http://owenjow.xyz" target="_blank">ohjay</a>
+                Last updated February 23rd, 2016 by <a href="http://owenjow.xyz" target="_blank">ohjay</a>
             </div><!-- /last-updated -->
         </div><!-- /footer-bottom -->
     </div><!-- /footer-bottom-wrapper -->
@@ -88,9 +92,7 @@
     var clock;
     $(document).ready(function() {
         var currentDate = new Date();
-
-        // Current tournament: BEAST 6; next tournament: Pound 2016 (4/2)
-        var futureDate  = new Date("February 19, 2016 0:00:00");
+        var futureDate  = new Date('{{ next_date }}');
 
         // Calculate the difference in seconds between the future and current date
         var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;

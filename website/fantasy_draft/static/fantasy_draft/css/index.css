@@ -30,7 +30,7 @@
     }
 }
 
-.center-text { 
+.center-text {
     font-family: 'Jura', sans-serif;
     color: #ffffff;
     font-size: 2.7em;
@@ -70,4 +70,10 @@
     color: white;
     text-shadow: 0 0 10px #ffde00;
     margin-top: 5px;
+}
+
+#text-wrapper {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
 }

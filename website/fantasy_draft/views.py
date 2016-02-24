@@ -11,26 +11,41 @@ from django.utils import timezone
 
 from .models import *
 from .forms import *
-from .utils import to_ordinal, handle_completion, get_score
+from .utils import to_ordinal, handle_completion, get_score, TOURNAMENT_SCHEDULE
 
 from datetime import datetime, date, timedelta
 from collections import defaultdict
 import random, hashlib, operator
 
 def index(request):
+    next_tournament = "No tournaments found."
+    next_date = date(2018, 5, 12) # 20XX wasn't an option
+    
+    for tournament, day in reversed(TOURNAMENT_SCHEDULE):
+        if day <= date.today():
+            break
+        else:
+            next_tournament, next_date = tournament, day
+    
     message = request.GET.get('m')
     if not message:
-        return render(request, 'fantasy_draft/index.html', {})
+        return render(request, 'fantasy_draft/index.html', {
+            'next_tournament': next_tournament,
+            'next_date': next_date,
+        })
     elif message == '1':
         return render(request, 'fantasy_draft/index.html', {
             'message': "Your account has been successfully activated!",
+            'next_tournament': next_tournament,
+            'next_date': next_date,
         })
     elif message == '2':
         return render(request, 'fantasy_draft/index.html', {
             'message': "An activation link has been sent to your email.",
+            'next_tournament': next_tournament,
+            'next_date': next_date,
         })
-        
-    
+
 def league_detail(request, invite_sent, league_id):
     league = get_object_or_404(League, pk=league_id)
     

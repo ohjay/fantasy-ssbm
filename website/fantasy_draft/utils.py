@@ -1,3 +1,5 @@
+from datetime import date
+
 SUFFIXES = {1: 'st', 2: 'nd', 3: 'rd'}
 def to_ordinal(num):
     """Returns the ordinal representation of NUM + 1.
@@ -36,3 +38,14 @@ def get_score(placing):
     elif placing == 3: return 555
     elif placing == 2: return 610
     elif placing == 1: return 670
+    
+TOURNAMENT_SCHEDULE = [
+    ('Pound 2016', date(2016, 4, 2)),
+    ('EGLX', date(2016, 4, 29)),
+    ('DreamHack Austin', date(2016, 5, 6)),
+    ('CEO 2016', date(2016, 6, 24)),
+    ('EVO 2016', date(2016, 7, 15)),
+    ('Super Smash Con', date(2016, 8, 11)),
+    ('The Big House 6', date(2016, 10, 1)),
+    ('DreamHack Winter', date(2016, 11, 24)),
+]
