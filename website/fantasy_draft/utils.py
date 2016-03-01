@@ -46,6 +46,6 @@ TOURNAMENT_SCHEDULE = [
     ('CEO 2016', date(2016, 6, 24)),
     ('EVO 2016', date(2016, 7, 15)),
     ('Super Smash Con', date(2016, 8, 11)),
-    ('The Big House 6', date(2016, 10, 1)),
+    ('The Big House 6', date(2016, 10, 7)),
     ('DreamHack Winter', date(2016, 11, 24)),
 ]

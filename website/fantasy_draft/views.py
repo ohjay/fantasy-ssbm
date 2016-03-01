@@ -19,7 +19,7 @@ import random, hashlib, operator
 
 def index(request):
     next_tournament = "No tournaments found."
-    next_date = date(2018, 5, 12) # 20XX wasn't an option
+    next_date = date.today() + timedelta(21) # 20XX wasn't an option
     
     for tournament, day in reversed(TOURNAMENT_SCHEDULE):
         if day <= date.today():
