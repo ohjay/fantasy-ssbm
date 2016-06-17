@@ -3,7 +3,7 @@ Fantasy SSBM is a website that enables the creation/management of Melee fantasy 
 
 As Charlie Puth might say, you're only one click away. :)
 
-## OS X Setup
+## Getting Started
 #### Dependencies
 Install pip (`sudo easy_install pip`) and virtualenv (`pip install virtualenv`). You'll need pip to install package dependencies and virtualenv to create an isolated environment for them.
 
@@ -49,3 +49,6 @@ Secondly, in `fantasy_draft/views.py` you'll have to make two modifications. The
 Ensure that Postgres is running on port 5432. Then `cd` into `website` and run `python manage.py runserver`. 
 
 With luck, your local server should soon be up and running! When the command finishes, you can view the site by visiting `localhost:8000` in your favorite web browser.
+
+#### Extra [fE]
+To update the site on AWS, execute `eb deploy` from the root directory. This will synchronize the public website with the version in your latest commit.

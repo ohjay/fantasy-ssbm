@@ -497,6 +497,7 @@ def player_rankings(request):
         num_tournaments = player_tourn_ct[player]
         score_avg = float(score) / num_tournaments
         
+        # Assumption: no more than 9 ranked tournaments per year
         activity_bonus = float(num_tournaments)
         while activity_bonus >= 1.0:
             activity_bonus /= 10

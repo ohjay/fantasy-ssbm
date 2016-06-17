@@ -30,6 +30,12 @@
     }
 }
 
+@media only screen and (min-width: 1601px) {
+    .opaque {
+        margin-top: 20vh;
+    }
+}
+
 .center-text {
     font-family: 'Jura', sans-serif;
     color: #ffffff;
