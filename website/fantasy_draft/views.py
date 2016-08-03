@@ -488,7 +488,12 @@ def player_rankings(request):
     score_avg = AVG(SCORE(placing) for tournament in tournaments)
     score_final = ACTIVITY BONUS (1.# tournaments attended) * score_avg
     """
-    for tournament in Tournament.objects.filter(date__gt=date_1yr_ago).all():
+    tournaments = Tournament.objects.filter(date__gt=date_1yr_ago).all()
+    if not tournaments:
+        date_1yr_ago = date(2016, 1, 15) # keep our public range accurate
+        tournaments = Tournament.objects.all() # start from the Genesis
+    
+    for tournament in tournaments:
         for result in tournament.result_set.all():
             player_scores[result.player] += get_score(result.placing)
             player_tourn_ct[result.player] += 1
@@ -570,9 +575,9 @@ def leagues(request):
             is_ready = t.player_set.count() > 0
             
             if t.date < date(year=2016, month=7, day=1):
-                season_desc = "[ 2015 Season 1 ]"
+                season_desc = "[ 2016 Season 1 ]"
             elif t.date < date(year=2017, month=1, day=1):
-                season_desc = "[ 2015 Season 2 ]"
+                season_desc = "[ 2016 Season 2 ]"
             else:
                 season_desc = "Season Unknown"
             
